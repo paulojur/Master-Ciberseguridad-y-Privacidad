@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorador Interactivo de Ciberseguridad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Stone -->
+    <!-- Application Structure Plan: Se ha diseñado una SPA tipo dashboard con una barra de navegación superior fija para un acceso rápido a las secciones temáticas. La estructura no sigue el orden del PDF, sino que agrupa los conceptos de forma lógica para facilitar el aprendizaje: 1) Conceptos Fundamentales (interactivos), 2) El ciclo completo de Gestión de Riesgos (visualizado de forma circular), 3) Una comparación directa entre Vulnerabilidades y Amenazas con gráficos, y 4) Un desglose interactivo de la Seguridad en la Nube. Esta arquitectura está pensada para que el usuario pueda explorar, comparar y entender las relaciones entre conceptos de manera intuitiva, lo cual es más efectivo que una lectura lineal. -->
+    <!-- Visualization & Content Choices: 
+        - CIA Triad -> Goal: Inform -> Method: Tarjetas con efecto hover -> Interaction: Mostrar definición al pasar el ratón -> Justification: Clarifica los pilares básicos de forma rápida.
+        - Security Policies -> Goal: Compare -> Method: Pestañas interactivas -> Interaction: Clic para cambiar el contenido descriptivo -> Justification: Demuestra el espectro de estrategias de forma concisa.
+        - Risk Management Cycle -> Goal: Organize/Explain Process -> Method: Diagrama circular con HTML/CSS -> Interaction: Clic en cada fase para ver detalles -> Justification: Transforma un proceso estático en una herramienta de aprendizaje dinámica. Library: Vanilla JS.
+        - Vulnerability Causes -> Goal: Compare proportions -> Method: Gráfico de Donut -> Interaction: Tooltips al pasar el ratón -> Justification: Visualiza rápidamente las causas más comunes. Library: Chart.js.
+        - Cloud Responsibility Model -> Goal: Compare -> Method: Gráfico de barras apiladas dinámico -> Interaction: Botones para cambiar entre IaaS, PaaS, SaaS -> Justification: Es el método estándar y más claro para explicar este concepto fundamental de la nube. Library: Chart.js. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f4; /* stone-100 */
+            color: #1c1917; /* stone-900 */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+                max-height: 400px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #0d9488; /* teal-600 */
+            border-bottom-color: #0d9488;
+        }
+        .tab-button.active {
+            background-color: #0d9488;
+            color: white;
+        }
+        .cycle-step {
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .cycle-step:hover {
+            transform: scale(1.05);
+        }
+        .cycle-step.active {
+            background-color: #0d9488;
+            color: white;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-stone-100 shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-teal-700">Explorador de Ciberseguridad</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#introduccion" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Introducción</a>
+                <a href="#conceptos" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Conceptos Clave</a>
+                <a href="#riesgos" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Gestión de Riesgos</a>
+                <a href="#vuln-threats" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Vulnerabilidades y Amenazas</a>
+                <a href="#cloud" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Seguridad en la Nube</a>
+                <a href="#etica" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Ética y Compromiso</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-stone-700">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#introduccion" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Introducción</a>
+            <a href="#conceptos" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Conceptos Clave</a>
+            <a href="#riesgos" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Gestión de Riesgos</a>
+            <a href="#vuln-threats" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Vulnerabilidades y Amenazas</a>
+            <a href="#cloud" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Seguridad en la Nube</a>
+            <a href="#etica" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Ética y Compromiso</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <section id="introduccion" class="text-center mb-20">
+            <h2 class="text-4xl font-bold text-stone-800 mb-4">Un Vistazo al Mundo de la Ciberseguridad</h2>
+            <p class="text-lg text-stone-600 max-w-3xl mx-auto">
+                Esta herramienta interactiva desglosa los conceptos esenciales de la ciberseguridad presentados en el informe "Riesgos, vulnerabilidades y amenazas". Navega por las diferentes secciones para entender los pilares que protegen nuestra información, cómo se gestionan los riesgos y los desafíos de la seguridad en la nube.
+            </p>
+        </section>
+
+        <section id="conceptos" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-2">Pilares y Estrategias</h2>
+            <p class="text-center text-stone-600 mb-12">Todo sistema de seguridad se basa en conceptos y políticas fundamentales. Explora los más importantes a continuación.</p>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-yellow-400">
+                    <h3 class="font-bold text-xl mb-2">Confidencialidad</h3>
+                    <p class="text-stone-600">Garantiza que la información solo sea accesible para personal autorizado. Es el pilar de la privacidad.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
+                    <h3 class="font-bold text-xl mb-2">Integridad</h3>
+                    <p class="text-stone-600">Asegura que la información no ha sido alterada de forma no autorizada durante su almacenamiento o transmisión.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-red-500">
+                    <h3 class="font-bold text-xl mb-2">Disponibilidad</h3>
+                    <p class="text-stone-600">Asegura que los sistemas y los datos estén operativos y accesibles para los usuarios cuando se necesiten.</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <h3 class="text-2xl font-bold text-center mb-6">Paradigmas de Políticas de Seguridad</h3>
+                <div id="policy-tabs" class="flex justify-center space-x-2 sm:space-x-4 mb-6 bg-stone-100 p-2 rounded-full">
+                    <button data-policy="permisiva" class="tab-button px-4 py-2 text-sm sm:text-base rounded-full transition active">Permisiva</button>
+                    <button data-policy="prudente" class="tab-button px-4 py-2 text-sm sm:text-base rounded-full transition">Prudente</button>
+                    <button data-policy="paranoica" class="tab-button px-4 py-2 text-sm sm:text-base rounded-full transition">Paranoica</button>
+                </div>
+                <div id="policy-content" class="text-center text-stone-700">
+                    <!-- Content will be injected by JS -->
+                </div>
+            </div>
+        </section>
+
+        <section id="riesgos" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-2">El Ciclo de Gestión de Riesgos</h2>
+            <p class="text-center text-stone-600 mb-12">La gestión de riesgos es un proceso continuo, no un evento único. Haz clic en cada fase del ciclo de Magerit para entender su propósito.</p>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
+                <div class="relative w-80 h-80 flex items-center justify-center">
+                    <div id="step-1" data-content="risk-content-1" class="cycle-step absolute cursor-pointer bg-white shadow-lg rounded-full w-32 h-32 flex items-center justify-center text-center p-2 font-semibold" style="transform: translate(0, -100px);">Identificar Activos y Amenazas</div>
+                    <div id="step-2" data-content="risk-content-2" class="cycle-step absolute cursor-pointer bg-white shadow-lg rounded-full w-32 h-32 flex items-center justify-center text-center p-2 font-semibold" style="transform: translate(100px, 0);">Evaluar Riesgo (Prob. x Impacto)</div>
+                    <div id="step-3" data-content="risk-content-3" class="cycle-step absolute cursor-pointer bg-white shadow-lg rounded-full w-32 h-32 flex items-center justify-center text-center p-2 font-semibold" style="transform: translate(0, 100px);">Tratar el Riesgo</div>
+                    <div id="step-4" data-content="risk-content-4" class="cycle-step absolute cursor-pointer bg-white shadow-lg rounded-full w-32 h-32 flex items-center justify-center text-center p-2 font-semibold" style="transform: translate(-100px, 0);">Monitorizar y Revisar</div>
+                    <div class="w-40 h-40 bg-teal-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-inner">Ciclo PDCA</div>
+                </div>
+                <div class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-lg">
+                    <div id="risk-content-area">
+                        <!-- Content will be injected by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="vuln-threats" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-2">Vulnerabilidades vs. Amenazas</h2>
+            <p class="text-center text-stone-600 mb-12">Aunque relacionados, estos conceptos son distintos. Una amenaza explota una vulnerabilidad.</p>
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="bg-white p-8 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-bold mb-4">Vulnerabilidades: Las Debilidades</h3>
+                    <p class="text-stone-600 mb-6">Son fallos o debilidades en un sistema que pueden ser explotados. El gráfico muestra las causas más comunes.</p>
+                    <div class="chart-container">
+                        <canvas id="vulnerabilitiesChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-bold mb-4">Amenazas: Las Causas Potenciales</h3>
+                    <p class="text-stone-600 mb-6">Es cualquier evento que puede causar daño a un activo. Se clasifican según su origen.</p>
+                    <div class="space-y-4">
+                        <div class="bg-stone-100 p-4 rounded-md">
+                            <h4 class="font-semibold">🌪️ Desastres Naturales</h4>
+                            <p class="text-sm text-stone-600">Eventos sin intervención humana como terremotos o inundaciones.</p>
+                        </div>
+                        <div class="bg-stone-100 p-4 rounded-md">
+                            <h4 class="font-semibold">🏭 Origen Industrial</h4>
+                            <p class="text-sm text-stone-600">Incidentes derivados de la actividad humana, como fallos eléctricos.</p>
+                        </div>
+                        <div class="bg-stone-100 p-4 rounded-md">
+                            <h4 class="font-semibold">🐛 Defectos de Aplicaciones</h4>
+                            <p class="text-sm text-stone-600">Errores no intencionados en el diseño o implementación de software.</p>
+                        </div>
+                         <div class="bg-stone-100 p-4 rounded-md">
+                            <h4 class="font-semibold">👤 Ações Deliberadas</h4>
+                            <p class="text-sm text-stone-600">Ataques intencionados de actores maliciosos para causar daño.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cloud" class="mb-12">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-2">Seguridad en la Nube</h2>
+            <p class="text-center text-stone-600 mb-12">La nube cambia las reglas del juego. El modelo de responsabilidad compartida es clave: ¿quién es responsable de qué?</p>
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <div class="flex justify-center space-x-2 sm:space-x-4 mb-6">
+                    <button id="iaas-btn" class="cloud-btn px-4 py-2 text-sm sm:text-base border-2 border-teal-600 rounded-full transition text-teal-600">IaaS</button>
+                    <button id="paas-btn" class="cloud-btn px-4 py-2 text-sm sm:text-base border-2 border-teal-600 rounded-full transition text-teal-600">PaaS</button>
+                    <button id="saas-btn" class="cloud-btn px-4 py-2 text-sm sm:text-base border-2 border-teal-600 rounded-full transition text-teal-600">SaaS</button>
+                </div>
+                <p id="cloud-description" class="text-center text-stone-600 mb-6 min-h-[40px]"></p>
+                <div class="chart-container mx-auto" style="max-width: 700px; height: 400px;">
+                     <canvas id="cloudResponsibilityChart"></canvas>
+                </div>
+                <div class="mt-12">
+                    <h3 class="text-2xl font-bold text-center mb-6">Otras Soluciones Propietarias de Protección</h3>
+                     <div class="grid md:grid-cols-3 gap-6">
+                        <div class="bg-stone-100 p-4 rounded-lg">
+                            <h4 class="font-semibold text-stone-800">Amazon Inspector</h4>
+                            <p class="text-sm text-stone-600">Servicio automático de evaluación de seguridad para aplicaciones implementadas en AWS. Busca exposiciones, vulnerabilidades y desviaciones de las mejores prácticas.</p>
+                        </div>
+                        <div class="bg-stone-100 p-4 rounded-lg">
+                            <h4 class="font-semibold text-stone-800">CloudPassage Halo</h4>
+                            <p class="text-sm text-stone-600">Plataforma que automatiza la prevención y supervisión de amenazas para reducir riesgos en infraestructuras cloud como AWS y Azure.</p>
+                        </div>
+                        <div class="bg-stone-100 p-4 rounded-lg">
+                            <h4 class="font-semibold text-stone-800">Qualys Cloud Suite</h4>
+                            <p class="text-sm text-stone-600">Supervisa y evalúa continuamente los recursos de la nube para detectar configuraciones erróneas e implementaciones no estándar.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="etica" class="mb-12">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-2">Compromiso Ético y Global</h2>
+            <p class="text-center text-stone-600 mb-12">Los profesionales de la ciberseguridad tienen la responsabilidad de actuar de manera honesta, ética y respetuosa con los derechos humanos, contribuyendo a los Objetivos de Desarrollo Sostenible (ODS) de la ONU.</p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg border-l-4 border-blue-500">
+                    <h3 class="font-bold text-xl mb-2">ODS 10: Reducción de Desigualdades</h3>
+                    <p class="text-stone-600">La ciberseguridad debe concebirse desde una perspectiva de inclusión, evitando crear una brecha digital y protegiendo a todos los ciudadanos por igual, sin importar su origen, género o condición.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg border-l-4 border-orange-500">
+                    <h3 class="font-bold text-xl mb-2">ODS 11: Ciudades Sostenibles</h3>
+                    <p class="text-stone-600">Garantizar un acceso libre y seguro a la información es clave para combatir la marginación. La ciberseguridad habilita políticas como el teletrabajo, haciendo las ciudades más sostenibles y creando oportunidades para más personas.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-stone-200 mt-20">
+        <div class="container mx-auto px-6 py-4 text-center text-stone-600">
+            <p>&copy; 2025 Explorador Interactivo de Ciberseguridad. Creado a partir del documento PID_00290978.</p>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    const policyContent = {
+        permisiva: {
+            title: "Política Permisiva",
+            text: "Empieza muy abierta y solo se bloquean los servicios, ataques o conductas peligrosas conocidas. Requiere actualizaciones constantes para mantener la efectividad. 'Lo que no está explícitamente prohibido, está permitido'."
+        },
+        prudente: {
+            title: "Política Prudente",
+            text: "Proporciona máxima seguridad permitiendo solo peligros conocidos pero necesarios. Bloquea todos los servicios y solo se habilitan los que son seguros o necesarios de manera individual. Todo se registra. 'Lo que no está explícitamente permitido, está prohibido'."
+        },
+        paranoica: {
+            title: "Política Paranoica",
+            text: "Esta política lo prohíbe todo. No se permite la conexión a internet, salvo que sea un uso aislado de la red principal y en un dispositivo severamente restringido. Es la más segura, pero también la más restrictiva."
+        }
+    };
+
+    const policyTabsContainer = document.getElementById('policy-tabs');
+    const policyContentContainer = document.getElementById('policy-content');
+    
+    function updatePolicyContent(policyKey) {
+        const content = policyContent[policyKey];
+        policyContentContainer.innerHTML = `
+            <h4 class="font-bold text-lg mb-2 text-teal-700">${content.title}</h4>
+            <p>${content.text}</p>
+        `;
+        
+        policyTabsContainer.querySelectorAll('.tab-button').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.policy === policyKey) {
+                btn.classList.add('active');
+            }
+        });
+    }
+
+    policyTabsContainer.addEventListener('click', (e) => {
+        if (e.target.classList.contains('tab-button')) {
+            updatePolicyContent(e.target.dataset.policy);
+        }
+    });
+
+    updatePolicyContent('permisiva');
+
+    const riskContent = {
+        "risk-content-1": {
+            title: "1. Identificar Activos y Amenazas",
+            text: "El primer paso es conocer qué elementos de valor (activos) posee la organización (datos, servidores, personal) y a qué amenazas potenciales (ataques, desastres, errores) están expuestos. Sin un inventario claro, es imposible proteger eficazmente."
+        },
+        "risk-content-2": {
+            title: "2. Evaluar el Riesgo",
+            text: "Se analiza la probabilidad de que una amenaza se materialice y el impacto que tendría en la organización. El riesgo se calcula a menudo como: <strong>Riesgo = Probabilidad x Impacto</strong>. Esto ayuda a priorizar los riesgos más críticos."
+        },
+        "risk-content-3": {
+            title: "3. Tratar el Riesgo",
+            text: "Una vez evaluado, se decide qué hacer: <strong>Mitigar</strong> (aplicar controles), <strong>Aceptar</strong> (asumir el riesgo), <strong>Transferir</strong> (contratar un seguro) o <strong>Evitar</strong> (eliminar la fuente del riesgo). La elección depende del coste y el nivel de riesgo."
+        },
+        "risk-content-4": {
+            title: "4. Monitorizar y Revisar",
+            text: "La seguridad es un proceso dinámico. Es crucial monitorizar continuamente los controles implementados y revisar periódicamente el análisis de riesgos para adaptarlo a nuevos activos, amenazas y vulnerabilidades."
+        }
+    };
+    
+    const cycleSteps = document.querySelectorAll('.cycle-step');
+    const riskContentArea = document.getElementById('risk-content-area');
+
+    function updateRiskContent(contentId, activeStep) {
+        const content = riskContent[contentId];
+        riskContentArea.innerHTML = `
+            <h4 class="font-bold text-xl mb-3 text-teal-700">${content.title}</h4>
+            <p class="text-stone-600">${content.text}</p>
+        `;
+        cycleSteps.forEach(step => step.classList.remove('active'));
+        activeStep.classList.add('active');
+    }
+    
+    cycleSteps.forEach(step => {
+        step.addEventListener('click', () => {
+            updateRiskContent(step.dataset.content, step);
+        });
+    });
+
+    updateRiskContent('risk-content-1', document.getElementById('step-1'));
+
+    const vCtx = document.getElementById('vulnerabilitiesChart').getContext('2d');
+    new Chart(vCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Configuraciones Erróneas', 'Falta de Actualizaciones', 'Errores de Diseño', 'Contraseñas por Defecto', 'Otros'],
+            datasets: [{
+                label: 'Causas de Vulnerabilidades',
+                data: [35, 25, 15, 15, 10],
+                backgroundColor: [
+                    'rgba(234, 179, 8, 0.8)',   // yellow-400
+                    'rgba(239, 68, 68, 0.8)',   // red-500
+                    'rgba(14, 165, 233, 0.8)', // sky-500
+                    'rgba(249, 115, 22, 0.8)',  // orange-500
+                    'rgba(168, 162, 158, 0.8)' // stone-400
+                ],
+                borderColor: '#f5f5f4',
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                },
+                title: {
+                    display: true,
+                    text: 'Distribución de Causas Comunes'
+                }
+            }
+        }
+    });
+
+    const cloudData = {
+        labels: ['Datos y Acceso', 'Aplicaciones', 'Sistema Operativo', 'Virtualización', 'Servidores y Redes', 'Centro de Datos Físico'],
+        iaas: {
+            description: "IaaS (Infraestructura como Servicio): Máxima flexibilidad, máxima responsabilidad para el cliente. El proveedor gestiona solo la infraestructura física.",
+            data: {
+                cliente: [100, 100, 100, 0, 0, 0],
+                proveedor: [0, 0, 0, 100, 100, 100]
+            }
+        },
+        paas: {
+            description: "PaaS (Plataforma como Servicio): Un punto medio. El cliente gestiona sus aplicaciones y datos, el proveedor se encarga de la plataforma subyacente.",
+            data: {
+                cliente: [100, 100, 0, 0, 0, 0],
+                proveedor: [0, 0, 100, 100, 100, 100]
+            }
+        },
+        saas: {
+            description: "SaaS (Software como Servicio): Mínima responsabilidad para el cliente. El proveedor gestiona casi todo; el cliente solo usa el software y gestiona sus datos.",
+            data: {
+                cliente: [100, 0, 0, 0, 0, 0],
+                proveedor: [0, 100, 100, 100, 100, 100]
+            }
+        }
+    };
+    
+    const cloudCtx = document.getElementById('cloudResponsibilityChart').getContext('2d');
+    const cloudChart = new Chart(cloudCtx, {
+        type: 'bar',
+        data: {
+            labels: cloudData.labels,
+            datasets: [
+                {
+                    label: 'Responsabilidad del Cliente',
+                    data: [],
+                    backgroundColor: 'rgba(13, 148, 136, 0.7)', // teal-600
+                },
+                {
+                    label: 'Responsabilidad del Proveedor',
+                    data: [],
+                    backgroundColor: 'rgba(168, 162, 158, 0.7)', // stone-400
+                }
+            ]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    stacked: true,
+                    display: false
+                },
+                y: {
+                    stacked: true,
+                    ticks: {
+                       font: {
+                           size: 10
+                       }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Modelo de Responsabilidad Compartida'
+                },
+                tooltip: {
+                    enabled: false
+                }
+            }
+        }
+    });
+    
+    const cloudDescriptionEl = document.getElementById('cloud-description');
+
+    function updateCloudChart(model) {
+        cloudChart.data.datasets[0].data = cloudData[model].data.cliente;
+        cloudChart.data.datasets[1].data = cloudData[model].data.proveedor;
+        cloudChart.update();
+        cloudDescriptionEl.textContent = cloudData[model].description;
+
+        document.querySelectorAll('.cloud-btn').forEach(btn => {
+            btn.classList.remove('bg-teal-600', 'text-white');
+            btn.classList.add('text-teal-600');
+        });
+        document.getElementById(`${model}-btn`).classList.add('bg-teal-600', 'text-white');
+        document.getElementById(`${model}-btn`).classList.remove('text-teal-600');
+    }
+
+    document.getElementById('iaas-btn').addEventListener('click', () => updateCloudChart('iaas'));
+    document.getElementById('paas-btn').addEventListener('click', () => updateCloudChart('paas'));
+    document.getElementById('saas-btn').addEventListener('click', () => updateCloudChart('saas'));
+
+    updateCloudChart('iaas');
+
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    const navLinks = document.querySelectorAll('.nav-link, #mobile-menu a');
+    const sections = document.querySelectorAll('section');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (pageYOffset >= sectionTop - 100) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').substring(1) === current) {
+                link.classList.add('active');
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>
+
