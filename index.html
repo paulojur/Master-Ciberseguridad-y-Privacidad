@@ -1,110 +1,143 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jornada em Cibersegurança | Portfólio de Estudos</title>
+    <title>Threat Intel Ops | Study Log</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Roboto Mono', monospace;
+            background-color: #0a0a0a;
+            /* Fundo com padrão de grade sutil */
+            background-image:
+                linear-gradient(rgba(34, 211, 238, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(34, 211, 238, 0.05) 1px, transparent 1px);
+            background-size: 2rem 2rem;
+            color: #a3a3a3; /* neutral-400 */
         }
-        .gradient-text {
-            background: linear-gradient(90deg, #38bdf8, #a78bfa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
+        .text-cyan-glow {
+            color: #22d3ee; /* cyan-400 */
+            text-shadow: 0 0 5px rgba(34, 211, 238, 0.4);
         }
-        .card {
-            background-color: #1e293b; /* slate-800 */
-            border: 1px solid #334155; /* slate-700 */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .border-glow {
+            border-color: rgba(34, 211, 238, 0.2);
         }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.2), 0 8px 10px -6px rgba(56, 189, 248, 0.2);
+        .link-item {
+            border: 1px solid rgba(163, 163, 163, 0.2);
+            /* Adicionado um fundo levemente translúcido para destacar do grid */
+            background-color: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(2px);
+            transition: background-color 0.3s, border-color 0.3s;
         }
-        .card-link {
-            border: 1px solid #334155; /* slate-700 */
-            transition: background-color 0.3s ease, color 0.3s ease;
+        .link-item:hover {
+            background-color: rgba(34, 211, 238, 0.05);
+            border-color: rgba(34, 211, 238, 0.5);
         }
-        .card-link:hover {
-            background-color: #38bdf8; /* sky-500 */
-            color: #ffffff;
-            border-color: #38bdf8;
+        .typewriter-cursor {
+            display: inline-block;
+            background-color: #22d3ee;
+            margin-left: 0.1rem;
+            width: 3px;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0% { background-color: #22d3ee; }
+            49% { background-color: #22d3ee; }
+            50% { background-color: transparent; }
+            99% { background-color: transparent; }
+            100% { background-color: #22d3ee; }
         }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-300 antialiased">
+<body class="antialiased">
 
-    <!-- Container Principal -->
-    <div class="container mx-auto px-6 py-12 md:py-20 max-w-4xl">
+    <div class="container mx-auto px-6 py-12 md:py-20 max-w-3xl min-h-screen flex flex-col">
 
         <!-- Cabeçalho -->
-        <header class="text-center mb-16">
-            <h1 class="text-4xl md:text-6xl font-black tracking-tight gradient-text mb-4">
-                Jornada em Cibersegurança
+        <header class="mb-12 md:mb-16">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-neutral-100">
+                <span id="typewriter"></span>
+                <span class="typewriter-cursor">&nbsp;</span>
             </h1>
-            <p class="text-lg text-slate-400 max-w-2xl mx-auto">
-                Um portfólio de estudos para o <span class="font-semibold text-slate-200">Master en Ciberseguridad y Privacidad</span>. Cada laboratório é uma conquista, cada desafio é um degrau.
-            </p>
+            <p class="text-base text-cyan-glow">// Mission Log: Master en Ciberseguridad y Privacidad</p>
         </header>
 
-        <!-- Seção de Matérias -->
-        <main class="space-y-12">
+        <!-- Conteúdo Principal -->
+        <main class="flex-grow space-y-12">
 
-            <!-- Matéria: Fundamentos de Ciberseguridad -->
-            <section id="fundamentos-ciberseguridad">
-                <div class="card rounded-xl p-8">
-                    <h2 class="text-2xl font-bold text-white mb-2">Fundamentos de Ciberseguridad</h2>
-                    <p class="text-slate-400 mb-6">Explorando os pilares da segurança digital, desde a identificação de riscos até a implementação de estratégias de mitigação.</p>
-                    
-                    <div class="space-y-4">
-                        <!-- Link para o projeto -->
-                        <a href="./fundamentos-ciberseguridad/explorador-interactivo.html" class="card-link flex items-center justify-between p-4 rounded-lg">
-                            <span class="font-semibold text-slate-100">Guía: Riesgos, Vulnerabilidades y Amenazas</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                        </a>
-                        
-                        <!-- Link para o projeto -->
-                        <a href="./fundamentos-ciberseguridad/laboratorio-analise-risco.html" class="card-link flex items-center justify-between p-4 rounded-lg">
-                             <span class="font-semibold text-slate-100">Laboratório: Reto 1 - Análise de Risco em Videovigilância</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                        </a>
-                    </div>
+            <!-- Módulo: Fundamentos de Ciberseguridad -->
+            <section id="module-01">
+                <h2 class="text-xl font-semibold mb-6 text-neutral-200 border-b border-glow pb-2">
+                    <span class="text-cyan-glow">[M01]</span> Fundamentos de Ciberseguridad
+                </h2>
+                <div class="space-y-4">
+                    <!-- Link Guia -->
+                    <a href="./fundamentos-ciberseguridad/explorador-interactivo.html" class="link-item flex items-center justify-between p-4 rounded-md">
+                        <div class="flex items-center">
+                            <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
+                            <span class="text-neutral-200 font-medium">Guia_Riesgos_Vulnerabilidades_Amenazas</span>
+                        </div>
+                        <span class="text-xs font-bold text-cyan-400 border border-cyan-400/50 px-2 py-1 rounded">GUIA</span>
+                    </a>
+                    <!-- Link Laboratório -->
+                    <a href="./fundamentos-ciberseguridad/laboratorio-analise-risco.html" class="link-item flex items-center justify-between p-4 rounded-md">
+                        <div class="flex items-center">
+                            <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
+                            <span class="text-neutral-200 font-medium">Lab_Reto1_Analise_Risco_Videovigilancia</span>
+                        </div>
+                        <span class="text-xs font-bold text-yellow-400 border border-yellow-400/50 px-2 py-1 rounded">LAB</span>
+                    </a>
                 </div>
             </section>
 
-            <!-- Matéria: Fundamentos de redes y arquitecturas -->
-            <section id="fundamentos-redes">
-                 <div class="card rounded-xl p-8">
-                    <h2 class="text-2xl font-bold text-white mb-2">Fundamentos de redes y arquitecturas</h2>
-                    <p class="text-slate-400 mb-6">Mergulhando na espinha dorsal da comunicação digital para entender como proteger dados em trânsito e em repouso.</p>
-                    
-                    <div class="space-y-4">
-                        <!-- Link para o projeto -->
-                        <a href="./fundamentos-redes/guia-redes.html" class="card-link flex items-center justify-between p-4 rounded-lg">
-                            <span class="font-semibold text-slate-100">Guía de Estudios - Redes de Computadoras</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                        </a>
-                    </div>
+            <!-- Módulo: Fundamentos de redes y arquitecturas -->
+            <section id="module-02">
+                <h2 class="text-xl font-semibold mb-6 text-neutral-200 border-b border-glow pb-2">
+                    <span class="text-cyan-glow">[M02]</span> Fundamentos de Redes y Arquitecturas
+                </h2>
+                <div class="space-y-4">
+                     <!-- Link Guia -->
+                     <a href="./fundamentos-redes/guia-redes.html" class="link-item flex items-center justify-between p-4 rounded-md">
+                        <div class="flex items-center">
+                            <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
+                            <span class="text-neutral-200 font-medium">Guia_Redes_Computadoras</span>
+                        </div>
+                        <span class="text-xs font-bold text-cyan-400 border border-cyan-400/50 px-2 py-1 rounded">GUIA</span>
+                    </a>
                 </div>
             </section>
-             <!-- Adicione mais seções de matérias aqui conforme avançamos -->
+
+             <!-- Adicione mais módulos aqui -->
 
         </main>
 
         <!-- Rodapé -->
-        <footer class="text-center mt-20">
-            <p class="text-slate-500 text-sm">"Você não falha até parar de tentar."</p>
-            <p class="text-slate-600 text-xs mt-2">Construído passo a passo, com foco e determinação.</p>
+        <footer class="text-center mt-20 pt-8 border-t border-glow">
+            <p class="text-sm text-neutral-500">// STATUS: <span class="text-green-400">[ONLINE]</span> | ALL SYSTEMS NOMINAL</p>
         </footer>
 
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const typewriterElement = document.getElementById('typewriter');
+            const text = "Threat Intel Ops";
+            let index = 0;
+
+            function type() {
+                if (index < text.length) {
+                    typewriterElement.textContent += text.charAt(index);
+                    index++;
+                    setTimeout(type, 120);
+                }
+            }
+            type();
+        });
+    </script>
 
 </body>
 </html>
