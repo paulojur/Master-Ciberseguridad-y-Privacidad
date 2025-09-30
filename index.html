@@ -1,328 +1,110 @@
 <!DOCTYPE html>
-<html lang="es-ES">
+<html lang="pt-BR" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guía de Estudios | El Papel de las Redes de Computadoras</title>
+    <title>Jornada em Cibersegurança | Portfólio de Estudos</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #111827; /* Gray 900 */
-            color: #f3f4f6; /* Gray 100 */
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #38bdf8, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
         }
         .card {
-            background-color: #1f2937; /* Gray 800 */
-            border: 1px solid #374151; /* Gray 700 */
+            background-color: #1e293b; /* slate-800 */
+            border: 1px solid #334155; /* slate-700 */
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.2), 0 8px 10px -6px rgba(56, 189, 248, 0.2);
         }
-        .strategic-insight {
-            border-left: 4px solid #34d399; /* Emerald 400 */
-            background-color: #1a2436;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-top: 1rem;
+        .card-link {
+            border: 1px solid #334155; /* slate-700 */
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
-        .reading-suggestion {
-            border-left: 4px solid #f97316; /* Orange 500 */
-            background-color: #1f2937;
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 0.5rem;
-        }
-        .reading-suggestion p {
-            font-style: italic;
-            color: #d1d5db; /* Gray 300 */
-        }
-        .layer-stack {
-            position: relative;
-            perspective: 1000px;
-        }
-        .layer {
-            transition: transform 0.5s ease;
-            cursor: pointer;
-        }
-        .layer:hover {
-            transform: translateZ(20px);
-        }
-        .flip-card {
-            perspective: 1000px;
-        }
-        .flip-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
-        .flip-card:hover .flip-card-inner {
-            transform: rotateY(180deg);
-        }
-        .flip-card-front, .flip-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            padding: 1rem;
-            border-radius: 0.5rem;
-        }
-        .flip-card-front {
-            background-color: #374151; /* Gray 700 */
-        }
-        .flip-card-back {
-            background-color: #4f46e5; /* Indigo 600 */
-            transform: rotateY(180deg);
+        .card-link:hover {
+            background-color: #38bdf8; /* sky-500 */
+            color: #ffffff;
+            border-color: #38bdf8;
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="bg-slate-900 text-slate-300 antialiased">
 
-    <!-- Header -->
-    <header class="bg-gray-900 text-white text-center py-12 px-4">
-        <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">Guía de Estudios Interactiva</h1>
-            <p class="mt-4 text-xl text-gray-300">El Papel de las Redes de Computadoras en el Ciclo de Vida de los Datos</p>
-            <p class="mt-2 text-gray-400">Un resumen visual con insights estratégicos para optimizar tu aprendizaje en ciberseguridad.</p>
-        </div>
-    </header>
+    <!-- Container Principal -->
+    <div class="container mx-auto px-6 py-12 md:py-20 max-w-4xl">
 
-    <main class="container mx-auto px-4 py-12">
+        <!-- Cabeçalho -->
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-6xl font-black tracking-tight gradient-text mb-4">
+                Jornada em Cibersegurança
+            </h1>
+            <p class="text-lg text-slate-400 max-w-2xl mx-auto">
+                Um portfólio de estudos para o <span class="font-semibold text-slate-200">Master en Ciberseguridad y Privacidad</span>. Cada laboratório é uma conquista, cada desafio é um degrau.
+            </p>
+        </header>
 
-        <!-- Seção: Ciclo de Vida dos Dados -->
-        <section id="lifecycle" class="mb-16">
-            <h2 class="text-3xl font-bold text-center mb-8 text-cyan-400">El Ciclo de Vida de los Datos</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                <!-- Captura -->
-                <div class="card p-6 rounded-lg">
-                    <div class="text-5xl mb-4">📥</div>
-                    <h3 class="text-xl font-semibold mb-2">1. Captura</h3>
-                    <p class="text-gray-400">Recepción de datos brutos de diversas fuentes (usuario, sensores, sistemas externos) y su conversión a formato digital.</p>
-                </div>
-                <!-- Almacenamiento -->
-                <div class="card p-6 rounded-lg">
-                    <div class="text-5xl mb-4">💾</div>
-                    <h3 class="text-xl font-semibold mb-2">2. Almacenamiento</h3>
-                    <p class="text-gray-400">Resguardo de los datos en diferentes arquitecturas (DAS, NAS, SAN) para garantizar acceso, fiabilidad y recuperabilidad.</p>
-                </div>
-                <!-- Procesamiento -->
-                <div class="card p-6 rounded-lg">
-                    <div class="text-5xl mb-4">⚙️</div>
-                    <h3 class="text-xl font-semibold mb-2">3. Procesamiento</h3>
-                    <p class="text-gray-400">Manipulación y transformación de los datos en información útil a través de operaciones como validación, filtrado y análisis en Data Centers.</p>
-                </div>
-            </div>
-            <div class="strategic-insight">
-                <h4 class="font-bold text-lg text-emerald-400">Insight Estratégico: El Ciclo de Vida como Marco de Amenazas</h4>
-                <p class="text-gray-300 mt-2">Para un analista de seguridad, cada fase del ciclo de vida es un potencial vector de ataque:
-                    <br> • <strong>En la Captura:</strong> Piensa en ataques Man-in-the-Middle (MitM) para interceptar datos en tránsito o en Data Poisoning para corromper la información desde su origen.
-                    <br> • <strong>En el Almacenamiento:</strong> El riesgo es el acceso no autorizado. La defensa es cifrado de datos en reposo (at-rest), controles de acceso robustos (IAM) y Data Loss Prevention (DLP).
-                    <br> • <strong>En el Procesamiento:</strong> Las vulnerabilidades en el software (ej. inyección de código) pueden permitir la manipulación o exfiltración de datos mientras están en uso.</p>
-            </div>
-             <div class="reading-suggestion">
-                <p><strong>Lectura recomendada:</strong> Para saber más sobre qué es internet y el nacimiento de las redes de computadoras, consulta los apartados 1.1 y 1.7 del libro "Computer Networking: A Top-Down Approach".</p>
-            </div>
-        </section>
+        <!-- Seção de Matérias -->
+        <main class="space-y-12">
 
-        <!-- Seção: Tipos de Redes -->
-        <section id="network-types" class="mb-16">
-            <h2 class="text-3xl font-bold text-center mb-8 text-cyan-400">Tipos de Redes por Alcance</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-                <div class="card p-6 rounded-lg text-center"><h3 class="font-semibold text-lg">PAN</h3><p class="text-gray-400 text-sm">Personal Area Network (Hasta 10m, ej: Bluetooth)</p></div>
-                <div class="card p-6 rounded-lg text-center"><h3 class="font-semibold text-lg">LAN</h3><p class="text-gray-400 text-sm">Local Area Network (Cientos de metros, ej: Wi-Fi)</p></div>
-                <div class="card p-6 rounded-lg text-center"><h3 class="font-semibold text-lg">MAN</h3><p class="text-gray-400 text-sm">Metropolitan Area Network (Ciudades, ej: WiMAX)</p></div>
-                <div class="card p-6 rounded-lg text-center"><h3 class="font-semibold text-lg">WAN</h3><p class="text-gray-400 text-sm">Wide Area Network (Países/Continentes, ej: Satélite)</p></div>
-                <div class="card p-6 rounded-lg text-center"><h3 class="font-semibold text-lg">GAN</h3><p class="text-gray-400 text-sm">Global Area Network (Mundial, ej: Internet)</p></div>
-            </div>
-            <div class="reading-suggestion">
-                <p><strong>Lectura recomendada:</strong> Puedes encontrar más información sobre los diferentes tipos de redes conmutadas en el apartado 1.3 del libro "Computer Networking: A Top-Down Approach".</p>
-            </div>
-        </section>
-        
-        <!-- Seção: Arquiteturas de Protocolos -->
-        <section id="protocols" class="mb-16">
-            <h2 class="text-3xl font-bold text-center mb-8 text-cyan-400">Arquitecturas de Protocolos: OSI vs. TCP/IP</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                <!-- Modelo OSI -->
-                <div class="card p-6 rounded-lg">
-                    <h3 class="text-2xl font-bold text-center mb-4">Modelo OSI</h3>
-                    <div class="space-y-2 layer-stack">
-                        <div class="layer bg-sky-600 p-3 rounded-md text-center"><b>7. Aplicación:</b> Servicios de red para apps</div>
-                        <div class="layer bg-sky-700 p-3 rounded-md text-center"><b>6. Presentación:</b> Formato y representación de datos</div>
-                        <div class="layer bg-sky-800 p-3 rounded-md text-center"><b>5. Sesión:</b> Gestión de conexiones</div>
-                        <div class="layer bg-teal-600 p-3 rounded-md text-center"><b>4. Transporte:</b> Conexión extremo a extremo y fiabilidad</div>
-                        <div class="layer bg-emerald-600 p-3 rounded-md text-center"><b>3. Red:</b> Direccionamiento lógico y enrutamiento (IP)</div>
-                        <div class="layer bg-rose-700 p-3 rounded-md text-center"><b>2. Enlace de Datos:</b> Direccionamiento físico (MAC)</div>
-                        <div class="layer bg-rose-800 p-3 rounded-md text-center"><b>1. Física:</b> Transmisión de bits en el medio físico</div>
-                    </div>
-                    <div class="reading-suggestion mt-4">
-                        <p><strong>Lectura recomendada:</strong> Para una descripción detallada de las capas OSI, consulta el apartado 1.5 de "Computer Networking: A Top-Down Approach".</p>
+            <!-- Matéria: Fundamentos de Ciberseguridad -->
+            <section id="fundamentos-ciberseguridad">
+                <div class="card rounded-xl p-8">
+                    <h2 class="text-2xl font-bold text-white mb-2">Fundamentos de Ciberseguridad</h2>
+                    <p class="text-slate-400 mb-6">Explorando os pilares da segurança digital, desde a identificação de riscos até a implementação de estratégias de mitigação.</p>
+                    
+                    <div class="space-y-4">
+                        <!-- Link para o projeto -->
+                        <a href="./fundamentos-ciberseguridad/explorador-interactivo.html" class="card-link flex items-center justify-between p-4 rounded-lg">
+                            <span class="font-semibold text-slate-100">Explorador Interactivo de Ciberseguridad</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        </a>
+                        
+                        <!-- Link para o projeto -->
+                        <a href="./fundamentos-ciberseguridad/laboratorio-analise-risco.html" class="card-link flex items-center justify-between p-4 rounded-lg">
+                             <span class="font-semibold text-slate-100">Laboratório: Análise de Risco em Videovigilância</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        </a>
                     </div>
                 </div>
-                <!-- Modelo TCP/IP -->
-                <div class="card p-6 rounded-lg">
-                    <h3 class="text-2xl font-bold text-center mb-4">Modelo TCP/IP</h3>
-                    <div class="space-y-2 layer-stack">
-                        <div class="layer bg-sky-600 p-3 rounded-md h-[156px] flex items-center justify-center"><b>Aplicación</b><br/>(Combina Aplicación, Presentación y Sesión)</div>
-                        <div class="layer bg-teal-600 p-3 rounded-md text-center"><b>Transporte</b><br/>(TCP/UDP)</div>
-                        <div class="layer bg-emerald-600 p-3 rounded-md text-center"><b>Internet</b><br/>(IP, Enrutamiento)</div>
-                        <div class="layer bg-rose-700 p-3 rounded-md h-[104px] flex items-center justify-center"><b>Acceso a la Red</b><br/>(Combina Enlace y Física)</div>
-                    </div>
-                     <div class="reading-suggestion mt-4">
-                        <p><strong>Lectura recomendada:</strong> Para más información sobre la arquitectura TCP/IP, consulta el apartado 1.5 de "Computer Networking: A Top-Down Approach".</p>
-                    </div>
-                </div>
-            </div>
-            <div class="strategic-insight">
-                <h4 class="font-bold text-lg text-emerald-400">Insight Estratégico: Las Capas como Superpoder Forense</h4>
-                <p class="text-gray-300 mt-2">Aunque el modelo OSI es teórico, pensar en capas es un superpoder para el análisis forense y la resolución de problemas. Ante un incidente, te permite segmentar la investigación: ¿Es un problema de cableado (Capa 1)? ¿Un ataque de ARP spoofing (Capa 2)? ¿Un enrutamiento malicioso (Capa 3)? ¿Un puerto bloqueado por el firewall (Capa 4)? ¿O una vulnerabilidad en una aplicación web (Capa 7)? Este modelo mental es tu mapa para diagnosticar incidentes de forma rápida y eficiente.</p>
-            </div>
-        </section>
+            </section>
 
-        <!-- Seção: Arquiteturas de Armazenamento -->
-        <section id="storage" class="mb-16">
-            <h2 class="text-3xl font-bold text-center mb-8 text-cyan-400">Arquitecturas de Almacenamiento</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- DAS -->
-                <div class="card p-6 rounded-lg flex flex-col">
-                    <h3 class="text-2xl font-bold mb-3 text-center">DAS</h3>
-                    <p class="text-sm font-semibold mb-2">Direct-Attached Storage</p>
-                    <p class="text-gray-400 mb-4 flex-grow">El almacenamiento se conecta directamente a un servidor. Simple y barato, pero no se comparte, creando "islas de información".</p>
-                    <div class="text-xs space-y-1 mt-auto">
-                        <p><span class="font-semibold text-green-400">Pros:</span> Bajo coste, fácil de implementar.</p>
-                        <p><span class="font-semibold text-red-400">Contras:</span> Baja escalabilidad, sin gestión centralizada.</p>
+            <!-- Matéria: Fundamentos de redes y arquitecturas -->
+            <section id="fundamentos-redes">
+                 <div class="card rounded-xl p-8">
+                    <h2 class="text-2xl font-bold text-white mb-2">Fundamentos de redes y arquitecturas</h2>
+                    <p class="text-slate-400 mb-6">Mergulhando na espinha dorsal da comunicação digital para entender como proteger dados em trânsito e em repouso.</p>
+                    
+                    <div class="space-y-4">
+                        <!-- Link para o projeto -->
+                        <a href="./fundamentos-redes/guia-redes.html" class="card-link flex items-center justify-between p-4 rounded-lg">
+                            <span class="font-semibold text-slate-100">Guía de Estudios - Redes de Computadoras</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        </a>
                     </div>
                 </div>
-                <!-- NAS -->
-                <div class="card p-6 rounded-lg flex flex-col">
-                    <h3 class="text-2xl font-bold mb-3 text-center">NAS</h3>
-                    <p class="text-sm font-semibold mb-2">Network-Attached Storage</p>
-                    <p class="text-gray-400 mb-4 flex-grow">Dispositivo de almacenamiento centralizado en la red, accesible vía protocolos de archivo (NFS/CIFS). Funciona como un "servidor de archivos".</p>
-                     <div class="text-xs space-y-1 mt-auto">
-                        <p><span class="font-semibold text-green-400">Pros:</span> Fácil compartición, buena escalabilidad.</p>
-                        <p><span class="font-semibold text-red-400">Contras:</span> El rendimiento puede ser un cuello de botella (tráfico en la LAN), no ideal para bases de datos transaccionales.</p>
-                    </div>
-                </div>
-                <!-- SAN -->
-                <div class="card p-6 rounded-lg flex flex-col">
-                    <h3 class="text-2xl font-bold mb-3 text-center">SAN</h3>
-                    <p class="text-sm font-semibold mb-2">Storage Area Network</p>
-                    <p class="text-gray-400 mb-4 flex-grow">Una red dedicada de alta velocidad (ej: Fibre Channel) para almacenamiento en bloque. Los servidores ven el almacenamiento como si fuera local.</p>
-                     <div class="text-xs space-y-1 mt-auto">
-                        <p><span class="font-semibold text-green-400">Pros:</span> Altísimo rendimiento y escalabilidad, fiabilidad.</p>
-                        <p><span class="font-semibold text-red-400">Contras:</span> Coste y complejidad muy elevados.</p>
-                    </div>
-                </div>
-            </div>
-             <div class="strategic-insight">
-                <h4 class="font-bold text-lg text-emerald-400">Insight Estratégico: Almacenamiento como Decisión de Riesgo</h4>
-                <p class="text-gray-300 mt-2">Como arquitecto de seguridad, la elección entre DAS, NAS y SAN no es solo técnica, es una <strong>decisión de gestión de riesgos</strong>. Una SAN, al ser una red aislada, permite controles de seguridad más granulares (zoning, LUN masking) y es ideal para datos críticos que requieren cumplimiento normativo (como GDPR). Un NAS expone los datos a la LAN general, aumentando la superficie de ataque, por lo que exige un endurecimiento (hardening) de la red y de los permisos a nivel de sistema de archivos. La arquitectura de almacenamiento define la superficie de ataque de tus datos en reposo.</p>
-            </div>
-        </section>
-        
-        <!-- Seção: Conexões Estratégicas -->
-        <section id="connections" class="mb-16">
-            <h2 class="text-3xl font-bold text-center mb-8 text-cyan-400">Conectando los Puntos: La Perspectiva del Analista</h2>
-            <div class="card p-8 rounded-lg">
-                <p class="text-gray-300 mb-4">Los conceptos de redes no son aislados. Para un analista de ciberseguridad, son piezas de un rompecabezas que explican cómo ocurren los incidentes y cómo detectarlos.</p>
-                <ul class="space-y-4">
-                    <li class="flex items-start">
-                        <span class="text-emerald-400 mr-3 text-2xl">›</span>
-                        <div><strong class="text-white">El Flujo de un Ataque Sigue el Ciclo de Vida de los Datos.</strong> Un atacante puede interceptar credenciales en la <strong>captura</strong> (sniffing en una red Wi-Fi abierta), exfiltrar una base de datos desde el <strong>almacenamiento</strong>, o inyectar un payload durante el <strong>procesamiento</strong>. Mapear tus defensas a cada fase es clave.</div>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="text-emerald-400 mr-3 text-2xl">›</span>
-                        <div><strong class="text-white">Métricas de Red son Indicadores de Compromiso (IoCs).</strong> Para un analista de Threat Intelligence, los "keywords" de red son vitales. Un pico anómalo de <strong>Latencia</strong> puede indicar un ataque DDoS. Un aumento súbito en el <strong>Throughput</strong> de salida hacia una IP desconocida en China a las 3 AM es una bandera roja gigante de exfiltración de datos. Monitorizar estas métricas es una forma de caza de amenazas (threat hunting).</div>
-                    </li>
-                </ul>
-            </div>
-        </section>
+            </section>
+             <!-- Adicione mais seções de matérias aqui conforme avançamos -->
 
-        <!-- Seção: Keywords -->
-        <section id="keywords" class="mb-16">
-            <h2 class="text-3xl font-bold text-center mb-8 text-cyan-400">Keywords & Conceptos Clave</h2>
-            <p class="text-center text-gray-400 mb-8 -mt-4">Pasa el ratón sobre las tarjetas para ver la definición.</p>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <!-- Card -->
-                <div class="flip-card h-32 rounded-lg">
-                    <div class="flip-card-inner rounded-lg">
-                        <div class="flip-card-front"><h4 class="text-lg font-bold">Throughput</h4></div>
-                        <div class="flip-card-back"><p class="text-sm">Velocidad <strong>real</strong> con la que se transmite la información. (Se mide en bps).</p></div>
-                    </div>
-                </div>
-                <!-- Card -->
-                <div class="flip-card h-32 rounded-lg">
-                    <div class="flip-card-inner rounded-lg">
-                        <div class="flip-card-front"><h4 class="text-lg font-bold">Ancho de Banda</h4></div>
-                        <div class="flip-card-back"><p class="text-sm">Velocidad <strong>máxima (teórica)</strong> de transmisión de un canal. (Se mide en bps).</p></div>
-                    </div>
-                </div>
-                <!-- Card -->
-                <div class="flip-card h-32 rounded-lg">
-                    <div class="flip-card-inner rounded-lg">
-                        <div class="flip-card-front"><h4 class="text-lg font-bold">Latencia (Delay)</h4></div>
-                        <div class="flip-card-back"><p class="text-sm">Tiempo que tarda un paquete en ir del emisor al receptor. (Se mide en segundos).</p></div>
-                    </div>
-                </div>
-                <!-- Card -->
-                <div class="flip-card h-32 rounded-lg">
-                    <div class="flip-card-inner rounded-lg">
-                        <div class="flip-card-front"><h4 class="text-lg font-bold">RTT</h4></div>
-                        <div class="flip-card-back"><p class="text-sm">Round Trip Time: Tiempo de ida y vuelta de un paquete más su ACK (confirmación).</p></div>
-                    </div>
-                </div>
-                <!-- Card -->
-                <div class="flip-card h-32 rounded-lg">
-                    <div class="flip-card-inner rounded-lg">
-                        <div class="flip-card-front"><h4 class="text-lg font-bold">Jitter</h4></div>
-                        <div class="flip-card-back"><p class="text-sm">Variación en el tiempo de llegada entre paquetes consecutivos. Crítico para VoIP y vídeo.</p></div>
-                    </div>
-                </div>
-                <!-- Card -->
-                <div class="flip-card h-32 rounded-lg">
-                    <div class="flip-card-inner rounded-lg">
-                        <div class="flip-card-front"><h4 class="text-lg font-bold">Modulación</h4></div>
-                        <div class="flip-card-back"><p class="text-sm">Proceso de convertir datos digitales en una señal analógica para su transmisión.</p></div>
-                    </div>
-                </div>
-                <!-- Card -->
-                <div class="flip-card h-32 rounded-lg">
-                    <div class="flip-card-inner rounded-lg">
-                        <div class="flip-card-front"><h4 class="text-lg font-bold">Multiplexación</h4></div>
-                        <div class="flip-card-back"><p class="text-sm">Técnica para combinar múltiples señales en un único medio de transmisión.</p></div>
-                    </div>
-                </div>
-                 <!-- Card -->
-                <div class="flip-card h-32 rounded-lg">
-                    <div class="flip-card-inner rounded-lg">
-                        <div class="flip-card-front"><h4 class="text-lg font-bold">Data Center</h4></div>
-                        <div class="flip-card-back"><p class="text-sm">Espacio que concentra los recursos (servidores, storage) para procesar y almacenar datos.</p></div>
-                    </div>
-                </div>
-            </div>
-             <div class="reading-suggestion">
-                <p><strong>Lectura recomendada:</strong> Para más información sobre los parámetros físicos de una red, su expresión matemática y ejemplos, consulta el apartado 1.4 de "Computer Networking: A Top-Down Approach".</p>
-            </div>
-        </section>
+        </main>
 
-    </main>
+        <!-- Rodapé -->
+        <footer class="text-center mt-20">
+            <p class="text-slate-500 text-sm">"Você não falha até parar de tentar."</p>
+            <p class="text-slate-600 text-xs mt-2">Construído passo a passo, com foco e determinação.</p>
+        </footer>
 
-    <footer class="text-center py-6 bg-gray-900 border-t border-gray-700">
-        <p class="text-gray-500">Guía de estudios creada a partir del documento "El papel de las redes.pdf".</p>
-    </footer>
+    </div>
 
 </body>
 </html>
-
