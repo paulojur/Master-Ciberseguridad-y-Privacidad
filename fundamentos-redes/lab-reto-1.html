@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorio: Reto 1 - Anatomía de una Red</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* gray-900 */
+            color: #f3f4f6; /* gray-100 */
+        }
+        .font-mono {
+            font-family: 'Roboto Mono', monospace;
+        }
+        .lab-container {
+            background-color: #1f2937; /* gray-800 */
+            border: 1px solid #374151; /* gray-700 */
+        }
+        .task-header {
+            border-bottom: 1px solid #4b5563; /* gray-600 */
+        }
+        .pt-instruction {
+            background-color: #111827; /* gray-900 */
+            border-left: 4px solid #38bdf8; /* lightBlue-400 */
+            padding: 0.75rem;
+            border-radius: 0.25rem;
+        }
+        .lab-option {
+            background-color: #374151; /* gray-700 */
+            border: 1px solid #4b5563; /* gray-600 */
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .lab-option:hover:not(:disabled) {
+            background-color: #4b5563; /* gray-600 */
+            border-color: #6b7280; /* gray-500 */
+        }
+        .lab-option.correct {
+            background-color: #10b981;
+            border-color: #059669;
+            color: white;
+        }
+        .lab-option.incorrect {
+            background-color: #ef4444;
+            border-color: #dc2626;
+            color: white;
+        }
+        .feedback {
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+        }
+        .feedback-correct {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #34d399;
+        }
+        .feedback-incorrect {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-gray-900 text-white text-center py-12 px-4 shadow-lg">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">Laboratorio Práctico: Reto 1</h1>
+            <p class="mt-4 text-xl text-gray-300">Anatomía de una Red Doméstica y Diagnóstico</p>
+            <p class="mt-2 text-gray-400 font-mono text-sm">Módulo: Fundamentos de Redes y Arquitecturas</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-12">
+        <div class="lab-container p-6 sm:p-8 rounded-lg shadow-2xl">
+            
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-cyan-400">BRIEFING DE LA MISIÓN</h2>
+                <p class="text-gray-400 mt-2 max-w-3xl mx-auto">Tu objetivo es construir y validar una red doméstica básica utilizando Packet Tracer. A través de este proceso, aplicarás conceptos fundamentales de topología, direccionamiento IP y herramientas de diagnóstico. Sigue las fases en orden. El éxito en cada fase desbloquea la siguiente.</p>
+            </div>
+
+            <!-- Contenedor de Fases del Laboratorio -->
+            <div id="lab-phases">
+                <!-- Fase 1: Reconocimiento -->
+                <div id="phase-1" class="lab-phase">
+                    <div class="task-header pb-3 mb-6">
+                        <h3 class="text-xl font-bold text-white">Fase 1: Reconocimiento y Construcción Inicial</h3>
+                        <p class="text-gray-400 text-sm">Identifica los componentes esenciales y establece la conexión básica a Internet.</p>
+                    </div>
+                    <div class="pt-instruction font-mono text-sm mb-6">
+                        <p class="font-bold text-sky-300 mb-2">&gt; Instrucciones para Packet Tracer:</p>
+                        <ol class="list-decimal list-inside space-y-1 text-gray-300">
+                            <li>Añade un 'PC' (End Devices).</li>
+                            <li>Añade un 'Router-PT' (Routers).</li>
+                            <li>Añade una 'Cloud-PT' (WAN).</li>
+                            <li>Conecta el PC al Router (FastEthernet0/0) y el Router (FastEthernet1/0) a la Cloud usando el cable de cobre directo (Copper Straight-Through).</li>
+                        </ol>
+                    </div>
+                    <div id="q1-container" class="question-container">
+                        <p class="font-semibold mb-4 text-gray-200">Pregunta 1: Para que el PC pueda comunicarse con internet, el router debe realizar una función clave que "traduce" la dirección IP privada del PC a una dirección IP pública. ¿Cómo se llama esta función?</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <button class="lab-option p-3 rounded-md" onclick="checkAnswer(1, 'a')">A) DHCP (Dynamic Host Configuration Protocol)</button>
+                            <button class="lab-option p-3 rounded-md" onclick="checkAnswer(1, 'b')">B) NAT (Network Address Translation)</button>
+                            <button class="lab-option p-3 rounded-md" onclick="checkAnswer(1, 'c')">C) DNS (Domain Name System)</button>
+                            <button class="lab-option p-3 rounded-md" onclick="checkAnswer(1, 'd')">D) ARP (Address Resolution Protocol)</button>
+                        </div>
+                        <div id="f1" class="feedback mt-4 hidden"></div>
+                    </div>
+                </div>
+
+                <!-- Fase 2: Expansión y Configuración -->
+                <div id="phase-2" class="lab-phase hidden mt-8">
+                    <div class="task-header pb-3 mb-6">
+                        <h3 class="text-xl font-bold text-white">Fase 2: Expansión de la Red Local (LAN)</h3>
+                        <p class="text-gray-400 text-sm">Añade más dispositivos y configúralos para que coexistan en la misma red.</p>
+                    </div>
+                    <div class="pt-instruction font-mono text-sm mb-6">
+                        <p class="font-bold text-sky-300 mb-2">&gt; Instrucciones para Packet Tracer:</p>
+                        <ol class="list-decimal list-inside space-y-1 text-gray-300">
+                            <li>Añade un 'Switch-PT' (Switches) y conéctalo al Router (FastEthernet0/0).</li>
+                            <li>Desconecta el PC del Router y conéctalo al Switch.</li>
+                            <li>Añade un 'Server-PT' (End Devices) y conéctalo al Switch.</li>
+                            <li>Configura IPs estáticas: PC (192.168.1.10) y Servidor (192.168.1.11). Máscara de subred: 255.255.255.0. Gateway: 192.168.1.1 (la IP del router en la LAN).</li>
+                        </ol>
+                    </div>
+                    <div id="q2-container" class="question-container">
+                        <p class="font-semibold mb-4 text-gray-200">Pregunta 2: El switch opera principalmente en una capa del modelo OSI para dirigir el tráfico basándose en direcciones físicas (MAC). ¿Cuál es esa capa?</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <button class="lab-option p-3 rounded-md" onclick="checkAnswer(2, 'a')">A) Capa 1 (Física)</button>
+                            <button class="lab-option p-3 rounded-md" onclick="checkAnswer(2, 'b')">B) Capa 3 (Red)</button>
+                            <button class="lab-option p-3 rounded-md" onclick="checkAnswer(2, 'c')">C) Capa 2 (Enlace de Datos)</button>
+                            <button class="lab-option p-3 rounded-md" onclick="checkAnswer(2, 'd')">D) Capa 4 (Transporte)</button>
+                        </div>
+                        <div id="f2" class="feedback mt-4 hidden"></div>
+                    </div>
+                </div>
+
+                <!-- Fase 3: Verificación de Conectividad -->
+                <div id="phase-3" class="lab-phase hidden mt-8">
+                    <div class="task-header pb-3 mb-6">
+                        <h3 class="text-xl font-bold text-white">Fase 3: Verificación de Conectividad</h3>
+                        <p class="text-gray-400 text-sm">Utiliza herramientas de diagnóstico para confirmar que tu red funciona como se espera.</p>
+                    </div>
+                    <div class="pt-instruction font-mono text-sm mb-6">
+                        <p class="font-bold text-sky-300 mb-2">&gt; Instrucciones para Packet Tracer:</p>
+                        <ol class="list-decimal list-inside space-y-1 text-gray-300">
+                            <li>Abre la terminal del PC (Desktop &gt; Command Prompt).</li>
+                            <li>Ejecuta el comando: <code class="text-yellow-300">ping 192.168.1.11</code>. Deberías recibir 4 respuestas exitosas.</li>
+                        </ol>
+                    </div>
+                    <div id="q3-container" class="question-container">
+                        <p class="font-semibold mb-4 text-gray-200">Pregunta 3: El comando <code class="font-mono text-yellow-300">ping</code> utiliza un protocolo específico para enviar sus "echo requests" y recibir "echo replies", operando en la capa de Red. ¿Qué protocolo es?</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <button class="lab-option p-3 rounded-md" onclick="checkAnswer(3, 'a')">A) TCP (Transmission Control Protocol)</button>
+                            <button class="lab-option p-3 rounded-md" onclick="checkAnswer(3, 'b')">B) UDP (User Datagram Protocol)</button>
+                            <button class="lab-option p-3 rounded-md" onclick="checkAnswer(3, 'c')">C) HTTP (Hypertext Transfer Protocol)</button>
+                            <button class="lab-option p-3 rounded-md" onclick="checkAnswer(3, 'd')">D) ICMP (Internet Control Message Protocol)</button>
+                        </div>
+                        <div id="f3" class="feedback mt-4 hidden"></div>
+                    </div>
+                </div>
+                 <!-- Fase 4: Finalización -->
+                <div id="phase-4" class="lab-phase hidden mt-8 text-center">
+                    <h3 class="text-2xl font-bold text-green-400">LABORATORIO COMPLETADO</h3>
+                    <p class="text-gray-300 mt-4">Has construido, configurado y verificado con éxito una red básica. Has demostrado comprender la función de los componentes clave, el direccionamiento IP y las herramientas de diagnóstico fundamentales. Tu red está operativa.</p>
+                    <p class="mt-4 text-sm text-gray-400">Este es el fundamento. En los próximos retos, introduciremos más complejidad, más dispositivos y, por supuesto, más amenazas que defender.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center py-6 mt-12">
+        <p class="text-gray-500 text-sm">Este laboratorio es una simulación de entrenamiento. Las configuraciones son simplificadas con fines educativos.</p>
+    </footer>
+
+<script>
+    const answers = {
+        1: { correct: 'b', feedback: '¡Correcto! NAT es esencial para permitir que múltiples dispositivos en una red privada compartan una única IP pública para acceder a Internet.' },
+        2: { correct: 'c', feedback: '¡Exacto! El switch utiliza las direcciones MAC (Capa 2) para reenviar tramas solo al puerto donde se encuentra el dispositivo de destino, a diferencia de un hub que reenvía a todos.' },
+        3: { correct: 'd', feedback: '¡Preciso! ICMP es el protocolo de diagnóstico de la suite TCP/IP, usado por herramientas como ping y traceroute para reportar errores y enviar mensajes de control.' }
+    };
+
+    function checkAnswer(questionNum, selectedOption) {
+        const question = answers[questionNum];
+        const feedbackEl = document.getElementById(`f${questionNum}`);
+        const containerEl = document.getElementById(`q${questionNum}-container`);
+        const options = containerEl.querySelectorAll('.lab-option');
+
+        options.forEach(opt => {
+            opt.disabled = true;
+        });
+
+        const selectedButton = Array.from(options).find(opt => opt.textContent.trim().startsWith(selectedOption.toUpperCase()));
+
+        if (selectedOption === question.correct) {
+            feedbackEl.textContent = question.feedback;
+            feedbackEl.className = 'feedback feedback-correct';
+            if(selectedButton) selectedButton.classList.add('correct');
+            
+            setTimeout(() => {
+                document.getElementById(`phase-${questionNum}`).classList.add('hidden');
+                document.getElementById(`phase-${questionNum + 1}`).classList.remove('hidden');
+            }, 2500);
+
+        } else {
+            feedbackEl.textContent = 'Incorrecto. Revisa los conceptos e inténtalo de nuevo.';
+            feedbackEl.className = 'feedback feedback-incorrect';
+            if(selectedButton) selectedButton.classList.add('incorrect');
+
+            setTimeout(() => {
+                feedbackEl.classList.add('hidden');
+                if(selectedButton) selectedButton.classList.remove('incorrect');
+                options.forEach(opt => {
+                    opt.disabled = false;
+                });
+            }, 3000);
+        }
+        feedbackEl.classList.remove('hidden');
+    }
+</script>
+
+</body>
+</html>
