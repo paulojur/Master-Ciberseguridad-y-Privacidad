@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Mando de Redes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f4; /* stone-100 */
+            color: #1c1917; /* stone-900 */
+        }
+        .nav-link { transition: color 0.3s, border-bottom-color 0.3s; }
+        .nav-link:hover, .nav-link.active { color: #0d9488; border-bottom-color: #0d9488; }
+        .layer { cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .layer:hover { transform: translateX(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .strategic-insight {
+            border-left: 4px solid #0d9488; /* teal-600 */
+            background-color: #f0fdfa; /* teal-50 */
+        }
+        .flip-card { perspective: 1000px; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
+        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 1rem; border-radius: 0.5rem; }
+        .flip-card-front { background-color: #ffffff; border: 1px solid #e5e5e5; }
+        .flip-card-back { background-color: #14b8a6; color: white; transform: rotateY(180deg); }
+        
+        /* Estilos Laboratorio */
+        .lab-option { transition: background-color 0.3s, border-color 0.3s, color 0.3s; cursor: pointer; }
+        .lab-option.correct { background-color: #10b981; border-color: #059669; color: white; }
+        .lab-option.incorrect { background-color: #ef4444; border-color: #dc2626; color: white; }
+        .log-entry-flag { cursor: pointer; background-color: rgba(255, 235, 59, 0.4); padding: 0 3px; border-radius: 3px; transition: background-color 0.2s; }
+        .log-entry-flag:hover { background-color: rgba(255, 235, 59, 0.8); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-stone-100 shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-teal-700">Centro de Mando de Redes</h1>
+            <div class="hidden md:flex space-x-6">
+                <a href="#briefing" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Intel Briefing</a>
+                <a href="#arquitecturas" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Arquitecturas</a>
+                <a href="#modelo-osi" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Modelo OSI</a>
+                <a href="#metricas" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Métricas Clave</a>
+                <a href="#laboratorio" class="nav-link font-bold text-yellow-600 border-b-2 border-transparent pb-1">LABORATORIO</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-stone-700">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0_0_24_24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#briefing" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Intel Briefing</a>
+            <a href="#arquitecturas" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Arquitecturas</a>
+            <a href="#modelo-osi" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Modelo OSI</a>
+            <a href="#metricas" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Métricas Clave</a>
+            <a href="#laboratorio" class="block py-2 px-4 text-sm font-bold text-yellow-600 hover:bg-stone-200">LABORATORIO</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <section id="briefing" class="text-center mb-20">
+            <h2 class="text-4xl font-bold text-stone-800 mb-4">Módulo de Operaciones de Red</h2>
+            <p class="text-lg text-stone-600 max-w-3xl mx-auto">
+                Las redes no son solo cables y protocolos. Son el sistema circulatorio de los datos y el principal campo de batalla en ciberseguridad. Aquí aprenderás a leer el flujo, a entender sus puntos débiles y a usar ese conocimiento para cazar y neutralizar amenazas.
+            </p>
+        </section>
+
+        <section id="arquitecturas" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Arquitecturas de Almacenamiento y Ciclo de Vida</h2>
+            <p class="text-center text-stone-600 -mt-8 mb-12">Un atacante sigue el rastro de los datos. Conocer su ciclo de vida y dónde residen es el primer paso para defenderlos.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- DAS -->
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col">
+                    <h3 class="text-2xl font-bold mb-3 text-center">DAS</h3>
+                    <p class="text-sm font-semibold mb-2 text-center">Direct-Attached Storage</p>
+                    <p class="text-stone-600 mb-4 flex-grow">Conexión directa a un servidor. Simple, pero crea "islas de información" difíciles de monitorizar centralmente.</p>
+                    <p class="text-xs mt-auto"><strong class="text-red-600">Riesgo:</strong> Falta de visibilidad y gestión centralizada de la seguridad.</p>
+                </div>
+                <!-- NAS -->
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col">
+                    <h3 class="text-2xl font-bold mb-3 text-center">NAS</h3>
+                    <p class="text-sm font-semibold mb-2 text-center">Network-Attached Storage</p>
+                    <p class="text-stone-600 mb-4 flex-grow">Almacenamiento centralizado en la red local (LAN). Accesible, pero expuesto a cualquier amenaza dentro de la misma red.</p>
+                     <p class="text-xs mt-auto"><strong class="text-red-600">Riesgo:</strong> Superficie de ataque amplia si la LAN está comprometida.</p>
+                </div>
+                <!-- SAN -->
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col">
+                    <h3 class="text-2xl font-bold mb-3 text-center">SAN</h3>
+                    <p class="text-sm font-semibold mb-2 text-center">Storage Area Network</p>
+                    <p class="text-stone-600 mb-4 flex-grow">Red dedicada de alta velocidad para almacenamiento. Segmentada y aislada de la LAN normal.</p>
+                     <p class="text-xs mt-auto"><strong class="text-green-600">Ventaja:</strong> Permite controles de seguridad granulares (zoning, LUN masking), reduciendo la superficie de ataque.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="modelo-osi" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-2">El Modelo OSI: Tu Mapa Forense</h2>
+            <p class="text-center text-stone-600 mb-12">No es teoría aburrida, es tu mejor herramienta para diagnosticar incidentes. Te permite aislar el problema capa por capa.</p>
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <div class="space-y-3">
+                    <div class="layer bg-sky-600 text-white p-3 rounded-md"><b>7. Aplicación:</b> La interfaz del ataque (Phishing, vulnerabilidad web).</div>
+                    <div class="layer bg-sky-700 text-white p-3 rounded-md"><b>6. Presentación:</b> Cifrado y formato de datos (SSL/TLS inspection).</div>
+                    <div class="layer bg-sky-800 text-white p-3 rounded-md"><b>5. Sesión:</b> Gestión de conexiones (Hijacking de sesión).</div>
+                    <div class="layer bg-teal-600 text-white p-3 rounded-md"><b>4. Transporte:</b> Puertos y control de flujo (Escaneo de puertos TCP/UDP).</div>
+                    <div class="layer bg-emerald-600 text-white p-3 rounded-md"><b>3. Red:</b> Direccionamiento y enrutamiento (Spoofing de IP, paquetes malformados).</div>
+                    <div class="layer bg-rose-700 text-white p-3 rounded-md"><b>2. Enlace de Datos:</b> Direcciones físicas (ARP Spoofing, MAC Flooding).</div>
+                    <div class="layer bg-rose-800 text-white p-3 rounded-md"><b>1. Física:</b> El medio físico (Cableado pinchado, interferencias).</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="metricas" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-8">Métricas como Indicadores de Compromiso (IoC)</h2>
+             <p class="text-center text-stone-600 -mt-4 mb-12">Para un analista, las métricas de red no son solo números. Son el pulso del sistema. Aprende a detectar las anomalías.</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="flip-card h-40"><div class="flip-card-inner"><div class="flip-card-front"><h4 class="text-lg font-bold">Throughput</h4></div><div class="flip-card-back"><p class="text-sm"><strong>IoC:</strong> Un pico masivo e inesperado de throughput de salida a las 3 AM puede ser exfiltración de datos.</p></div></div></div>
+                <div class="flip-card h-40"><div class="flip-card-inner"><div class="flip-card-front"><h4 class="text-lg font-bold">Latencia (Delay)</h4></div><div class="flip-card-back"><p class="text-sm"><strong>IoC:</strong> Un aumento súbito y sostenido de la latencia puede indicar un ataque de denegación de servicio (DDoS).</p></div></div></div>
+                <div class="flip-card h-40"><div class="flip-card-inner"><div class="flip-card-front"><h4 class="text-lg font-bold">RTT</h4></div><div class="flip-card-back"><p class="text-sm"><strong>IoC:</strong> Tiempos de RTT muy altos a múltiples hosts pueden ser señal de una red congestionada o bajo ataque.</p></div></div></div>
+                <div class="flip-card h-40"><div class="flip-card-inner"><div class="flip-card-front"><h4 class="text-lg font-bold">Jitter</h4></div><div class="flip-card-back"><p class="text-sm"><strong>IoC:</strong> Un jitter elevado puede ser usado por un atacante para degradar servicios de VoIP y extorsionar.</p></div></div></div>
+            </div>
+        </section>
+
+        <!-- #################### LABORATORIO DE SIMULACIÓN DE RED #################### -->
+        <section id="laboratorio" class="pt-12">
+            <div class="bg-gray-800 text-white p-8 rounded-lg shadow-2xl border-t-4 border-yellow-400">
+                <h2 class="text-3xl font-bold text-center text-yellow-400 mb-2">Laboratorio de Simulación</h2>
+                <p class="text-center text-stone-300 mb-8">El conocimiento sin acción es inútil. Analiza la situación y responde.</p>
+                
+                <div class="bg-black/50 p-6 rounded-lg">
+                    <h3 class="text-2xl font-bold mb-4 border-b border-yellow-400/50 pb-2">Incidente 02: La Exfiltración Silenciosa</h3>
+                    <p class="text-stone-300 mb-6"><strong>Briefing:</strong> Analista, el SIEM ha generado una alerta de alta severidad. Se ha detectado un flujo de datos anómalo desde un servidor interno hacia un destino desconocido en internet durante la noche. Tu misión: analizar el log, identificar la técnica del adversario y proponer el siguiente paso de la investigación.</p>
+
+                    <div id="lab-feedback" class="mb-4 p-3 rounded-md text-center font-semibold hidden"></div>
+
+                    <h4 class="font-bold text-lg mb-4 text-stone-200">Evidencia: Log de Tráfico de Red (Firewall)</h4>
+                    <div class="bg-gray-900 text-gray-200 p-4 rounded-md font-mono text-sm border-l-4 border-gray-500 overflow-x-auto">
+                        <p>&gt; TIME: <span class="log-entry-flag" data-feedback="¡Correcto! Las 3 AM es una hora de baja actividad. Los atacantes a menudo programan la exfiltración de datos para estas horas para pasar desapercibidos.">03:15:22Z</span></p>
+                        <p>&gt; SRC_IP: 192.168.50.10 (SRV-FILES-01)</p>
+                        <p>&gt; DST_IP: <span class="log-entry-flag" data-feedback="¡Bien visto! Una IP externa desconocida, especialmente si las búsquedas de OSINT la asocian con actividad maliciosa, es un indicador de compromiso claro.">187.95.34.112</span></p>
+                        <p>&gt; PROTO: UDP</p>
+                        <p>&gt; DST_PORT: <span class="log-entry-flag" data-feedback="Correcto. El puerto 53 se usa para DNS. Es un tráfico que normalmente se permite en los firewalls, por lo que los atacantes lo usan para ocultar sus comunicaciones.">53</span></p>
+                        <p>&gt; BYTES_OUT: <span class="log-entry-flag" data-feedback="¡Clave! 500 MB es una cantidad de datos absurdamente alta para una consulta DNS normal, que suele ser de unos pocos bytes. Esto sugiere que el protocolo se está usando para otro fin.">524,288,000</span> (500 MB)</p>
+                        <p>&gt; ACTION: ALLOWED</p>
+                    </div>
+                     <p class="text-xs text-stone-400 mt-2"><i>Instrucción: Haz clic en las partes del log que consideres sospechosas para ver el análisis.</i></p>
+
+                    <div class="mt-8">
+                        <h4 class="font-bold text-lg mb-4 text-stone-200">Análisis Táctico</h4>
+                        <div id="lab-question-area">
+                           <!-- Las preguntas del laboratorio se cargarán aquí -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-stone-200 mt-20">
+        <div class="container mx-auto px-6 py-4 text-center text-stone-600">
+            <p>&copy; 2025 Centro de Mando de Redes. Creado a partir del documento "El papel de las redes.pdf".</p>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+
+    const navLinks = document.querySelectorAll('.nav-link, #mobile-menu a');
+    const sections = document.querySelectorAll('main section');
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            if (pageYOffset >= section.offsetTop - 100) { current = section.getAttribute('id'); }
+        });
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href')?.substring(1) === current) { link.classList.add('active'); }
+        });
+    });
+
+    // #################### LÓGICA DEL LABORATORIO ####################
+    const labFeedback = document.getElementById('lab-feedback');
+    document.querySelectorAll('.log-entry-flag').forEach(flag => {
+        flag.addEventListener('click', () => {
+            labFeedback.textContent = flag.dataset.feedback;
+            labFeedback.classList.remove('hidden', 'bg-green-200', 'text-green-800', 'bg-red-200', 'text-red-800');
+            labFeedback.classList.add('bg-yellow-200', 'text-yellow-800');
+            labFeedback.style.display = 'block';
+        });
+    });
+
+    const labQuestions = [
+        {
+            question: "Considerando el alto volumen de datos saliendo por el puerto UDP 53 (DNS), ¿cuál es la técnica de exfiltración más probable?",
+            options: ["Ataque DDoS", "Escaneo de Puertos", "DNS Tunneling", "Inyección SQL"],
+            correct: 2,
+            feedback: "Análisis correcto. DNS Tunneling encapsula datos arbitrarios dentro de consultas DNS para evadir firewalls. El gran volumen de datos es la pista clave."
+        },
+        {
+            question: "Para verificar la IP de destino y el puerto en los paquetes crudos, ¿en qué capa del Modelo OSI centrarías tu análisis con una herramienta como Wireshark?",
+            options: ["Capa 2 (Enlace)", "Capa 7 (Aplicación)", "Capa 3 (Red) y 4 (Transporte)"],
+            correct: 2,
+            feedback: "Exacto. La Capa de Red (3) te mostrará las IPs de origen y destino, y la Capa de Transporte (4) te mostrará los puertos. Así se confirma la comunicación a nivel de paquete."
+        },
+        {
+            question: "El servidor afectado (SRV-FILES-01) almacena datos críticos en una red de almacenamiento aislada y de alto rendimiento. ¿Qué arquitectura de almacenamiento es más probable que utilice?",
+            options: ["DAS (Direct-Attached Storage)", "SAN (Storage Area Network)", "NAS (Network-Attached Storage)"],
+            correct: 1,
+            feedback: "Correcto. Una SAN es la única arquitectura que proporciona una red dedicada y aislada para el almacenamiento, ideal para proteger activos críticos de la red LAN general."
+        }
+    ];
+    let currentQuestionIndex = 0;
+    const questionArea = document.getElementById('lab-question-area');
+
+    function loadQuestion(index) {
+        const q = labQuestions[index];
+        questionArea.innerHTML = `
+            <p class="mb-4 text-stone-300">${index + 1}. ${q.question}</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                ${q.options.map((opt, i) => `<button data-index="${i}" class="lab-option w-full text-center px-4 py-3 border-2 border-stone-500 rounded-lg font-semibold hover:bg-stone-700">${opt}</button>`).join('')}
+            </div>
+        `;
+    }
+
+    questionArea.addEventListener('click', e => {
+        if (e.target.classList.contains('lab-option') && !e.target.disabled) {
+            const selectedIndex = parseInt(e.target.dataset.index);
+            const question = labQuestions[currentQuestionIndex];
+            const isCorrect = selectedIndex === question.correct;
+
+            labFeedback.textContent = question.feedback;
+            labFeedback.classList.remove('hidden', 'bg-yellow-200', 'text-yellow-800');
+            if (isCorrect) {
+                labFeedback.classList.add('bg-green-200', 'text-green-800');
+            } else {
+                labFeedback.classList.add('bg-red-200', 'text-red-800');
+            }
+            labFeedback.style.display = 'block';
+            
+            questionArea.querySelectorAll('.lab-option').forEach((btn, i) => {
+                btn.disabled = true;
+                if(i === question.correct) btn.classList.add('correct');
+                else if (i === selectedIndex) btn.classList.add('incorrect');
+            });
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < labQuestions.length) {
+                setTimeout(() => loadQuestion(currentQuestionIndex), 3000);
+            } else {
+                setTimeout(() => {
+                    questionArea.innerHTML = `<p class="text-center font-bold text-lg text-yellow-400">Análisis Táctico completado. Amenaza identificada. Buen trabajo, analista.</p>`;
+                }, 3000);
+            }
+        }
+    });
+    
+    loadQuestion(0);
+});
+</script>
+</body>
+</html>
