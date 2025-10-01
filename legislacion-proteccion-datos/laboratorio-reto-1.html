@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorio: Reto 1 - Simulador de Conformidad RGPD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f4; /* stone-100 */
+            color: #1c1917; /* stone-900 */
+        }
+        .font-mono {
+            font-family: 'Roboto Mono', monospace;
+        }
+        .nav-link { transition: color 0.3s, border-bottom-color 0.3s; }
+        .nav-link:hover, .nav-link.active { color: #0d9488; border-bottom-color: #0d9488; }
+        .training-module {
+             background-color: #ffffff;
+             border: 1px solid #e7e5e4; /* stone-200 */
+             border-left: 4px solid #0d9488; /* teal-600 */
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 250px;
+            background-color: #262626;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -125px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+            font-family: 'Inter', sans-serif;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        .simulation-input {
+            background-color: #f5f5f4;
+            border: 1px solid #d6d3d1;
+        }
+        .simulation-input:focus {
+            outline: none;
+            border-color: #14b8a6;
+            box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.2);
+        }
+        .simulation-btn {
+            background-color: #0d9488;
+            transition: background-color 0.2s;
+        }
+        .simulation-btn:hover {
+            background-color: #0f766e;
+        }
+        .feedback-box {
+            display: none;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-stone-100 shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-teal-700">LAB: Simulador de Conformidad RGPD</h1>
+            <div class="hidden md:flex space-x-6">
+                <a href="#briefing" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Briefing Táctico</a>
+                <a href="#training" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Módulos de Entrenamiento</a>
+                <a href="#simulation" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Simulación Práctica</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <section id="briefing" class="mb-20">
+            <div class="bg-gray-800 text-white p-8 rounded-lg shadow-xl border-t-4 border-yellow-400">
+                <h2 class="text-3xl font-bold text-center text-yellow-400 mb-2">MISIÓN: PREPARACIÓN PARA AUDITORÍA</h2>
+                <p class="text-center text-stone-300 mb-6">Analista, has sido designado como el DPO (Delegado de Protección de Datos) de una startup tecnológica en crecimiento. Tu primera misión: asegurar que la organización supere con éxito su primera auditoría de conformidad con el RGPD. La PEC1 es tu hoja de ruta. Este laboratorio es tu campo de entrenamiento.</p>
+                <p class="text-center font-mono text-sm text-cyan-400">OBJETIVO: Dominar los conceptos y herramientas prácticas para resolver la PEC1 de forma autónoma.</p>
+            </div>
+        </section>
+        
+        <section id="training" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Módulos de Entrenamiento Táctico</h2>
+            <div class="space-y-8">
+                <!-- Módulo: Conceptos Clave -->
+                <div class="training-module p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-teal-800 mb-4">Módulo 1: Identificación de Activos (Datos Personales)</h3>
+                    <p class="text-stone-600 mb-3">Tu primer paso es saber qué proteger. No todo es un "dato personal".</p>
+                    <ul class="list-disc list-inside space-y-2 text-sm">
+                        <li><strong>Dato Personal:</strong> Según el <strong class="font-mono">Art. 4.1 RGPD</strong>, es "toda información sobre una persona física identificada o identificable". No aplica a personas jurídicas (empresas).</li>
+                        <li><strong>Identificable:</strong> Una persona es identificable si se puede determinar su identidad, directa o indirectamente (nombre, DNI, email, IP, datos de localización, etc.).</li>
+                        <li><strong>Categorías Especiales (Art. 9 RGPD):</strong> Datos que revelen origen étnico, opiniones políticas, convicciones religiosas, datos genéticos, biométricos, de salud o sobre la vida sexual. Requieren una protección reforzada.</li>
+                    </ul>
+                </div>
+                 <!-- Módulo: Principios -->
+                <div class="training-module p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-teal-800 mb-4">Módulo 2: Principios del Tratamiento (Art. 5 RGPD)</h3>
+                    <p class="text-stone-600 mb-3">Estos son los 7 mandamientos del RGPD. Tu auditor los comprobará uno por uno.</p>
+                    <ul class="list-disc list-inside space-y-2 text-sm text-stone-700">
+                        <li><strong>Licitud, lealtad y transparencia:</strong> Tratar los datos de forma legal y clara.</li>
+                        <li><strong>Limitación de la finalidad:</strong> Recoger datos para fines específicos y no usarlos para otros incompatibles.</li>
+                        <li><strong>Minimización de datos:</strong> Solo recoger los datos estrictamente necesarios.</li>
+                        <li><strong>Exactitud:</strong> Los datos deben ser precisos y estar actualizados.</li>
+                        <li><strong>Limitación del plazo de conservación:</strong> No guardar los datos más tiempo del necesario.</li>
+                        <li><strong>Integridad y confidencialidad:</strong> Proteger los datos contra tratamiento no autorizado, pérdida o destrucción.</li>
+                        <li><strong>Responsabilidad proactiva:</strong> El responsable debe ser capaz de demostrar que cumple con todo lo anterior.</li>
+                    </ul>
+                </div>
+
+                <!-- Módulo: Derechos -->
+                <div class="training-module p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-teal-800 mb-4">Módulo 3: Gestión de Derechos de los Interesados</h3>
+                    <p class="text-stone-600 mb-3">Todo individuo tiene derechos sobre sus datos. Debes estar preparado para gestionarlos en los plazos correctos.</p>
+                     <p class="text-stone-700 mb-3 text-sm"><strong>Plazo de Respuesta General:</strong> Según el <strong class="font-mono">Art. 12.3 RGPD</strong>, debes responder a las solicitudes "sin dilación indebida y, a más tardar, en el plazo de <strong class="text-black">un mes</strong>". Este plazo puede prorrogarse otros dos meses si la solicitud es compleja.</p>
+                    <ul class="list-disc list-inside space-y-2 text-sm">
+                        <li><strong>Acceso:</strong> Derecho a saber si se tratan sus datos y a obtener una copia.</li>
+                        <li><strong>Rectificación:</strong> Derecho a corregir datos inexactos.</li>
+                        <li><strong>Supresión ("Derecho al olvido"):</strong> Derecho a que se eliminen sus datos. <strong>OJO:</strong> No es absoluto, tiene excepciones (ej: para cumplir una obligación legal o para la formulación, el ejercicio o la defensa de reclamaciones).</li>
+                        <li><strong>Portabilidad:</strong> Derecho a recibir los datos en un formato estructurado y transmitirlos a otro responsable.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="simulation">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Simulación Práctica: Herramientas de Conformidad</h2>
+            
+            <!-- Ejercicio 1: RoPA -->
+            <div class="bg-white p-8 rounded-lg shadow-lg mb-12">
+                <h3 class="text-2xl font-bold text-teal-800 mb-4">Ejercicio 1: Constructor de RoPA (Art. 30 RGPD)</h3>
+                <p class="text-stone-600 mb-6">La PEC te pide crear un Registro de Actividades de Tratamiento para un proceso de selección. Usa este simulador para practicar. Rellena los campos para el escenario descrito en la PEC.</p>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-stone-700 tooltip">Finalidad del Tratamiento <span class="text-red-500">*</span><span>&#9432;</span><span class="tooltiptext">¿Para qué se van a usar los datos? Ej: "Gestión de candidaturas para procesos de selección".</span></label>
+                        <input type="text" class="simulation-input mt-1 block w-full rounded-md shadow-sm p-2">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-stone-700 tooltip">Categorías de Interesados y Datos <span class="text-red-500">*</span><span>&#9432;</span><span class="tooltiptext">¿A quién pertenecen los datos y qué tipo de datos son? Ej: "Candidatos a empleo" y "Datos identificativos, de contacto, académicos y profesionales contenidos en el CV".</span></label>
+                         <textarea class="simulation-input mt-1 block w-full rounded-md shadow-sm p-2" rows="3"></textarea>
+                    </div>
+                     <div>
+                        <label class="block text-sm font-medium text-stone-700 tooltip">Base Jurídica <span class="text-red-500">*</span><span>&#9432;</span><span class="tooltiptext">¿Qué te legitima para tratar los datos? Para un CV, suele ser el consentimiento del interesado o la aplicación de medidas precontractuales a petición del interesado (Art. 6.1.a o 6.1.b RGPD).</span></label>
+                        <input type="text" class="simulation-input mt-1 block w-full rounded-md shadow-sm p-2">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-stone-700 tooltip">Destinatarios y Transferencias Internacionales <span class="text-red-500">*</span><span>&#9432;</span><span class="tooltiptext">¿Se ceden los datos a alguien? ¿Se envían fuera de la UE? La PEC menciona un proveedor en Japón. Esto es una transferencia internacional y requiere garantías adecuadas (ej: Decisión de Adecuación de la Comisión Europea).</span></label>
+                        <textarea class="simulation-input mt-1 block w-full rounded-md shadow-sm p-2" rows="2"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-stone-700 tooltip">Plazo de Conservación <span class="text-red-500">*</span><span>&#9432;</span><span class="tooltiptext">¿Cuánto tiempo se guardarán los datos? Ej: "Durante el proceso de selección y, si el candidato consiente, durante 1 año para futuras vacantes".</span></label>
+                        <input type="text" class="simulation-input mt-1 block w-full rounded-md shadow-sm p-2">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ejercicio 2: Política de Privacidad -->
+            <div class="bg-white p-8 rounded-lg shadow-lg mb-12">
+                <h3 class="text-2xl font-bold text-teal-800 mb-4">Ejercicio 2: Redactor de Política de Privacidad (Art. 13 RGPD)</h3>
+                <p class="text-stone-600 mb-6">Ahora, crea la cláusula informativa para la oferta de empleo. Tu política debe ser clara y transparente. Usa esta guía para asegurar que incluyes toda la información obligatoria.</p>
+                <div class="bg-stone-50 p-4 rounded-md border">
+                    <p class="font-semibold mb-2">Plantilla de Cláusula Informativa (Información por capas):</p>
+                    <p class="text-sm font-bold"><u>Información básica sobre Protección de Datos</u></p>
+                    <p class="text-sm"><strong>Responsable:</strong> [Nombre de tu empresa]</p>
+                    <p class="text-sm"><strong>Finalidad:</strong> [La misma que en el RoPA]</p>
+                    <p class="text-sm"><strong>Legitimación:</strong> [La misma que en el RoPA]</p>
+                    <p class="text-sm"><strong>Destinatarios:</strong> [Mencionar si hay cesiones, ej: "Proveedores de servicios de reclutamiento"]</p>
+                    <p class="text-sm"><strong>Derechos:</strong> "Puede ejercer sus derechos de acceso, rectificación, supresión, portabilidad, limitación y oposición al tratamiento..."</p>
+                    <p class="text-sm"><strong>Información adicional:</strong> "Puede consultar la información adicional y detallada sobre Protección de Datos en nuestra política de privacidad completa en [link]".</p>
+                </div>
+            </div>
+            
+            <!-- Ejercicio 3: Simulador de Respuesta a Derechos -->
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <h3 class="text-2xl font-bold text-teal-800 mb-4">Ejercicio 3: Simulador de Decisión - Derecho de Supresión</h3>
+                <p class="text-stone-600 mb-6">Te enfrentas al caso práctico III: un ex-empleado con un litigio pendiente ejerce su derecho de supresión. ¿Qué haces? Analiza las excepciones y elige tu respuesta.</p>
+                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 rounded-r-lg">
+                    <p class="font-bold">ESCENARIO:</p>
+                    <p class="text-sm text-stone-700">Un ex-empleado te ha demandado. A continuación, solicita la supresión de TODOS sus datos personales. Sospechas que es para dejarte sin pruebas.</p>
+                </div>
+                <label class="block text-sm font-medium text-stone-700 mb-2">Selecciona la respuesta legalmente correcta:</label>
+                <select id="response-selector" class="w-full p-2 border border-stone-300 rounded-md">
+                    <option value="none" selected disabled>Elige una opción...</option>
+                    <option value="accept">A) Conceder la supresión. Es su derecho y no podemos negarnos.</option>
+                    <option value="reject">B) Denegar la supresión, argumentando que los datos son necesarios para la formulación, el ejercicio o la defensa de reclamaciones.</option>
+                    <option value="ignore">C) Ignorar la solicitud, ya que parece hecha de mala fe.</option>
+                </select>
+                <button onclick="evaluateResponse()" class="simulation-btn text-white font-bold py-2 px-4 rounded-md mt-4">Evaluar Decisión</button>
+                <div id="response-feedback" class="feedback-box"></div>
+            </div>
+
+        </section>
+    </main>
+    
+    <script>
+        function evaluateResponse() {
+            const selector = document.getElementById('response-selector');
+            const feedbackBox = document.getElementById('response-feedback');
+            const selectedValue = selector.value;
+
+            feedbackBox.style.display = 'block';
+
+            if (selectedValue === 'reject') {
+                feedbackBox.className = 'feedback-box bg-green-100 text-green-800 border-l-4 border-green-500';
+                feedbackBox.innerHTML = '<p><strong class="font-bold">Decisión Correcta.</strong> El Art. 17.3.e del RGPD establece una excepción clara al derecho de supresión: cuando el tratamiento es necesario "para la formulación, el ejercicio o la defensa de reclamaciones". Debes comunicar al ex-empleado que, si bien has recibido su solicitud, no puedes proceder a la supresión de los datos necesarios para el litigio en curso, los cuales serán bloqueados y conservados únicamente para este fin.</p>';
+            } else if (selectedValue === 'accept') {
+                feedbackBox.className = 'feedback-box bg-red-100 text-red-800 border-l-4 border-red-500';
+                feedbackBox.innerHTML = '<p><strong class="font-bold">Decisión Incorrecta.</strong> Si bien el derecho de supresión es fundamental, no es absoluto. Borrar los datos te dejaría indefenso en el litigio, y la ley prevé esta situación. Revisa las excepciones del Art. 17.3 del RGPD.</p>';
+            } else if (selectedValue === 'ignore') {
+                feedbackBox.className = 'feedback-box bg-red-100 text-red-800 border-l-4 border-red-500';
+                feedbackBox.innerHTML = '<p><strong class="font-bold">Decisión Incorrecta y Peligrosa.</strong> Ignorar una solicitud de ejercicio de derechos es una infracción del RGPD en sí misma. Siempre debes responder en el plazo de un mes, aunque sea para denegar la solicitud de forma justificada.</p>';
+            } else {
+                 feedbackBox.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
