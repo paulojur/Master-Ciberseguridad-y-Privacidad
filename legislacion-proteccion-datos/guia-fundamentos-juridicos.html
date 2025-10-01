@@ -41,11 +41,14 @@
     <header class="bg-stone-100 shadow-sm sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <h1 class="text-xl font-bold text-teal-700">Centro de Mando Jurídico</h1>
-            <div class="hidden md:flex space-x-6">
-                <a href="#briefing" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Intel Briefing</a>
-                <a href="#marco-legal" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Marco Legal</a>
-                <a href="#riesgos-digitales" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Riesgos Digitales</a>
-                <a href="#nuevos-valores" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Nuevos Valores</a>
+            <div class="hidden md:flex space-x-4">
+                <a href="#briefing" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Briefing</a>
+                <a href="#principios" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Principios</a>
+                <a href="#derechos" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Legitimación</a>
+                <a href="#roles" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Roles</a>
+                <a href="#medidas" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Seguridad</a>
+                <a href="#expansion" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Expansión Digital</a>
+                <a href="#transferencias" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Operaciones Globales</a>
                 <a href="#laboratorio" class="nav-link font-bold text-yellow-600 border-b-2 border-transparent pb-1">LABORATORIO</a>
             </div>
             <button id="mobile-menu-button" class="md:hidden text-stone-700">
@@ -53,11 +56,14 @@
             </button>
         </nav>
         <div id="mobile-menu" class="hidden md:hidden">
-            <a href="#briefing" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Intel Briefing</a>
-            <a href="#marco-legal" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Marco Legal</a>
-            <a href="#riesgos-digitales" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Riesgos Digitales</a>
-            <a href="#nuevos-valores" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Nuevos Valores</a>
-            <a href="#laboratorio" class="block py-2 px-4 text-sm font-bold text-yellow-600 hover:bg-stone-200">LABORATORIO</a>
+             <a href="#briefing" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Briefing</a>
+             <a href="#principios" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Principios</a>
+             <a href="#derechos" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Legitimación</a>
+             <a href="#roles" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Roles</a>
+             <a href="#medidas" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Seguridad</a>
+             <a href="#expansion" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Expansión Digital</a>
+             <a href="#transferencias" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Operaciones Globales</a>
+             <a href="#laboratorio" class="block py-2 px-4 text-sm font-bold text-yellow-600 hover:bg-stone-200">LABORATORIO</a>
         </div>
     </header>
 
@@ -70,96 +76,171 @@
             </p>
         </section>
 
-        <section id="marco-legal" class="mb-20">
-            <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Análisis del Marco Legal: UE y España</h2>
-            <div class="grid md:grid-cols-2 gap-10">
+        <section id="principios" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Principios y Conceptos Clave</h2>
+            <div class="space-y-8">
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-bold mb-4">El Derecho de la Unión Europea</h3>
-                    <p class="text-stone-600 mb-4">La UE legisla principalmente de dos formas. Es vital entender la diferencia:</p>
-                    <ul class="space-y-3">
-                        <li class="border border-stone-200 p-3 rounded-md">
-                            <strong class="text-teal-700 font-mono">Reglamentos (Ej: RGPD)</strong>
-                            <p class="text-stone-600 text-sm mt-1">Son de <strong class="text-black">aplicación directa</strong> y uniforme en TODOS los países miembros. No necesitan "traducción" a leyes nacionales. Crean un estándar único.</p>
-                        </li>
-                        <li class="border border-stone-200 p-3 rounded-md">
-                            <strong class="text-teal-700 font-mono">Directivas (Ej: Directiva sobre e-commerce)</strong>
-                            <p class="text-stone-600 text-sm mt-1">Marcan objetivos, pero cada país miembro debe crear o adaptar sus propias leyes para cumplirlos (<strong class="text-black">transposición</strong>).</p>
-                        </li>
+                    <h3 class="text-xl font-bold mb-4">1. Identificación de Activos: ¿Qué es un Dato Personal?</h3>
+                    <p class="text-stone-600 mb-4">Tu misión empieza por saber qué proteger. Según el <strong class="font-mono">Art. 4.1 RGPD</strong>, un dato personal es "toda información sobre una persona física identificada o identificable".</p>
+                    <ul class="list-disc list-inside space-y-2 text-stone-700">
+                        <li><strong>Identificable:</strong> No es solo el nombre. Una IP, un email, un dato de localización, un ID de usuario o una cookie pueden identificar a alguien.</li>
+                        <li><strong>Categorías Especiales (Art. 9 RGPD):</strong> Máxima alerta. Datos de salud, biométricos, genéticos, origen étnico, opiniones políticas o afiliación sindical. Su tratamiento está prohibido por defecto y requiere una base legal explícita y protección reforzada.</li>
+                        <li><strong>Anonimización vs. Seudonimización:</strong> Tácticas cruciales. Un dato <strong class="text-black">anonimizado</strong> está fuera del RGPD (la re-identificación es imposible). Un dato <strong class="text-black">seudonimizado</strong> (ej. hashing, cifrado) sigue siendo un dato personal porque la re-identificación es posible con información adicional. La seudonimización es una medida de seguridad recomendada, no una exención.</li>
                     </ul>
                 </div>
-
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-bold mb-4">El Ordenamiento Jurídico Español</h3>
-                    <p class="text-stone-600 mb-4">Se estructura en dos grandes áreas:</p>
-                    <ul class="space-y-3">
-                        <li class="border border-stone-200 p-3 rounded-md">
-                            <strong class="text-teal-700 font-mono">Derecho Privado</strong>
-                            <p class="text-stone-600 text-sm mt-1">Regula conflictos entre particulares. Ej: un incumplimiento de contrato (Derecho Civil).</p>
-                        </li>
-                        <li class="border border-stone-200 p-3 rounded-md">
-                            <strong class="text-teal-700 font-mono">Derecho Público</strong>
-                            <p class="text-stone-600 text-sm mt-1">Regula la relación del Estado con los particulares. Incluye el <strong class="text-black">Derecho Penal</strong>, la herramienta más severa del Estado (<em class="font-semibold">ultima ratio</em>), reservada para los ataques más graves a bienes jurídicos (delitos).</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section id="riesgos-digitales" class="mb-20">
-            <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Nuevos Riesgos para Derechos Clásicos</h2>
-            <p class="text-center text-stone-600 -mt-8 mb-12">La tecnología no crea delitos de la nada, pero sí magnifica las amenazas a derechos fundamentales.</p>
-            <div class="bg-white p-8 rounded-lg shadow-lg">
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div>
-                        <h4 class="font-bold text-lg mb-2">1. Lesiones al Derecho a la Intimidad</h4>
-                        <ul class="list-disc list-inside space-y-2 text-stone-600">
-                            <li><strong>Interceptación:</strong> Uso de <em class="font-semibold">sniffers</em> para capturar tráfico de red.</li>
-                            <li><strong>Monitorización y Perfilado:</strong> Rastreo mediante <em class="font-semibold">cookies, web bugs y spyware</em> para crear perfiles de usuario y dirigir publicidad (<em class="font-semibold">cibermarketing</em>).</li>
-                            <li><strong>Publicidad Invasiva:</strong> Envío de correo no solicitado (<em class="font-semibold">spamming</em>).</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-lg mb-2">2. Ataques a Activos Económicos</h4>
-                        <ul class="list-disc list-inside space-y-2 text-stone-600">
-                            <li><strong>Secretos Empresariales:</strong> Acceso y exfiltración de información sensible (propiedad industrial, datos estratégicos) almacenada digitalmente.</li>
-                            <li><strong>Propiedad Intelectual:</strong> Copia y distribución masiva no autorizada de software y contenido a través de redes P2P y otras plataformas.</li>
-                        </ul>
-                    </div>
-                    <div class="md:col-span-2">
-                        <h4 class="font-bold text-lg mb-2 mt-4">3. Otros Derechos Afectados</h4>
-                        <ul class="list-disc list-inside space-y-2 text-stone-600">
-                            <li><strong>Libertad e Indemnidad Sexual del Menor:</strong> Facilitado por la proliferación de webcams y la distribución por redes anónimas.</li>
-                            <li><strong>Honor y Dignidad:</strong> Difusión de mensajes de odio (racistas, xenófobos) e injurias, amplificados por la viralidad de la red.</li>
-                        </ul>
+                    <h3 class="text-xl font-bold mb-4">2. Directivas Operacionales: Principios del Tratamiento (Art. 5 RGPD)</h3>
+                    <p class="text-stone-600 mb-4">Estos no son sugerencias, son las reglas de enfrentamiento. Debes poder demostrar su cumplimiento en todo momento.</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="border p-3 rounded-md"><strong class="text-teal-700">Licitud, lealtad y transparencia:</strong> Opera siempre con una base legal válida y comunica de forma clara qué haces con los datos.</div>
+                        <div class="border p-3 rounded-md"><strong class="text-teal-700">Limitación de la finalidad:</strong> Si recoges datos para un login, no los uses para marketing sin una base legal para ello.</div>
+                        <div class="border p-3 rounded-md"><strong class="text-teal-700">Minimización de datos:</strong> No pidas el DNI para una newsletter. Recoge solo lo estrictamente necesario.</div>
+                        <div class="border p-3 rounded-md"><strong class="text-teal-700">Exactitud:</strong> Implementa mecanismos para que los datos sean correctos y se actualicen.</div>
+                        <div class="border p-3 rounded-md"><strong class="text-teal-700">Limitación de la conservación:</strong> Define y aplica políticas de borrado. Los datos no se guardan para siempre.</div>
+                        <div class="border p-3 rounded-md"><strong class="text-teal-700">Integridad y confidencialidad:</strong> Tu dominio. Aquí entran el cifrado, el control de acceso y todas las medidas de ciberseguridad.</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="nuevos-valores" class="mb-20">
-            <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">La Reconfiguración de la Protección Jurídica</h2>
-             <div class="space-y-6">
-                <div class="strategic-insight p-6 rounded-lg">
-                    <h4 class="font-bold text-lg text-teal-700 font-mono">&gt; Táctica 01: La Evolución de la Privacidad</h4>
-                    <p class="text-stone-700 mt-2">La privacidad ha mutado. Tu enfoque para protegerla también debe hacerlo. Ya no se trata solo de construir muros, sino de dar control.</p>
-                    <ul class="list-decimal list-inside mt-2 text-stone-600 space-y-1">
-                        <li><strong>Fase 1 (Clásica):</strong> El "derecho a estar solo", a excluir a otros de una esfera privada.</li>
-                        <li><strong>Fase 2 (Habeas Data):</strong> El derecho a tener <strong class="text-black">CONTROL</strong> sobre tus datos personales (acceso, rectificación, supresión). Este es el corazón del RGPD.</li>
-                        <li><strong>Fase 3 (Actual):</strong> El "derecho al anonimato", a navegar y operar sin ser rastreado. Es una batalla técnica contra el perfilado masivo.</li>
-                    </ul>
+        <section id="derechos" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Legitimación y Derechos del Interesado</h2>
+            <div class="space-y-8">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">Bases Jurídicas para el Tratamiento (Art. 6 RGPD)</h3>
+                    <p class="text-stone-600 mb-4">No puedes tratar un dato sin una de estas justificaciones. Elige la correcta para cada operación.</p>
+                    <ol class="list-decimal list-inside space-y-2 text-stone-700">
+                        <li><strong>Consentimiento:</strong> Debe ser libre, específico, informado e inequívoco (¡no valen casillas pre-marcadas!). Para datos sensibles, debe ser explícito.</li>
+                        <li><strong>Ejecución de un contrato:</strong> Necesitas la dirección para enviar un producto comprado.</li>
+                        <li><strong>Obligación legal:</strong> Debes guardar las facturas por ley durante un tiempo determinado.</li>
+                        <li><strong>Interés vital:</strong> Para proteger la vida de alguien en una emergencia médica.</li>
+                        <li><strong>Interés público:</strong> Tareas realizadas por autoridades públicas.</li>
+                        <li><strong>Interés legítimo:</strong> Una base flexible pero peligrosa. Requiere un juicio de ponderación para asegurar que tu interés no prevalece sobre los derechos del individuo. Ej: seguridad de la red, prevención del fraude.</li>
+                    </ol>
                 </div>
-                <div class="reading-recommendation p-4 rounded-lg">
-                     <p><strong class="text-orange-700">Lectura Recomendada:</strong> Para profundizar en cómo la tecnología redefine los derechos, consulta "El Código 2.0 y otras leyes del ciberespacio" de Lawrence Lessig y "Psicopolítica" de Byung-Chul Han. Analizan el impacto social y de control que subyace a la tecnología.</p>
-                </div>
-                <div class="strategic-insight p-6 rounded-lg">
-                    <h4 class="font-bold text-lg text-teal-700 font-mono">&gt; Táctica 02: La Seguridad como Bien Jurídico en Sí Misma</h4>
-                    <p class="text-stone-700 mt-2">La ley está empezando a reconocer que la <strong class="text-black">seguridad de los sistemas informáticos</strong> no es solo un medio para proteger otros datos, sino un valor fundamental que merece protección por sí mismo. Para ti, esto significa:</p>
-                     <ul class="list-disc list-inside mt-2 text-stone-600 space-y-1">
-                        <li>Un ataque DDoS no es solo una "molestia técnica", es un atentado contra la <strong class="text-black">disponibilidad</strong>, un pilar de la seguridad y un bien jurídico protegido.</li>
-                        <li>La <strong class="text-black">integridad</strong> de los sistemas es clave para la confianza en el entorno digital. Un defacement o la alteración de datos ataca directamente esa confianza.</li>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">Derechos de los Interesados: El Arsenal del Ciudadano</h3>
+                    <p class="text-stone-600 mb-4">Como DPO u operador de seguridad, tu deber es facilitar el ejercicio de estos derechos. Tienes <strong class="text-black">1 mes</strong> para responder.</p>
+                     <ul class="list-disc list-inside space-y-2 text-stone-700">
+                        <li><strong class="font-mono">Acceso:</strong> "Quiero saber qué datos tienes sobre mí y para qué los usas."</li>
+                        <li><strong class="font-mono">Rectificación:</strong> "Mi dirección ha cambiado, actualízala."</li>
+                        <li><strong class="font-mono">Supresión (Olvido):</strong> "Bórrame de tu sistema." <strong class="text-red-600">OJO:</strong> No es absoluto. No puedes borrar datos si los necesitas para defenderte en un juicio o por una obligación legal.</li>
+                        <li><strong class="font-mono">Oposición:</strong> "No quiero que uses mis datos para marketing directo."</li>
+                        <li><strong class="font-mono">Limitación:</strong> "Mientras verificas si mis datos son correctos, márcalos para no usarlos."</li>
+                        <li><strong class="font-mono">Portabilidad:</strong> "Dame mis datos en un formato estándar para llevármelos a otro servicio."</li>
                     </ul>
                 </div>
             </div>
+        </section>
+
+        <section id="roles" class="mb-20">
+             <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Roles y Responsabilidad Proactiva (Accountability)</h2>
+              <div class="strategic-insight p-6 rounded-lg mb-8">
+                <h4 class="font-bold text-lg text-teal-700 font-mono">&gt; Táctica Central: Responsabilidad Proactiva</h4>
+                <p class="text-stone-700 mt-2">Este es el cambio de paradigma del RGPD. No basta con cumplir la ley, debes ser capaz de <strong class="text-black">DEMOSTRAR</strong> que la cumples en todo momento. Esto significa documentar decisiones, tener políticas claras, realizar análisis de riesgos y mantener un registro de actividades de tratamiento (RoPA).</p>
+            </div>
+             <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-2">Responsable del Tratamiento (RT)</h3>
+                    <p class="text-sm text-stone-500 mb-3">Controller</p>
+                    <p class="text-stone-600">Es quien <strong class="text-black">decide</strong> el "porqué" y el "cómo" del tratamiento. Es el máximo responsable legal del cumplimiento.</p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-2">Encargado del Tratamiento (ET)</h3>
+                    <p class="text-sm text-stone-500 mb-3">Processor</p>
+                    <p class="text-stone-600">Es un tercero que trata datos <strong class="text-black">por cuenta</strong> del responsable (ej. un proveedor de cloud, una gestoría). Su relación debe estar regulada por un contrato (<strong class="font-mono">Art. 28 RGPD</strong>).</p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-2">Delegado de Protección de Datos (DPD)</h3>
+                     <p class="text-sm text-stone-500 mb-3">Data Protection Officer (DPO)</p>
+                    <p class="text-stone-600">Es el asesor interno. <strong class="text-black">Supervisa y informa</strong> sobre la conformidad. Actúa de forma independiente y es el punto de contacto con la autoridad de control. Es obligatorio para autoridades públicas y empresas que realizan tratamientos a gran escala o de datos sensibles.</p>
+                </div>
+             </div>
+        </section>
+
+         <section id="medidas" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Medidas de Seguridad y Gestión de Incidentes</h2>
+            <div class="space-y-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">1. Privacidad desde el Diseño y por Defecto (Art. 25)</h3>
+                    <p class="text-stone-600">La seguridad y la privacidad no son un añadido, son parte del diseño inicial de cualquier nuevo sistema, producto o servicio. Implica aplicar la minimización y la seudonimización desde el minuto cero.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">2. Análisis y Evaluación de Riesgos (EIPD / DPIA)</h3>
+                    <p class="text-stone-600">Antes de iniciar un tratamiento que pueda entrañar un <strong class="text-black">alto riesgo</strong> (ej. uso de nuevas tecnologías, vigilancia a gran escala, tratamiento de datos sensibles), es obligatorio realizar una Evaluación de Impacto relativa a la Protección de Datos (<strong class="font-mono">Art. 35 RGPD</strong>) para identificar y mitigar dichos riesgos.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-red-600 mb-4">3. Notificación de Violaciones de Seguridad (Art. 33 y 34)</h3>
+                    <p class="text-stone-600">Protocolo de máxima prioridad:</p>
+                     <ul class="list-decimal list-inside space-y-2 mt-4 text-stone-700">
+                        <li><strong>¿Qué es una violación?</strong> Cualquier incidente que comprometa la confidencialidad, integridad o disponibilidad de los datos personales (ej. un ransomware, un acceso no autorizado, una pérdida de un portátil).</li>
+                        <li><strong>Notificación a la Autoridad de Control (AEPD):</strong> Debes notificar "sin dilación indebida" y, si es posible, en un plazo máximo de <strong class="text-black">72 horas</strong> desde que tienes constancia.</li>
+                        <li><strong>Comunicación a los Interesados:</strong> Solo es obligatorio si la violación entraña un <strong class="text-black">"alto riesgo"</strong> para sus derechos y libertades.</li>
+                     </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="expansion" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Expansión: Derechos Digitales y Conformidad</h2>
+            <div class="space-y-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">1. Nuevos Derechos Digitales en el Entorno Laboral (LOPDGDD)</h3>
+                    <p class="text-stone-600 mb-4">La ley española especifica derechos clave en el trabajo que debes conocer para la gestión de políticas internas:</p>
+                    <ul class="list-disc list-inside space-y-3 text-stone-700">
+                        <li>
+                            <strong class="text-black">Derecho a la Desconexión Digital (Art. 88):</strong> Garantiza el respeto al tiempo de descanso y vacaciones. Implica crear una política interna clara sobre comunicaciones fuera del horario laboral.
+                        </li>
+                        <li>
+                            <strong class="text-black">Videovigilancia y Geolocalización (Art. 89 y 90):</strong> Se permite su uso para control laboral, pero con límites estrictos. <strong class="text-red-600">PROHIBIDO</strong> en zonas de descanso (vestuarios, comedores). El trabajador debe ser informado de forma "expresa, clara e inequívoca".
+                        </li>
+                         <li>
+                            <strong class="text-black">Derecho al Olvido (Art. 93 y 94):</strong> Aplicado a buscadores y redes sociales. Un individuo puede solicitar la desindexación de enlaces obsoletos o irrelevantes que aparezcan al buscar su nombre.
+                        </li>
+                        <li>
+                            <strong class="text-black">Testamento Digital (Art. 96):</strong> Permite a los herederos o personas designadas acceder, modificar o suprimir los contenidos digitales de una persona fallecida.
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">2. El Arsenal de Conformidad: Demostrando Cumplimiento</h3>
+                    <p class="text-stone-600 mb-4">La "Responsabilidad Proactiva" exige pruebas. Estas son tus herramientas:</p>
+                     <div class="grid md:grid-cols-2 gap-4">
+                        <div class="border p-3 rounded-md">
+                            <strong class="text-teal-700">Códigos de Conducta (Art. 40)</strong>
+                            <p class="text-sm mt-1">Instrumentos de autorregulación para un sector específico (ej. sector sanitario, publicitario). Adherirse a uno demuestra un compromiso con buenas prácticas adaptadas a la realidad de ese sector.</p>
+                        </div>
+                        <div class="border p-3 rounded-md">
+                            <strong class="text-teal-700">Certificaciones (Art. 42)</strong>
+                            <p class="text-sm mt-1">Sellos o marcas de protección de datos emitidos por un organismo acreditado. Sirven para que un responsable o encargado demuestre que sus operaciones de tratamiento cumplen con el RGPD. Son voluntarias pero aumentan la transparencia y confianza.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="transferencias" class="mb-20">
+             <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Operaciones Globales: Transferencias y Sanciones</h2>
+             <div class="grid md:grid-cols-2 gap-10">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h3 class="text-xl font-bold mb-4">Transferencias Internacionales de Datos (TID)</h3>
+                     <p class="text-stone-600 mb-4">Enviar datos fuera del Espacio Económico Europeo (EEE) está prohibido por defecto. Solo se permite si se cumple una de estas condiciones:</p>
+                     <ul class="list-disc list-inside space-y-2 text-sm">
+                         <li>El país de destino tiene una <strong class="text-black">decisión de adecuación</strong> de la Comisión Europea.</li>
+                         <li>Se aportan <strong class="text-black">garantías adecuadas</strong>, como las Cláusulas Contractuales Tipo (CCT) o las Normas Corporativas Vinculantes (BCR).</li>
+                         <li>Se aplica alguna de las <strong class="text-black">excepciones</strong> del Art. 49 (ej. consentimiento explícito del interesado).</li>
+                     </ul>
+                     <p class="text-xs text-red-600 mt-4 font-mono">ALERTA: El TJUE anuló el "Privacy Shield" con EE.UU., lo que complica las transferencias a este país, dependiendo en gran medida de las CCT y análisis caso por caso.</p>
+                 </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h3 class="text-xl font-bold mb-4">Régimen Sancionador (Art. 83)</h3>
+                     <p class="text-stone-600 mb-4">Las multas son el último recurso, pero su cuantía es disuasoria. Se dividen en dos niveles:</p>
+                      <ul class="list-disc list-inside space-y-2 text-sm">
+                         <li><strong>Infracciones graves:</strong> Hasta 10M € o el 2% de la facturación anual global. (Ej: no notificar una brecha de seguridad).</li>
+                         <li><strong>Infracciones muy graves:</strong> Hasta 20M € o el 4% de la facturación anual global. (Ej: vulnerar los principios básicos, no atender los derechos de los interesados, realizar transferencias internacionales ilegales).</li>
+                     </ul>
+                 </div>
+             </div>
         </section>
 
         <section id="laboratorio" class="pt-12">
@@ -217,7 +298,7 @@
 
     <footer class="bg-stone-200 mt-20">
         <div class="container mx-auto px-6 py-4 text-center text-stone-600">
-            <p>&copy; 2025 Centro de Mando Jurídico. Creado a partir del documento "Fundamentos jurídicos.pdf".</p>
+            <p>&copy; 2025 Centro de Mando Jurídico. Creado a partir de los documentos "Fundamentos jurídicos.pdf" y "Legislación sobre protección de datos personales.pdf".</p>
         </div>
     </footer>
 
@@ -241,7 +322,6 @@
             });
         });
 
-        // --- Lógica del Laboratorio ---
         const answers = {
             1: { correct: 'b', feedback: 'Correcto. La notificación a la autoridad de control en 72 horas es una de las obligaciones más críticas y urgentes tras descubrir una brecha que suponga un riesgo.' },
             2: { correct: 'b', feedback: 'Exacto. El "responsable" es quien define los fines y medios del tratamiento (tu empresa), mientras que el "encargado" actúa bajo sus instrucciones (el proveedor de cloud). Ambos tienen obligaciones, pero la responsabilidad final recae en el responsable.' },
