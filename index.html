@@ -55,7 +55,7 @@
 </head>
 <body class="antialiased">
 
-    <div class="container mx-auto px-6 py-12 md:py-20 max-w-3xl min-h-screen flex flex-col">
+    <div class="container mx-auto px-6 py-12 md:py-20 max-w-5xl min-h-screen flex flex-col">
 
         <!-- Cabeçalho -->
         <header class="mb-12 md:mb-16">
@@ -67,60 +67,78 @@
         </header>
 
         <!-- Conteúdo Principal -->
-        <main class="flex-grow space-y-12">
+        <main class="flex-grow">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-16">
 
-            <!-- Módulo: Fundamentos de Ciberseguridad -->
-            <section id="module-01">
-                <h2 class="text-xl font-semibold mb-6 text-neutral-200 border-b border-glow pb-2">
-                    <span class="text-cyan-glow">[M01]</span> Fundamentos de Ciberseguridad
-                </h2>
-                <div class="space-y-4">
-                    <!-- Link Guia -->
-                    <a href="./fundamentos-ciberseguridad/explorador-interactivo.html" class="link-item flex items-center justify-between p-4 rounded-md">
-                        <div class="flex items-center">
-                            <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
-                            <span class="text-neutral-200 font-medium">Guia_Riesgos_Vulnerabilidades_Amenazas</span>
-                        </div>
-                        <span class="text-xs font-bold text-cyan-400 border border-cyan-400/50 px-2 py-1 rounded">GUIA</span>
-                    </a>
-                    <!-- Link Laboratório -->
-                    <a href="./fundamentos-ciberseguridad/laboratorio-analise-risco.html" class="link-item flex items-center justify-between p-4 rounded-md">
-                        <div class="flex items-center">
-                            <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
-                            <span class="text-neutral-200 font-medium">Lab_Reto1_Analise_Risco_Videovigilancia</span>
-                        </div>
-                        <span class="text-xs font-bold text-yellow-400 border border-yellow-400/50 px-2 py-1 rounded">LAB</span>
-                    </a>
-                </div>
-            </section>
+                <!-- Módulo: Fundamentos de Ciberseguridad -->
+                <section id="module-01">
+                    <h2 class="text-xl font-semibold mb-6 text-neutral-200 border-b border-glow pb-2">
+                        <span class="text-cyan-glow">[M01]</span> Fundamentos de Ciberseguridad
+                    </h2>
+                    <div class="space-y-4">
+                        <!-- Link Guia -->
+                        <a href="./fundamentos-ciberseguridad/explorador-interactivo.html" class="link-item flex items-center justify-between p-4 rounded-md">
+                            <div class="flex items-center">
+                                <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
+                                <span class="text-neutral-200 font-medium">Guia_Riesgos_Vulnerabilidades_Amenazas</span>
+                            </div>
+                            <span class="text-xs font-bold text-cyan-400 border border-cyan-400/50 px-2 py-1 rounded">GUIA</span>
+                        </a>
+                        <!-- Link Laboratório -->
+                        <a href="./fundamentos-ciberseguridad/laboratorio-analise-risco.html" class="link-item flex items-center justify-between p-4 rounded-md">
+                            <div class="flex items-center">
+                                <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
+                                <span class="text-neutral-200 font-medium">Lab_Reto1_Analise_Risco_Videovigilancia</span>
+                            </div>
+                            <span class="text-xs font-bold text-yellow-400 border border-yellow-400/50 px-2 py-1 rounded">LAB</span>
+                        </a>
+                    </div>
+                </section>
 
-            <!-- Módulo: Fundamentos de redes y arquitecturas -->
-            <section id="module-02">
-                <h2 class="text-xl font-semibold mb-6 text-neutral-200 border-b border-glow pb-2">
-                    <span class="text-cyan-glow">[M02]</span> Fundamentos de Redes y Arquitecturas
-                </h2>
-                <div class="space-y-4">
-                      <!-- Link Guia -->
-                      <a href="./fundamentos-redes/guia-redes.html" class="link-item flex items-center justify-between p-4 rounded-md">
-                        <div class="flex items-center">
-                            <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
-                            <span class="text-neutral-200 font-medium">Guia_Redes_Computadoras</span>
-                        </div>
-                        <span class="text-xs font-bold text-cyan-400 border border-cyan-400/50 px-2 py-1 rounded">GUIA</span>
-                    </a>
-                    <!-- Link Laboratório -->
-                    <a href="./fundamentos-redes/lab-reto-1.html" class="link-item flex items-center justify-between p-4 rounded-md">
-                        <div class="flex items-center">
-                            <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
-                            <span class="text-neutral-200 font-medium">Lab_Reto1_Anatomia_Red_Domestica</span>
-                        </div>
-                        <span class="text-xs font-bold text-yellow-400 border border-yellow-400/50 px-2 py-1 rounded">LAB</span>
-                    </a>
-                </div>
-            </section>
+                <!-- Módulo: Fundamentos de redes y arquitecturas -->
+                <section id="module-02">
+                    <h2 class="text-xl font-semibold mb-6 text-neutral-200 border-b border-glow pb-2">
+                        <span class="text-cyan-glow">[M02]</span> Fundamentos de Redes y Arquitecturas
+                    </h2>
+                    <div class="space-y-4">
+                          <!-- Link Guia -->
+                          <a href="./fundamentos-redes/guia-redes.html" class="link-item flex items-center justify-between p-4 rounded-md">
+                            <div class="flex items-center">
+                                <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
+                                <span class="text-neutral-200 font-medium">Guia_Redes_Computadoras</span>
+                            </div>
+                            <span class="text-xs font-bold text-cyan-400 border border-cyan-400/50 px-2 py-1 rounded">GUIA</span>
+                        </a>
+                        <!-- Link Laboratório -->
+                        <a href="./fundamentos-redes/laboratorio-reto-1.html" class="link-item flex items-center justify-between p-4 rounded-md">
+                            <div class="flex items-center">
+                                <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
+                                <span class="text-neutral-200 font-medium">Lab_Reto1_Anatomia_Red_Domestica</span>
+                            </div>
+                            <span class="text-xs font-bold text-yellow-400 border border-yellow-400/50 px-2 py-1 rounded">LAB</span>
+                        </a>
+                    </div>
+                </section>
 
-             <!-- Adicione mais módulos aqui -->
+                <!-- Módulo: Legislación y protección de datos -->
+                <section id="module-03">
+                    <h2 class="text-xl font-semibold mb-6 text-neutral-200 border-b border-glow pb-2">
+                        <span class="text-cyan-glow">[M03]</span> Legislación y Protección de Datos
+                    </h2>
+                    <div class="space-y-4">
+                          <!-- Link Guia -->
+                          <a href="./legislacion-proteccion-datos/guia-fundamentos-juridicos.html" class="link-item flex items-center justify-between p-4 rounded-md">
+                            <div class="flex items-center">
+                                <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
+                                <span class="text-neutral-200 font-medium">Guia_Fundamentos_Juridicos_y_RGPD</span>
+                            </div>
+                            <span class="text-xs font-bold text-cyan-400 border border-cyan-400/50 px-2 py-1 rounded">GUIA</span>
+                        </a>
+                    </div>
+                </section>
 
+                 <!-- Adicione mais módulos aqui -->
+            </div>
         </main>
 
         <!-- Rodapé -->
