@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Mando Jurídico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f4; /* stone-100 */
+            color: #1c1917; /* stone-900 */
+        }
+        .font-mono {
+            font-family: 'Roboto Mono', monospace;
+        }
+        .nav-link { transition: color 0.3s, border-bottom-color 0.3s; }
+        .nav-link:hover, .nav-link.active { color: #0d9488; border-bottom-color: #0d9488; }
+        .strategic-insight {
+            border-left: 4px solid #0d9488; /* teal-600 */
+            background-color: #f0fdfa; /* teal-50 */
+        }
+        .reading-recommendation {
+            border-left: 4px solid #f97316; /* orange-500 */
+            background-color: #fff7ed; /* orange-50 */
+            font-size: 0.875rem;
+        }
+        .lab-option { transition: background-color 0.3s, border-color 0.3s, color 0.3s; cursor: pointer; }
+        .lab-option.correct { background-color: #10b981 !important; border-color: #059669 !important; color: white !important; }
+        .lab-option.incorrect { background-color: #ef4444 !important; border-color: #dc2626 !important; color: white !important; }
+        .feedback { padding: 1rem; border-radius: 0.375rem; font-weight: 600; }
+        .feedback-correct { background-color: rgba(16, 185, 129, 0.1); color: #059669; }
+        .feedback-incorrect { background-color: rgba(239, 68, 68, 0.1); color: #b91c1c; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-stone-100 shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-teal-700">Centro de Mando Jurídico</h1>
+            <div class="hidden md:flex space-x-6">
+                <a href="#briefing" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Intel Briefing</a>
+                <a href="#marco-legal" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Marco Legal</a>
+                <a href="#riesgos-digitales" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Riesgos Digitales</a>
+                <a href="#nuevos-valores" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Nuevos Valores</a>
+                <a href="#laboratorio" class="nav-link font-bold text-yellow-600 border-b-2 border-transparent pb-1">LABORATORIO</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-stone-700">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#briefing" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Intel Briefing</a>
+            <a href="#marco-legal" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Marco Legal</a>
+            <a href="#riesgos-digitales" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Riesgos Digitales</a>
+            <a href="#nuevos-valores" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Nuevos Valores</a>
+            <a href="#laboratorio" class="block py-2 px-4 text-sm font-bold text-yellow-600 hover:bg-stone-200">LABORATORIO</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <section id="briefing" class="text-center mb-20">
+            <h2 class="text-4xl font-bold text-stone-800 mb-4">Módulo de Operaciones Legales</h2>
+            <p class="text-lg text-stone-600 max-w-3xl mx-auto">
+                La ley no es un obstáculo, es parte del terreno de operaciones. Entender el marco jurídico te da una ventaja táctica para proteger activos, gestionar incidentes y operar con legitimidad en el ciberespacio. Aquí aprenderás las reglas del juego.
+            </p>
+        </section>
+
+        <section id="marco-legal" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Análisis del Marco Legal: UE y España</h2>
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">El Derecho de la Unión Europea</h3>
+                    <p class="text-stone-600 mb-4">La UE legisla principalmente de dos formas. Es vital entender la diferencia:</p>
+                    <ul class="space-y-3">
+                        <li class="border border-stone-200 p-3 rounded-md">
+                            <strong class="text-teal-700 font-mono">Reglamentos (Ej: RGPD)</strong>
+                            <p class="text-stone-600 text-sm mt-1">Son de <strong class="text-black">aplicación directa</strong> y uniforme en TODOS los países miembros. No necesitan "traducción" a leyes nacionales. Crean un estándar único.</p>
+                        </li>
+                        <li class="border border-stone-200 p-3 rounded-md">
+                            <strong class="text-teal-700 font-mono">Directivas (Ej: Directiva sobre e-commerce)</strong>
+                            <p class="text-stone-600 text-sm mt-1">Marcan objetivos, pero cada país miembro debe crear o adaptar sus propias leyes para cumplirlos (<strong class="text-black">transposición</strong>).</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">El Ordenamiento Jurídico Español</h3>
+                    <p class="text-stone-600 mb-4">Se estructura en dos grandes áreas:</p>
+                    <ul class="space-y-3">
+                        <li class="border border-stone-200 p-3 rounded-md">
+                            <strong class="text-teal-700 font-mono">Derecho Privado</strong>
+                            <p class="text-stone-600 text-sm mt-1">Regula conflictos entre particulares. Ej: un incumplimiento de contrato (Derecho Civil).</p>
+                        </li>
+                        <li class="border border-stone-200 p-3 rounded-md">
+                            <strong class="text-teal-700 font-mono">Derecho Público</strong>
+                            <p class="text-stone-600 text-sm mt-1">Regula la relación del Estado con los particulares. Incluye el <strong class="text-black">Derecho Penal</strong>, la herramienta más severa del Estado (<em class="font-semibold">ultima ratio</em>), reservada para los ataques más graves a bienes jurídicos (delitos).</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="riesgos-digitales" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Nuevos Riesgos para Derechos Clásicos</h2>
+            <p class="text-center text-stone-600 -mt-8 mb-12">La tecnología no crea delitos de la nada, pero sí magnifica las amenazas a derechos fundamentales.</p>
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-bold text-lg mb-2">1. Lesiones al Derecho a la Intimidad</h4>
+                        <ul class="list-disc list-inside space-y-2 text-stone-600">
+                            <li><strong>Interceptación:</strong> Uso de <em class="font-semibold">sniffers</em> para capturar tráfico de red.</li>
+                            <li><strong>Monitorización y Perfilado:</strong> Rastreo mediante <em class="font-semibold">cookies, web bugs y spyware</em> para crear perfiles de usuario y dirigir publicidad (<em class="font-semibold">cibermarketing</em>).</li>
+                            <li><strong>Publicidad Invasiva:</strong> Envío de correo no solicitado (<em class="font-semibold">spamming</em>).</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg mb-2">2. Ataques a Activos Económicos</h4>
+                        <ul class="list-disc list-inside space-y-2 text-stone-600">
+                            <li><strong>Secretos Empresariales:</strong> Acceso y exfiltración de información sensible (propiedad industrial, datos estratégicos) almacenada digitalmente.</li>
+                            <li><strong>Propiedad Intelectual:</strong> Copia y distribución masiva no autorizada de software y contenido a través de redes P2P y otras plataformas.</li>
+                        </ul>
+                    </div>
+                    <div class="md:col-span-2">
+                        <h4 class="font-bold text-lg mb-2 mt-4">3. Otros Derechos Afectados</h4>
+                        <ul class="list-disc list-inside space-y-2 text-stone-600">
+                            <li><strong>Libertad e Indemnidad Sexual del Menor:</strong> Facilitado por la proliferación de webcams y la distribución por redes anónimas.</li>
+                            <li><strong>Honor y Dignidad:</strong> Difusión de mensajes de odio (racistas, xenófobos) e injurias, amplificados por la viralidad de la red.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="nuevos-valores" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">La Reconfiguración de la Protección Jurídica</h2>
+             <div class="space-y-6">
+                <div class="strategic-insight p-6 rounded-lg">
+                    <h4 class="font-bold text-lg text-teal-700 font-mono">&gt; Táctica 01: La Evolución de la Privacidad</h4>
+                    <p class="text-stone-700 mt-2">La privacidad ha mutado. Tu enfoque para protegerla también debe hacerlo. Ya no se trata solo de construir muros, sino de dar control.</p>
+                    <ul class="list-decimal list-inside mt-2 text-stone-600 space-y-1">
+                        <li><strong>Fase 1 (Clásica):</strong> El "derecho a estar solo", a excluir a otros de una esfera privada.</li>
+                        <li><strong>Fase 2 (Habeas Data):</strong> El derecho a tener <strong class="text-black">CONTROL</strong> sobre tus datos personales (acceso, rectificación, supresión). Este es el corazón del RGPD.</li>
+                        <li><strong>Fase 3 (Actual):</strong> El "derecho al anonimato", a navegar y operar sin ser rastreado. Es una batalla técnica contra el perfilado masivo.</li>
+                    </ul>
+                </div>
+                <div class="reading-recommendation p-4 rounded-lg">
+                     <p><strong class="text-orange-700">Lectura Recomendada:</strong> Para profundizar en cómo la tecnología redefine los derechos, consulta "El Código 2.0 y otras leyes del ciberespacio" de Lawrence Lessig y "Psicopolítica" de Byung-Chul Han. Analizan el impacto social y de control que subyace a la tecnología.</p>
+                </div>
+                <div class="strategic-insight p-6 rounded-lg">
+                    <h4 class="font-bold text-lg text-teal-700 font-mono">&gt; Táctica 02: La Seguridad como Bien Jurídico en Sí Misma</h4>
+                    <p class="text-stone-700 mt-2">La ley está empezando a reconocer que la <strong class="text-black">seguridad de los sistemas informáticos</strong> no es solo un medio para proteger otros datos, sino un valor fundamental que merece protección por sí mismo. Para ti, esto significa:</p>
+                     <ul class="list-disc list-inside mt-2 text-stone-600 space-y-1">
+                        <li>Un ataque DDoS no es solo una "molestia técnica", es un atentado contra la <strong class="text-black">disponibilidad</strong>, un pilar de la seguridad y un bien jurídico protegido.</li>
+                        <li>La <strong class="text-black">integridad</strong> de los sistemas es clave para la confianza en el entorno digital. Un defacement o la alteración de datos ataca directamente esa confianza.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="laboratorio" class="pt-12">
+            <div class="bg-gray-800 text-white p-8 rounded-lg shadow-2xl border-t-4 border-yellow-400">
+                <h2 class="text-3xl font-bold text-center text-yellow-400 mb-2">Laboratorio de Simulación</h2>
+                <p class="text-center text-stone-300 mb-8">Incidente 03: La Fuga de Datos y el RGPD</p>
+                
+                <div class="bg-black/50 p-6 rounded-lg">
+                    <h3 class="text-xl font-bold mb-4 border-b border-yellow-400/50 pb-2">Situación</h3>
+                    <p class="text-stone-300">Recibes una alerta. Un servidor de base de datos no parcheado que contenía información de clientes (nombres, correos, historial de compras) ha sido expuesto en Internet. La evidencia sugiere que los datos han sido exfiltrados. Eres el analista a cargo de la respuesta inicial.</p>
+                </div>
+
+                <div id="quiz-questions" class="mt-8">
+                    <div id="q1-container" class="question-container">
+                        <p class="font-semibold mb-4 text-gray-200">Pregunta 1: ¿Cuál es tu primera obligación legal crítica bajo el RGPD?</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <button class="lab-option bg-stone-700 p-4 rounded-md text-left hover:bg-stone-600" onclick="checkAnswer(1, 'a')">A) Formatear el servidor para eliminar rastros.</button>
+                            <button class="lab-option bg-stone-700 p-4 rounded-md text-left hover:bg-stone-600" onclick="checkAnswer(1, 'b')">B) Notificar la brecha a la autoridad de control (ej. AEPD) en un plazo máximo de 72 horas.</button>
+                            <button class="lab-option bg-stone-700 p-4 rounded-md text-left hover:bg-stone-600" onclick="checkAnswer(1, 'c')">C) Enviar inmediatamente un correo a todos los clientes informando del problema.</button>
+                            <button class="lab-option bg-stone-700 p-4 rounded-md text-left hover:bg-stone-600" onclick="checkAnswer(1, 'd')">D) Esperar a tener el informe forense completo antes de comunicar nada.</button>
+                        </div>
+                        <div id="f1" class="feedback mt-4 hidden"></div>
+                    </div>
+
+                    <div id="q2-container" class="question-container hidden mt-8">
+                        <p class="font-semibold mb-4 text-gray-200">Pregunta 2: La empresa utiliza un proveedor de cloud americano para alojar la base de datos. ¿Quién es el "responsable del tratamiento" y quién el "encargado del tratamiento" según el RGPD?</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <button class="lab-option bg-stone-700 p-4 rounded-md text-left hover:bg-stone-600" onclick="checkAnswer(2, 'a')">A) El proveedor de cloud es el responsable, ya que tiene los datos físicamente.</button>
+                            <button class="lab-option bg-stone-700 p-4 rounded-md text-left hover:bg-stone-600" onclick="checkAnswer(2, 'b')">B) Tu empresa es la responsable (decide el porqué y cómo del tratamiento) y el proveedor es el encargado (trata los datos por cuenta de tu empresa).</button>
+                            <button class="lab-option bg-stone-700 p-4 rounded-md text-left hover:bg-stone-600" onclick="checkAnswer(2, 'c')">C) Ambos son corresponsables con la misma carga legal.</button>
+                            <button class="lab-option bg-stone-700 p-4 rounded-md text-left hover:bg-stone-600" onclick="checkAnswer(2, 'd')">D) El RGPD no se aplica, ya que el proveedor está en EE.UU.</button>
+                        </div>
+                        <div id="f2" class="feedback mt-4 hidden"></div>
+                    </div>
+                    
+                    <div id="q3-container" class="question-container hidden mt-8">
+                        <p class="font-semibold mb-4 text-gray-200">Pregunta 3: El RGPD es un "Reglamento" de la UE. ¿Qué implicación práctica tiene esto para España?</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <button class="lab-option bg-stone-700 p-4 rounded-md text-left hover:bg-stone-600" onclick="checkAnswer(3, 'a')">A) Es de aplicación directa y obligatoria, sin necesidad de una ley española que lo "traduzca" o trasponga.</button>
+                            <button class="lab-option bg-stone-700 p-4 rounded-md text-left hover:bg-stone-600" onclick="checkAnswer(3, 'b')">B) Es una recomendación, cada país decide si lo aplica.</button>
+                            <button class="lab-option bg-stone-700 p-4 rounded-md text-left hover:bg-stone-600" onclick="checkAnswer(3, 'c')">C) España tuvo que crear una ley completamente nueva desde cero para que tuviera validez.</button>
+                            <button class="lab-option bg-stone-700 p-4 rounded-md text-left hover:bg-stone-600" onclick="checkAnswer(3, 'd')">D) Solo se aplica a empresas que operan en más de un país de la UE.</button>
+                        </div>
+                        <div id="f3" class="feedback mt-4 hidden"></div>
+                    </div>
+                </div>
+
+                <div id="lab-completed" class="hidden mt-8 text-center">
+                    <h3 class="text-2xl font-bold text-green-400">ANÁLISIS LEGAL COMPLETADO</h3>
+                    <p class="text-gray-300 mt-4">Has demostrado comprender las implicaciones legales inmediatas de una brecha de seguridad bajo el marco del RGPD. Tus decisiones iniciales son correctas y se alinean con las obligaciones de la normativa.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-stone-200 mt-20">
+        <div class="container mx-auto px-6 py-4 text-center text-stone-600">
+            <p>&copy; 2025 Centro de Mando Jurídico. Creado a partir del documento "Fundamentos jurídicos.pdf".</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+
+            const navLinks = document.querySelectorAll('.nav-link, #mobile-menu a');
+            const sections = document.querySelectorAll('main section');
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    if (pageYOffset >= section.offsetTop - 100) { current = section.getAttribute('id'); }
+                });
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href')?.substring(1) === current) { link.classList.add('active'); }
+                });
+            });
+        });
+
+        // --- Lógica del Laboratorio ---
+        const answers = {
+            1: { correct: 'b', feedback: 'Correcto. La notificación a la autoridad de control en 72 horas es una de las obligaciones más críticas y urgentes tras descubrir una brecha que suponga un riesgo.' },
+            2: { correct: 'b', feedback: 'Exacto. El "responsable" es quien define los fines y medios del tratamiento (tu empresa), mientras que el "encargado" actúa bajo sus instrucciones (el proveedor de cloud). Ambos tienen obligaciones, pero la responsabilidad final recae en el responsable.' },
+            3: { correct: 'a', feedback: 'Preciso. A diferencia de una Directiva, un Reglamento de la UE tiene carácter general, es obligatorio en todos sus elementos y directamente aplicable en cada Estado miembro, garantizando una legislación armonizada.' }
+        };
+
+        function checkAnswer(questionNum, selectedOption) {
+            const questionData = answers[questionNum];
+            const feedbackEl = document.getElementById(`f${questionNum}`);
+            const containerEl = document.getElementById(`q${questionNum}-container`);
+            const options = Array.from(containerEl.querySelectorAll('.lab-option'));
+
+            options.forEach(opt => { opt.disabled = true; });
+
+            const selectedButton = options.find(opt => opt.getAttribute('onclick').includes(`'${selectedOption}'`));
+
+            if (selectedOption === questionData.correct) {
+                feedbackEl.innerHTML = `<p class="font-bold">Análisis Correcto:</p><p>${questionData.feedback}</p>`;
+                feedbackEl.className = 'feedback feedback-correct';
+                if(selectedButton) selectedButton.classList.add('correct');
+                
+                setTimeout(() => {
+                    const nextQuestion = document.getElementById(`q${questionNum + 1}-container`);
+                    if (nextQuestion) {
+                        nextQuestion.classList.remove('hidden');
+                    } else {
+                        document.getElementById('lab-completed').classList.remove('hidden');
+                    }
+                }, 4000);
+
+            } else {
+                feedbackEl.innerHTML = `<p class="font-bold">Análisis Incorrecto:</p><p>Revisa el briefing. La decisión tomada no se alinea con el protocolo legal.</p>`;
+                feedbackEl.className = 'feedback feedback-incorrect';
+                if(selectedButton) selectedButton.classList.add('incorrect');
+
+                setTimeout(() => {
+                    feedbackEl.classList.add('hidden');
+                    if(selectedButton) selectedButton.classList.remove('incorrect');
+                    options.forEach(opt => { opt.disabled = false; });
+                }, 4000);
+            }
+            feedbackEl.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
+
