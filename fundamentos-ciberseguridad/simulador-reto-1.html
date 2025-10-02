@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Tático: Reto 1 - Análise de Risco (ENS/MAGERIT)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        .tab-button { transition: all 0.3s; }
+        .tab-button.active {
+            background-color: #0c4a6e; /* sky-900 */
+            color: white;
+            font-weight: 600;
+        }
+        .intel-briefing {
+            background-color: #f0f9ff; /* sky-50 */
+            border-left: 4px solid #0ea5e9; /* sky-500 */
+        }
+        .task-item:not(:last-child) {
+            border-bottom: 1px solid #e2e8f0; /* slate-200 */
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-10">
+        <div class="container mx-auto px-6 py-4 text-center">
+            <h1 class="text-2xl md:text-3xl font-bold text-sky-900">Simulador Tático: Análise de Risco (ENS/MAGERIT)</h1>
+            <p class="text-slate-600 mt-1">Cenário: PANDEFX VFX Studio - Reto 1</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-10">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl font-bold text-slate-800">BRIEFING DE LA MISIÓN</h2>
+                <p class="text-slate-600 mt-2">Tu rol como experto en seguridad es liderar el proyecto de análisis de riesgos para PANDEFX. Este simulador te guiará a través de las preguntas del Reto 1, proporcionando la inteligencia necesaria de los manuales ENS y MAGERIT para que construyas tus propias respuestas.</p>
+            </div>
+
+            <!-- Contenedor principal con pestañas -->
+            <div class="bg-white p-4 sm:p-6 rounded-lg shadow-lg">
+                <div class="flex flex-col sm:flex-row border-b border-slate-200 mb-6">
+                    <button class="tab-button py-3 px-4 text-sm sm:text-base text-center w-full sm:w-auto active" onclick="showTab('a')">a) Organización y Roles</button>
+                    <button class="tab-button py-3 px-4 text-sm sm:text-base text-center w-full sm:w-auto" onclick="showTab('b')">b) Identificación de Activos</button>
+                    <button class="tab-button py-3 px-4 text-sm sm:text-base text-center w-full sm:w-auto" onclick="showTab('c')">c) Selección de Medidas (ENS)</button>
+                    <button class="tab-button py-3 px-4 text-sm sm:text-base text-center w-full sm:w-auto" onclick="showTab('d')">d) Reflexión y Herramientas</button>
+                </div>
+
+                <!-- Contenido de las Pestañas -->
+                <div id="tab-content">
+                    <!-- Pestaña A: Organización y Roles -->
+                    <div id="tab-a" class="tab-panel">
+                        <h3 class="text-xl font-bold text-sky-800 mb-4">Pregunta (a): Organización de Seguridad y Roles</h3>
+                        <div class="intel-briefing p-4 rounded-md mb-6">
+                            <h4 class="font-bold text-sky-900">Intel Drop: ENS Art. 11 y 13 / CCN-STIC-801</h4>
+                            <p class="text-slate-700 mt-2 text-sm">El <strong>Esquema Nacional de Seguridad (ENS)</strong> exige una estructura de roles clara para la gestión de la seguridad. Los roles clave son:</p>
+                            <ul class="list-disc list-inside mt-2 space-y-1 text-sm">
+                                <li><strong>Responsable de la Información:</strong> Decide el 'qué'. Define los requisitos de seguridad de la información (ej. "los guiones de películas son confidenciales"). Usualmente un rol de alto nivel directivo.</li>
+                                <li><strong>Responsable del Servicio:</strong> Decide el 'qué' a nivel de servicio. Define los requisitos de seguridad de los servicios prestados (ej. "la plataforma de colaboración debe estar disponible 99.9%").</li>
+                                <li><strong>Responsable de Seguridad:</strong> Decide el 'cómo'. Determina las medidas de seguridad a implementar para cumplir los requisitos. Es el estratega de seguridad.</li>
+                                <li><strong>Responsable del Sistema:</strong> Decide el 'cómo' a nivel técnico. Es el responsable de operar y mantener el sistema de información seguro en el día a día. Es el implementador.</li>
+                            </ul>
+                        </div>
+                        <h4 class="font-semibold text-lg mb-3">Tu Tarea:</h4>
+                        <p class="text-slate-700 mb-6">Basado en el briefing y el escenario de PANDEFX, define en tu informe los roles que deberían existir en la empresa y describe brevemente sus responsabilidades. Considera qué perfiles dentro de PANDEFX (Dirección, Jefe de TI, etc.) podrían asumir cada rol.</p>
+                    </div>
+
+                    <!-- Pestaña B: Identificación de Activos -->
+                    <div id="tab-b" class="tab-panel hidden">
+                         <h3 class="text-xl font-bold text-sky-800 mb-4">Pregunta (b): Identificación de Activos (MAGERIT)</h3>
+                         <div class="intel-briefing p-4 rounded-md mb-6">
+                             <h4 class="font-bold text-sky-900">Intel Drop: MAGERIT v3 - Libro II</h4>
+                             <p class="text-slate-700 mt-2 text-sm">MAGERIT clasifica los activos para entender sus dependencias. La base son los **Activos Esenciales**:</p>
+                            <ul class="list-disc list-inside mt-2 space-y-1 text-sm">
+                                <li><strong>Información [D]:</strong> El valor intrínseco. Ej: `[D.source]` (código fuente), `[D.files]` (archivos de proyectos), `[D.log]` (registros de actividad).</li>
+                                <li><strong>Servicios [S]:</strong> Lo que el sistema HACE. Ej: `[S.email]` (correo), `[S.file]` (almacenamiento), `[S.www]` (portal web).</li>
+                            </ul>
+                            <p class="text-slate-700 mt-2 text-sm">Estos dependen de **Activos de Soporte**:</p>
+                             <ul class="list-disc list-inside mt-2 space-y-1 text-sm">
+                                <li><strong>Hardware [HW]:</strong> `[HW.pc]` (estaciones de trabajo), `[HW.host]` (servidores), `[HW.firewall]`.</li>
+                                <li><strong>Software [SW]:</strong> `[SW.os]` (sistemas operativos), `[SW.dbms]` (bases de datos), `[SW.av]` (antivirus).</li>
+                                <li><strong>Comunicaciones [COM]:</strong> `[COM.LAN]`, `[COM.wifi]`, `[COM.Internet]`.</li>
+                                <li><strong>Instalaciones [L]:</strong> `[L.building]` (edificio), `[L.local]` (CPD).</li>
+                                <li><strong>Personal [P]:</strong> `[P.ui]` (usuarios internos), `[P.adm]` (administradores).</li>
+                             </ul>
+                         </div>
+                         <h4 class="font-semibold text-lg mb-3">Tu Tarea (Checklist Interactivo):</h4>
+                         <p class="text-slate-700 mb-4">Usa el siguiente checklist para identificar los activos de PANDEFX. Esto te ayudará a estructurar tu respuesta en el informe.</p>
+                         <div id="asset-checklist" class="space-y-3">
+                            <!-- Items del checklist serán generados por JS -->
+                         </div>
+                    </div>
+
+                    <!-- Pestaña C: Selección de Medidas -->
+                    <div id="tab-c" class="tab-panel hidden">
+                        <h3 class="text-xl font-bold text-sky-800 mb-4">Pregunta (c): Selección de Medidas de Seguridad (ENS)</h3>
+                        <div class="intel-briefing p-4 rounded-md mb-6">
+                            <h4 class="font-bold text-sky-900">Intel Drop: ENS Anexo II - Catálogo de Medidas</h4>
+                            <p class="text-slate-700 mt-2 text-sm">El ENS organiza las medidas en tres marcos: **Organizativo [org]**, **Operacional [op]** y de **Protección [mp]**. Para una categoría BÁSICA, el foco está en establecer una base sólida de seguridad.</p>
+                             <p class="text-slate-700 mt-2 text-sm">Ejemplos de medidas relevantes para PANDEFX:</p>
+                            <ul class="list-disc list-inside mt-2 space-y-1 text-sm">
+                                <li><strong class="font-mono">[op.auth]</strong> - Identificación y autenticación: Asegurar que solo usuarios legítimos accedan (ej. VPN para teletrabajo).</li>
+                                <li><strong class="font-mono">[op.acc]</strong> - Control de acceso: Limitar a qué puede acceder cada usuario (ej. OpenLDAP).</li>
+                                <li><strong class="font-mono">[mp.info.2]</strong> - Protección de la información almacenada: Controles para los datos en reposo (ej. en el almacenamiento en red).</li>
+                                <li><strong class="font-mono">[mp.com.3]</strong> - Protección de las comunicaciones: Cifrado de datos en tránsito (ej. VPN, HTTPS para portales de clientes).</li>
+                            </ul>
+                        </div>
+                        <h4 class="font-semibold text-lg mb-3">Tu Tarea:</h4>
+                        <p class="text-slate-700 mb-6">Selecciona en tu informe 10 medidas del Anexo II del ENS. Para cada una, descríbela brevemente y justifica por qué es aplicable al escenario de PANDEFX. Usa la inteligencia anterior como punto de partida.</p>
+                    </div>
+
+                    <!-- Pestaña D: Reflexión y Herramientas -->
+                    <div id="tab-d" class="tab-panel hidden">
+                        <h3 class="text-xl font-bold text-sky-800 mb-4">Pregunta (d): Reflexión sobre la Categoría y Uso de µPILAR</h3>
+                        <div class="intel-briefing p-4 rounded-md mb-6">
+                            <h4 class="font-bold text-sky-900">Intel Drop: ENS - Categorización de Sistemas</h4>
+                            <p class="text-slate-700 mt-2 text-sm">La categoría de un sistema (BAJA, MEDIA, ALTA) se determina analizando el impacto de un incidente en las dimensiones de seguridad (Confidencialidad, Integridad, Disponibilidad, etc.) sobre los servicios que presta y la información que maneja.</p>
+                             <p class="text-slate-700 mt-2 text-sm"><strong>Reflexión clave:</strong> Un sistema que maneja propiedad intelectual de alto valor y datos confidenciales de clientes (como guiones de películas de gran éxito), ¿realmente tendría un impacto "bajo" o "limitado" si sufre una brecha de confidencialidad? ¿O el impacto sería "grave" o "muy grave"?</p>
+                        </div>
+                         <h4 class="font-semibold text-lg mb-3">Tu Tarea:</h4>
+                         <p class="text-slate-700 mb-6">1. **Usar µPILAR:** Sigue las guías para modelar el sistema de PANDEFX en la herramienta. Define los activos, sus dependencias y valora el impacto en cada dimensión. El objetivo es plasmar tu análisis en un formato estándar.</p>
+                         <p class="text-slate-700 mb-6">2. **Reflexionar sobre la Categoría:** En tu informe, argumenta si la categoría BÁSICA es adecuada para PANDEFX. Usa el *Intel Drop* anterior. ¿Un incidente de confidencialidad (filtración de una película) tendría un impacto bajo? ¿Qué categoría propondrías tú y por qué? Esta es tu oportunidad de demostrar pensamiento crítico como analista de seguridad.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-slate-100 mt-12 py-4">
+        <div class="container mx-auto px-6 text-center text-slate-500 text-sm">
+            <p>Este simulador es una herramienta de entrenamiento para guiar tu análisis del Reto 1.</p>
+        </div>
+    </footer>
+
+<script>
+    function showTab(tabId) {
+        document.querySelectorAll('.tab-panel').forEach(panel => {
+            panel.classList.add('hidden');
+        });
+        document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.classList.remove('active');
+        });
+        event.currentTarget.classList.add('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const assets = [
+            { category: '[D] Información', name: 'Biblioteca de creaciones digitales', checked: false },
+            { category: '[D] Información', name: 'Material audiovisual en producción', checked: false },
+            { category: '[D] Información', name: 'Código fuente de herramientas', checked: false },
+            { category: '[S] Servicio', name: 'Plataforma de colaboración', checked: false },
+            { category: '[S] Servicio', name: 'Granja de renderizado', checked: false },
+            { category: '[S] Servicio', name: 'Servicio de correo electrónico', checked: false },
+            { category: '[HW] Hardware', name: 'Estaciones de trabajo de artistas', checked: false },
+            { category: '[HW] Hardware', name: 'Servidores de virtualización', checked: false },
+            { category: '[SW] Software', name: 'Sistema operativo (Windows, Linux, macOS)', checked: false },
+            { category: '[SW] Software', name: 'Software especializado de VFX', checked: false },
+            { category: '[COM] Comunicaciones', name: 'Red interna (cableada e inalámbrica)', checked: false },
+            { category: '[COM] Comunicaciones', name: 'Conexión VPN para teletrabajo', checked: false },
+            { category: '[L] Instalaciones', name: 'Edificio/Oficinas de PANDEFX', checked: false },
+            { category: '[L] Instalaciones', name: 'Centro de Proceso de Datos (CPD)', checked: false },
+            { category: '[P] Personal', name: 'Artistas y desarrolladores', checked: false },
+            { category: '[P] Personal', name: 'Administradores de sistemas', checked: false },
+        ];
+
+        const checklistContainer = document.getElementById('asset-checklist');
+        assets.forEach((asset, index) => {
+            const item = document.createElement('div');
+            item.className = 'task-item flex items-center p-3';
+            item.innerHTML = `
+                <input id="asset-${index}" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-500">
+                <label for="asset-${index}" class="ml-3 min-w-0 flex-1 text-slate-700">
+                    <span class="font-mono text-xs text-sky-700">${asset.category}</span>
+                    <span class="block font-medium">${asset.name}</span>
+                </label>
+            `;
+            checklistContainer.appendChild(item);
+        });
+    });
+</script>
+
+</body>
+</html>
