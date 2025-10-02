@@ -12,15 +12,14 @@
         body {
             font-family: 'Roboto Mono', monospace;
             background-color: #0a0a0a;
-            /* Fundo com padrão de grade sutil */
             background-image:
                 linear-gradient(rgba(34, 211, 238, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(34, 211, 238, 0.05) 1px, transparent 1px);
             background-size: 2rem 2rem;
-            color: #a3a3a3; /* neutral-400 */
+            color: #a3a3a3;
         }
         .text-cyan-glow {
-            color: #22d3ee; /* cyan-400 */
+            color: #22d3ee;
             text-shadow: 0 0 5px rgba(34, 211, 238, 0.4);
         }
         .border-glow {
@@ -28,7 +27,6 @@
         }
         .link-item {
             border: 1px solid rgba(163, 163, 163, 0.2);
-            /* Adicionado um fundo levemente translúcido para destacar do grid */
             background-color: rgba(10, 10, 10, 0.6);
             backdrop-filter: blur(2px);
             transition: background-color 0.3s, border-color 0.3s;
@@ -45,10 +43,8 @@
             animation: blink 1s infinite;
         }
         @keyframes blink {
-            0% { background-color: #22d3ee; }
-            49% { background-color: #22d3ee; }
-            50% { background-color: transparent; }
-            99% { background-color: transparent; }
+            0%, 49% { background-color: #22d3ee; }
+            50%, 99% { background-color: transparent; }
             100% { background-color: #22d3ee; }
         }
     </style>
@@ -57,7 +53,6 @@
 
     <div class="container mx-auto px-6 py-12 md:py-20 max-w-5xl min-h-screen flex flex-col">
 
-        <!-- Cabeçalho -->
         <header class="mb-12 md:mb-16">
             <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-neutral-100">
                 <span id="typewriter"></span>
@@ -66,90 +61,62 @@
             <p class="text-base text-cyan-glow">// Mission Log: Master en Ciberseguridad y Privacidad</p>
         </header>
 
-        <!-- Conteúdo Principal -->
-        <main class="flex-grow">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-16">
+        <main class="flex-grow grid grid-cols-1 md:grid-cols-2 gap-12">
 
-                <!-- Módulo: Fundamentos de Ciberseguridad -->
-                <section id="module-01">
-                    <h2 class="text-xl font-semibold mb-6 text-neutral-200 border-b border-glow pb-2">
-                        <span class="text-cyan-glow">[M01]</span> Fundamentos de Ciberseguridad
-                    </h2>
-                    <div class="space-y-4">
-                        <!-- Link Guia -->
-                        <a href="./fundamentos-ciberseguridad/guia-fundamentos-ciberseguridad.html" class="link-item flex items-center justify-between p-4 rounded-md">
-                            <div class="flex items-center">
-                                <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
-                                <span class="text-neutral-200 font-medium">Guía 1: Riesgos y Amenazas</span>
-                            </div>
-                            <span class="text-xs font-bold text-cyan-400 border border-cyan-400/50 px-2 py-1 rounded">GUIA</span>
-                        </a>
-                        <!-- Link Laboratório -->
-                        <a href="./fundamentos-ciberseguridad/laboratorio-analise-risco.html" class="link-item flex items-center justify-between p-4 rounded-md">
-                            <div class="flex items-center">
-                                <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
-                                <span class="text-neutral-200 font-medium">Laboratorio Reto 1</span>
-                            </div>
-                            <span class="text-xs font-bold text-yellow-400 border border-yellow-400/50 px-2 py-1 rounded">LAB</span>
-                        </a>
-                    </div>
-                </section>
+            <section id="module-01">
+                <h2 class="text-xl font-semibold mb-6 text-neutral-200 border-b border-glow pb-2">
+                    <span class="text-cyan-glow">[M01]</span> Fundamentos de Ciberseguridad
+                </h2>
+                <div class="space-y-4">
+                    <a href="./fundamentos-ciberseguridad/guia-fundamentos-ciberseguridad.html" class="link-item flex items-center justify-between p-4 rounded-md">
+                        <div class="flex items-center"><span class="text-cyan-400 mr-3 text-lg">&gt;</span><span class="text-neutral-200 font-medium">Guía 1: Riesgos y Amenazas</span></div>
+                        <span class="text-xs font-bold text-cyan-400 border border-cyan-400/50 px-2 py-1 rounded">GUIA</span>
+                    </a>
+                    <a href="./fundamentos-ciberseguridad/laboratorio-analise-risco.html" class="link-item flex items-center justify-between p-4 rounded-md">
+                        <div class="flex items-center"><span class="text-cyan-400 mr-3 text-lg">&gt;</span><span class="text-neutral-200 font-medium">Laboratorio Reto 1</span></div>
+                        <span class="text-xs font-bold text-yellow-400 border border-yellow-400/50 px-2 py-1 rounded">LAB</span>
+                    </a>
+                     <a href="./fundamentos-ciberseguridad/simulador-reto-1.html" class="link-item flex items-center justify-between p-4 rounded-md">
+                        <div class="flex items-center"><span class="text-cyan-400 mr-3 text-lg">&gt;</span><span class="text-neutral-200 font-medium">Simulador táctico Reto 1</span></div>
+                        <span class="text-xs font-bold text-yellow-400 border border-yellow-400/50 px-2 py-1 rounded">LAB</span>
+                    </a>
+                </div>
+            </section>
 
-                <!-- Módulo: Fundamentos de redes y arquitecturas -->
-                <section id="module-02">
-                    <h2 class="text-xl font-semibold mb-6 text-neutral-200 border-b border-glow pb-2">
-                        <span class="text-cyan-glow">[M02]</span> Fundamentos de Redes y Arquitecturas
-                    </h2>
-                    <div class="space-y-4">
-                          <!-- Link Guia -->
-                          <a href="./fundamentos-redes/guia-redes.html" class="link-item flex items-center justify-between p-4 rounded-md">
-                            <div class="flex items-center">
-                                <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
-                                <span class="text-neutral-200 font-medium">Guía: El Papel de las Redes</span>
-                            </div>
-                            <span class="text-xs font-bold text-cyan-400 border border-cyan-400/50 px-2 py-1 rounded">GUIA</span>
-                        </a>
-                        <!-- Link Laboratório -->
-                        <a href="./fundamentos-redes/lab-reto-1.html" class="link-item flex items-center justify-between p-4 rounded-md">
-                            <div class="flex items-center">
-                                <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
-                                <span class="text-neutral-200 font-medium">Laboratorio Reto 1</span>
-                            </div>
-                            <span class="text-xs font-bold text-yellow-400 border border-yellow-400/50 px-2 py-1 rounded">LAB</span>
-                        </a>
-                    </div>
-                </section>
+            <section id="module-02">
+                <h2 class="text-xl font-semibold mb-6 text-neutral-200 border-b border-glow pb-2">
+                    <span class="text-cyan-glow">[M02]</span> Fundamentos de Redes y Arquitecturas
+                </h2>
+                <div class="space-y-4">
+                     <a href="./fundamentos-redes/guia-redes.html" class="link-item flex items-center justify-between p-4 rounded-md">
+                         <div class="flex items-center"><span class="text-cyan-400 mr-3 text-lg">&gt;</span><span class="text-neutral-200 font-medium">Guia_Redes_Computadoras</span></div>
+                         <span class="text-xs font-bold text-cyan-400 border border-cyan-400/50 px-2 py-1 rounded">GUIA</span>
+                     </a>
+                     <a href="./fundamentos-redes/laboratorio-reto-1.html" class="link-item flex items-center justify-between p-4 rounded-md">
+                         <div class="flex items-center"><span class="text-cyan-400 mr-3 text-lg">&gt;</span><span class="text-neutral-200 font-medium">Lab_Reto1_Anatomia_Red_Domestica</span></div>
+                         <span class="text-xs font-bold text-yellow-400 border border-yellow-400/50 px-2 py-1 rounded">LAB</span>
+                     </a>
+                </div>
+            </section>
 
-                <!-- Módulo: Legislación y protección de datos -->
-                <section id="module-03">
-                    <h2 class="text-xl font-semibold mb-6 text-neutral-200 border-b border-glow pb-2">
-                        <span class="text-cyan-glow">[M03]</span> Legislación y Protección de Datos
-                    </h2>
-                    <div class="space-y-4">
-                          <!-- Link Guia -->
-                        <a href="./legislacion-proteccion-datos/guia-fundamentos-juridicos.html" class="link-item flex items-center justify-between p-4 rounded-md">
-                            <div class="flex items-center">
-                                <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
-                                <span class="text-neutral-200 font-medium">Guía: Protección de los Datos Personales</span>
-                            </div>
-                            <span class="text-xs font-bold text-cyan-400 border border-cyan-400/50 px-2 py-1 rounded">GUIA</span>
-                        </a>
-                        <!-- Link Laboratório -->
-                        <a href="./legislacion-proteccion-datos/laboratorio-reto-1.html" class="link-item flex items-center justify-between p-4 rounded-md">
-                            <div class="flex items-center">
-                                <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
-                                <span class="text-neutral-200 font-medium">Laboratorio Reto 1</span>
-                            </div>
-                            <span class="text-xs font-bold text-yellow-400 border border-yellow-400/50 px-2 py-1 rounded">LAB</span>
-                        </a>
-                    </div>
-                </section>
+            <section id="module-03">
+                <h2 class="text-xl font-semibold mb-6 text-neutral-200 border-b border-glow pb-2">
+                    <span class="text-cyan-glow">[M03]</span> Legislación y Protección de Datos
+                </h2>
+                <div class="space-y-4">
+                     <a href="./legislacion-proteccion-datos/guia-fundamentos-juridicos.html" class="link-item flex items-center justify-between p-4 rounded-md">
+                         <div class="flex items-center"><span class="text-cyan-400 mr-3 text-lg">&gt;</span><span class="text-neutral-200 font-medium">Guia_Fundamentos_Juridicos</span></div>
+                         <span class="text-xs font-bold text-cyan-400 border border-cyan-400/50 px-2 py-1 rounded">GUIA</span>
+                     </a>
+                     <a href="./legislacion-proteccion-datos/laboratorio-reto-1.html" class="link-item flex items-center justify-between p-4 rounded-md">
+                         <div class="flex items-center"><span class="text-cyan-400 mr-3 text-lg">&gt;</span><span class="text-neutral-200 font-medium">Lab_Reto1_Conformidade_RGPD</span></div>
+                         <span class="text-xs font-bold text-yellow-400 border border-yellow-400/50 px-2 py-1 rounded">LAB</span>
+                     </a>
+                </div>
+            </section>
 
-                 <!-- Adicione mais módulos aqui -->
-            </div>
         </main>
 
-        <!-- Rodapé -->
         <footer class="text-center mt-20 pt-8 border-t border-glow">
             <p class="text-sm text-neutral-500">// STATUS: <span class="text-green-400">[ONLINE]</span> | ALL SYSTEMS NOMINAL</p>
         </footer>
@@ -161,7 +128,6 @@
             const typewriterElement = document.getElementById('typewriter');
             const text = "Threat Intel Ops";
             let index = 0;
-
             function type() {
                 if (index < text.length) {
                     typewriterElement.textContent += text.charAt(index);
