@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Mando de Ciberseguridad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f4; /* stone-100 */
+            color: #1c1917; /* stone-900 */
+        }
+        .font-mono {
+            font-family: 'Roboto Mono', monospace;
+        }
+        .nav-link { transition: color 0.3s, border-bottom-color 0.3s; }
+        .nav-link:hover, .nav-link.active { color: #0d9488; border-bottom-color: #0d9488; }
+        .tab-button.active { background-color: #0d9488; color: white; }
+        
+        .strategic-insight {
+            border-left: 4px solid #0d9488; /* teal-600 */
+            background-color: #f0fdfa; /* teal-50 */
+        }
+         .apt-phase {
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+        .apt-phase:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+        .apt-phase .phase-number {
+            background-color: #0d9488;
+        }
+
+        /* Estilos Laboratorio */
+        .lab-option { transition: background-color 0.3s, border-color 0.3s, color 0.3s; cursor: pointer; }
+        .lab-option.correct { background-color: #10b981 !important; border-color: #059669 !important; color: white !important; }
+        .lab-option.incorrect { background-color: #ef4444 !important; border-color: #dc2626 !important; color: white !important; }
+        .log-flag { cursor: pointer; background-color: rgba(255, 235, 59, 0.4); padding: 0 3px; border-radius: 3px; transition: background-color 0.2s; }
+        .log-flag:hover { background-color: rgba(255, 235, 59, 0.8); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-stone-100 shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-teal-700">Centro de Mando Cibersec</h1>
+            <div class="hidden md:flex space-x-4">
+                <a href="#briefing" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Briefing</a>
+                <a href="#vulnerabilidades" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Vulnerabilidades</a>
+                <a href="#threat-intel" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Threat Intel</a>
+                <a href="#riesgos" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Riesgos</a>
+                <a href="#cloud" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Nube</a>
+                <a href="#laboratorio" class="nav-link font-bold text-yellow-600 border-b-2 border-transparent pb-1">LABORATORIO</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-stone-700">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#briefing" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Briefing</a>
+            <a href="#vulnerabilidades" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Vulnerabilidades</a>
+            <a href="#threat-intel" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Threat Intel</a>
+            <a href="#riesgos" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Riesgos</a>
+            <a href="#cloud" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Nube</a>
+            <a href="#laboratorio" class="block py-2 px-4 text-sm font-bold text-yellow-600 hover:bg-stone-200">LABORATORIO</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <section id="briefing" class="text-center mb-20">
+            <h2 class="text-4xl font-bold text-stone-800 mb-4">Módulo de Operaciones Tácticas</h2>
+            <p class="text-lg text-stone-600 max-w-3xl mx-auto">
+                La teoría es el mapa, la práctica es el terreno. Este centro de mando integra la inteligencia de los documentos del Reto 1 para transformarla en conocimiento accionable. Tu misión: pasar de la teoría a la táctica.
+            </p>
+        </section>
+
+        <section id="vulnerabilidades" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Análisis de Vulnerabilidades</h2>
+             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-xl mb-3">Concepto: La Brecha en la Armadura</h3>
+                    <p class="text-stone-600">Una vulnerabilidad es una <strong class="text-black">debilidad o fallo</strong> en un sistema que permite a un atacante evadir las políticas de seguridad. No es el ataque en sí, sino la puerta que el ataque aprovecha.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-xl mb-3">El Ecosistema CVE</h3>
+                    <p class="text-stone-600">El sistema <strong class="font-mono">Common Vulnerabilities and Exposures (CVE)</strong>, mantenido por MITRE, asigna un <strong class="text-black">identificador único</strong> a cada vulnerabilidad pública. Es el lenguaje universal para referirse a una debilidad específica (ej. <span class="font-mono">CVE-2021-44228</span> para Log4Shell).</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-xl mb-3">Midiendo el Impacto: CVSS</h3>
+                    <p class="text-stone-600">El <strong class="font-mono">Common Vulnerability Scoring System (CVSS)</strong> es el estándar para puntuar la severidad de una vulnerabilidad (0.0 a 10.0). Considera métricas como el vector de ataque, la complejidad y el impacto en la CIA (Confidencialidad, Integridad, Disponibilidad).</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md lg:col-span-2">
+                     <h3 class="font-bold text-xl mb-3">Clasificación Táctica de Vulnerabilidades</h3>
+                    <ul class="list-disc list-inside space-y-2 text-stone-700">
+                        <li><strong>Día Cero (0-day):</strong> Vulnerabilidades desconocidas para el fabricante y para las defensas. Son el arma más preciada de un atacante.</li>
+                        <li><strong>Por Tipo de Sistema:</strong> Pueden afectar al <strong class="text-black">hardware</strong> (ej. Spectre), <strong class="text-black">sistemas operativos</strong> (ej. EternalBlue), <strong class="text-black">aplicaciones web</strong> (OWASP Top 10), o incluso a la <strong class="text-black">gestión de la información</strong> (contraseñas débiles).</li>
+                    </ul>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center justify-center text-center">
+                    <h3 class="font-bold text-xl mb-2">OWASP Top 10</h3>
+                    <p class="text-stone-600 text-sm">El documento de referencia para las vulnerabilidades más críticas en aplicaciones web. Incluye <strong class="text-black">Inyección (SQL, etc.), Autenticación Rota, XSS</strong>, y más.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="threat-intel" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Inteligencia de Amenazas (Threat Intel)</h2>
+            <div class="strategic-insight p-6 rounded-lg mb-8">
+                <h4 class="font-bold text-lg text-teal-700 font-mono">&gt; Insight de Analista</h4>
+                <p class="text-stone-700 mt-2">Una amenaza no es solo un malware; es la combinación de <strong class="text-black">intención, capacidad y oportunidad</strong> de un adversario. Tu trabajo es entender al actor detrás del ataque.</p>
+            </div>
+            <div class="bg-white p-8 rounded-lg shadow-lg mb-8">
+                <h3 class="text-2xl font-bold text-center mb-6">Perfiles de Actores de Amenaza</h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 text-center">
+                    <div><div class="bg-red-100 text-red-800 p-3 rounded-lg font-semibold">Estados</div><p class="text-xs mt-1">Motivación: Espionaje, sabotaje.</p></div>
+                    <div><div class="bg-orange-100 text-orange-800 p-3 rounded-lg font-semibold">Ciber-criminales</div><p class="text-xs mt-1">Motivación: Lucro económico.</p></div>
+                    <div><div class="bg-yellow-100 text-yellow-800 p-3 rounded-lg font-semibold">Hacktivistas</div><p class="text-xs mt-1">Motivación: Ideológica, política.</p></div>
+                    <div><div class="bg-blue-100 text-blue-800 p-3 rounded-lg font-semibold">Insiders</div><p class="text-xs mt-1">Motivación: Venganza, negligencia.</p></div>
+                    <div><div class="bg-purple-100 text-purple-800 p-3 rounded-lg font-semibold">Terroristas</div><p class="text-xs mt-1">Motivación: Propaganda, financiación.</p></div>
+                </div>
+            </div>
+             <div class="bg-white p-8 rounded-lg shadow-lg">
+                <h3 class="text-2xl font-bold text-center mb-6">Amenaza Persistente Avanzada (APT): El Ciclo de Vida</h3>
+                <p class="text-center text-stone-600 -mt-4 mb-8">Las APT son campañas sigilosas, a largo plazo y con objetivos específicos, a menudo patrocinadas por Estados.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="apt-phase border p-4 rounded-lg text-center"><span class="phase-number absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold">1</span><h4 class="font-bold mt-2">Reconocimiento</h4><p class="text-sm text-stone-600">Investigación pasiva y activa del objetivo.</p></div>
+                    <div class="apt-phase border p-4 rounded-lg text-center"><span class="phase-number absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold">2</span><h4 class="font-bold mt-2">Infiltración</h4><p class="text-sm text-stone-600">Uso de phishing o 0-day para el acceso inicial.</p></div>
+                    <div class="apt-phase border p-4 rounded-lg text-center"><span class="phase-number absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold">3</span><h4 class="font-bold mt-2">Expansión</h4><p class="text-sm text-stone-600">Movimiento lateral para encontrar activos valiosos.</p></div>
+                    <div class="apt-phase border p-4 rounded-lg text-center"><span class="phase-number absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold">4</span><h4 class="font-bold mt-2">Exfiltración</h4><p class="text-sm text-stone-600">Extracción sigilosa de los datos objetivo.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="riesgos" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Gestión de Riesgos y Políticas de Seguridad</h2>
+             <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-bold text-center mb-6">El Ciclo de Magerit (PDCA)</h3>
+                     <ul class="space-y-3">
+                        <li class="flex items-start"><span class="bg-teal-600 text-white font-bold w-6 h-6 text-sm rounded-full flex items-center justify-center mr-3 flex-shrink-0">1</span><div><strong class="text-black">Identificar y Analizar:</strong> ¿Qué activos tienes y qué amenazas enfrentan?</div></li>
+                        <li class="flex items-start"><span class="bg-teal-600 text-white font-bold w-6 h-6 text-sm rounded-full flex items-center justify-center mr-3 flex-shrink-0">2</span><div><strong class="text-black">Evaluar:</strong> Calcular el riesgo (Probabilidad x Impacto).</div></li>
+                        <li class="flex items-start"><span class="bg-teal-600 text-white font-bold w-6 h-6 text-sm rounded-full flex items-center justify-center mr-3 flex-shrink-0">3</span><div><strong class="text-black">Tratar:</strong> Mitigar, Aceptar, Transferir o Evitar el riesgo.</div></li>
+                        <li class="flex items-start"><span class="bg-teal-600 text-white font-bold w-6 h-6 text-sm rounded-full flex items-center justify-center mr-3 flex-shrink-0">4</span><div><strong class="text-black">Monitorizar y Revisar:</strong> La seguridad es un proceso continuo.</div></li>
+                    </ul>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-bold text-center mb-6">Paradigmas de Políticas</h3>
+                    <div id="policy-tabs" class="flex justify-center space-x-2 sm:space-x-4 mb-6 bg-stone-100 p-2 rounded-full">
+                        <button data-policy="permisiva" class="tab-button px-4 py-2 text-sm sm:text-base rounded-full transition active">Permisiva</button>
+                        <button data-policy="prudente" class="tab-button px-4 py-2 text-sm sm:text-base rounded-full transition">Prudente</button>
+                    </div>
+                    <div id="policy-content" class="text-center text-stone-700 min-h-[100px]"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cloud" class="mb-12">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Seguridad en la Nube</h2>
+             <div class="bg-white p-8 rounded-lg shadow-lg">
+                 <h3 class="text-2xl font-bold mb-4">Modelo de Responsabilidad Compartida</h3>
+                <p id="cloud-description" class="text-center text-stone-600 mb-6 min-h-[40px]"></p>
+                <div class="max-w-3xl mx-auto"><canvas id="cloudResponsibilityChart"></canvas></div>
+                 <div class="flex justify-center space-x-2 sm:space-x-4 mt-6">
+                    <button id="iaas-btn" class="cloud-btn px-4 py-2 text-sm sm:text-base border-2 border-teal-600 rounded-full transition text-teal-600">IaaS</button>
+                    <button id="paas-btn" class="cloud-btn px-4 py-2 text-sm sm:text-base border-2 border-teal-600 rounded-full transition text-teal-600">PaaS</button>
+                    <button id="saas-btn" class="cloud-btn px-4 py-2 text-sm sm:text-base border-2 border-teal-600 rounded-full transition text-teal-600">SaaS</button>
+                </div>
+                 <div class="strategic-insight p-4 rounded-lg mt-8">
+                     <h4 class="font-bold text-lg text-teal-700 font-mono">&gt; Táctica de Cumplimiento: Cloud Security Alliance (CSA)</h4>
+                     <p class="text-stone-700 mt-2 text-sm">La CSA proporciona herramientas críticas para auditar la seguridad en la nube. Su recurso principal es el <strong class="text-black">Cloud Controls Matrix (CCM)</strong>, un marco de controles de ciberseguridad para proveedores y consumidores de la nube. Es tu checklist para evaluar si un proveedor de cloud (como AWS, Azure, GCP) es seguro.</p>
+                 </div>
+            </div>
+        </section>
+        
+        <section id="laboratorio" class="pt-12">
+            <div class="bg-gray-800 text-white p-8 rounded-lg shadow-2xl border-t-4 border-yellow-400">
+                <h2 class="text-3xl font-bold text-center text-yellow-400 mb-2">Laboratorio de Simulación V2.0</h2>
+                <p class="text-center text-stone-300 mb-8">El conocimiento sin acción es inútil. Analiza la situación y responde.</p>
+                
+                <div class="bg-black/50 p-6 rounded-lg">
+                    <h3 class="text-2xl font-bold mb-4 border-b border-yellow-400/50 pb-2">Incidente 02: La Intrusión Persistente</h3>
+                    <p class="text-stone-300 mb-6"><strong>Briefing:</strong> Analista, el SIEM ha correlacionado varias alertas de baja prioridad en una alerta de alta severidad. Un documento de Word malicioso fue abierto por un empleado del departamento financiero. Días después, se detecta tráfico anómalo saliendo de su máquina hacia una IP externa, usando un protocolo no estándar. Tu misión: analizar la evidencia y determinar la naturaleza de la amenaza.</p>
+
+                    <div id="lab-feedback" class="mb-4 p-3 rounded-md text-center font-semibold hidden"></div>
+
+                    <h4 class="font-bold text-lg mb-4 text-stone-200">Evidencia: Logs Correlacionados</h4>
+                    <div class="bg-gray-900 text-gray-200 p-4 rounded-md font-mono text-sm border-l-4 border-gray-500 overflow-x-auto">
+                        <p>&gt; LOG 1 (EDR): User 'finance_user' opened 'Plan_Presupuestario_Q4.docx'. Document executed a PowerShell script.</p>
+                        <p>&gt; LOG 2 (Proxy): PowerShell script downloaded file from 'files.apt-repo.net/beacon.exe'.</p>
+                        <p>&gt; LOG 3 (CVE Scan): Host 'FINANCE-PC-01' is vulnerable to <span class="log-flag" data-feedback="¡Clave! CVE-2017-11882 es una vulnerabilidad conocida de ejecución remota de código en Microsoft Office. El atacante probablemente la usó para ejecutar el script inicial.">CVE-2017-11882</span>.</p>
+                        <p>&gt; LOG 4 (Firewall): Host 'FINANCE-PC-01' (192.168.1.23) established persistent connection to <span class="log-flag" data-feedback="Correcto. Esta IP externa, combinada con tráfico persistente y un dominio sospechoso, es un fuerte indicador de un servidor de Comando y Control (C2).">198.51.100.55</span> over TCP/4444.</p>
+                    </div>
+                     <p class="text-xs text-stone-400 mt-2"><i>Instrucción: Haz clic en las partes del log que consideres clave para el análisis.</i></p>
+
+                    <div class="mt-8">
+                        <h4 class="font-bold text-lg mb-4 text-stone-200">Análisis Táctico</h4>
+                        <div id="lab-question-area"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="bg-stone-200 mt-20">
+        <div class="container mx-auto px-6 py-4 text-center text-stone-600">
+            <p class="text-xs">&copy; 2025 Centro de Mando de Ciberseguridad. Creado a partir de los documentos del Reto 1.</p>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Lógica del Menú
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+
+    const navLinks = document.querySelectorAll('.nav-link, #mobile-menu a');
+    const sections = document.querySelectorAll('main section');
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            if (pageYOffset >= section.offsetTop - 100) { current = section.getAttribute('id'); }
+        });
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href')?.substring(1) === current) { link.classList.add('active'); }
+        });
+    });
+
+    // Lógica de Pestañas de Políticas
+    const policyContent = {
+        permisiva: { title: "Política Permisiva", text: "Principio: 'Lo que no está explícitamente prohibido, está permitido'. Es flexible pero requiere actualizaciones constantes para bloquear nuevas amenazas." },
+        prudente: { title: "Política Prudente", text: "Principio: 'Lo que no está explícitamente permitido, está prohibido'. Es el balance recomendado para la mayoría de las empresas. Bloquea todo por defecto y solo permite servicios necesarios y seguros." },
+    };
+    const policyTabsContainer = document.getElementById('policy-tabs');
+    const policyContentContainer = document.getElementById('policy-content');
+    function updatePolicyContent(policyKey) {
+        const content = policyContent[policyKey];
+        policyContentContainer.innerHTML = `<h4 class="font-bold text-lg mb-2 text-teal-700">${content.title}</h4><p>${content.text}</p>`;
+        policyTabsContainer.querySelectorAll('.tab-button').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.policy === policyKey) btn.classList.add('active');
+        });
+    }
+    policyTabsContainer.addEventListener('click', (e) => { if (e.target.classList.contains('tab-button')) updatePolicyContent(e.target.dataset.policy); });
+    updatePolicyContent('permisiva');
+
+    // Lógica del Gráfico de Nube
+    const cloudData = {
+        labels: ['Datos y Acceso', 'Aplicaciones', 'Sistema Operativo', 'Virtualización', 'Servidores y Redes', 'Centro de Datos Físico'],
+        iaas: { description: "IaaS (Infraestructura como Servicio): Máxima flexibilidad, máxima responsabilidad para el cliente.", data: { cliente: [100, 100, 100, 0, 0, 0], proveedor: [0, 0, 0, 100, 100, 100] } },
+        paas: { description: "PaaS (Plataforma como Servicio): El cliente gestiona sus apps y datos, el proveedor se encarga de la plataforma subyacente.", data: { cliente: [100, 100, 0, 0, 0, 0], proveedor: [0, 0, 100, 100, 100, 100] } },
+        saas: { description: "SaaS (Software como Servicio): Mínima responsabilidad para el cliente. El proveedor gestiona casi todo.", data: { cliente: [100, 0, 0, 0, 0, 0], proveedor: [0, 100, 100, 100, 100, 100] } }
+    };
+    const cloudCtx = document.getElementById('cloudResponsibilityChart');
+    if (cloudCtx) {
+        const cloudChart = new Chart(cloudCtx.getContext('2d'), {
+            type: 'bar', data: { labels: cloudData.labels, datasets: [{ label: 'Responsabilidad del Cliente', data: [], backgroundColor: 'rgba(13, 148, 136, 0.7)' }, { label: 'Responsabilidad del Proveedor', data: [], backgroundColor: 'rgba(168, 162, 158, 0.7)' }] },
+            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales: { x: { stacked: true, display: false }, y: { stacked: true, ticks: { font: { size: 10 } } } }, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Modelo de Responsabilidad Compartida' }, tooltip: { enabled: false } } }
+        });
+        const cloudDescriptionEl = document.getElementById('cloud-description');
+        function updateCloudChart(model) {
+            cloudChart.data.datasets[0].data = cloudData[model].data.cliente;
+            cloudChart.data.datasets[1].data = cloudData[model].data.proveedor;
+            cloudChart.update();
+            cloudDescriptionEl.textContent = cloudData[model].description;
+            document.querySelectorAll('.cloud-btn').forEach(btn => { btn.classList.remove('bg-teal-600', 'text-white'); btn.classList.add('text-teal-600'); });
+            document.getElementById(`${model}-btn`).classList.add('bg-teal-600', 'text-white');
+            document.getElementById(`${model}-btn`).classList.remove('text-teal-600');
+        }
+        document.getElementById('iaas-btn').addEventListener('click', () => updateCloudChart('iaas'));
+        document.getElementById('paas-btn').addEventListener('click', () => updateCloudChart('paas'));
+        document.getElementById('saas-btn').addEventListener('click', () => updateCloudChart('saas'));
+        updateCloudChart('iaas');
+    }
+
+    // #################### LÓGICA DEL LABORATORIO V2.0 ####################
+    const labFeedback = document.getElementById('lab-feedback');
+    document.querySelectorAll('.log-flag').forEach(flag => {
+        flag.addEventListener('click', () => {
+            if (labFeedback) {
+                labFeedback.textContent = flag.dataset.feedback;
+                labFeedback.className = 'mb-4 p-3 rounded-md text-center font-semibold bg-yellow-100 text-yellow-800';
+            }
+        });
+    });
+
+    const labQuestions = [
+        {
+            question: "La combinación de un vector de entrada (documento malicioso), la persistencia en la red y el tráfico a un servidor externo desconocido son características de qué tipo de amenaza?",
+            options: ["Ataque de Phishing genérico", "Una Amenaza Persistente Avanzada (APT)", "Un escaneo de vulnerabilidades", "Un ataque de denegación de servicio (DDoS)"],
+            correct: 1,
+            feedback: "Análisis correcto. Este patrón multifase y sigiloso es el sello distintivo de una APT, que busca un acceso a largo plazo en lugar de un impacto inmediato."
+        },
+        {
+            question: "Basado en el objetivo (departamento financiero) y la naturaleza sigilosa y dirigida del ataque, ¿cuál es el perfil más probable del actor de la amenaza?",
+            options: ["Hacktivista", "Insider negligente", "Ciber-criminal con motivación económica", "Estado-nación con fines de espionaje"],
+            correct: 2,
+            feedback: "Razonamiento sólido. Aunque el espionaje es posible, el objetivo financiero apunta más directamente a grupos de ciber-crimen organizados que buscan ganancias económicas, como el robo de datos bancarios o la extorsión."
+        },
+        {
+            question: "Has identificado la amenaza y su posible origen. ¿Cuál es el siguiente paso CRÍTICO en la gestión del incidente?",
+            options: ["Formatear la máquina para eliminar el malware.", "Desconectar la máquina afectada de la red para contener la amenaza.", "Enviar un email a toda la empresa advirtiendo del peligro.", "Ignorar la alerta ya que el EDR lo ha detectado."],
+            correct: 1,
+            feedback: "Decisión correcta. La contención es prioritaria. Aislar la máquina de la red evita que la amenaza se propague lateralmente (movimiento lateral) a otros sistemas mientras se investiga el alcance total de la brecha."
+        }
+    ];
+    let currentQuestionIndex = 0;
+    const questionArea = document.getElementById('lab-question-area');
+
+    function loadQuestion(index) {
+        if (!questionArea) return;
+        const q = labQuestions[index];
+        questionArea.innerHTML = `
+            <p class="mb-4 text-stone-300">${index + 1}. ${q.question}</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                ${q.options.map((opt, i) => `<button data-index="${i}" class="lab-option w-full text-left px-4 py-3 border-2 border-stone-500 rounded-lg font-semibold hover:bg-stone-700">${opt}</button>`).join('')}
+            </div>
+        `;
+    }
+    
+    if (questionArea) {
+        questionArea.addEventListener('click', e => {
+            if (e.target.classList.contains('lab-option') && !e.target.disabled) {
+                const selectedIndex = parseInt(e.target.dataset.index);
+                const question = labQuestions[currentQuestionIndex];
+
+                if (labFeedback) {
+                     labFeedback.textContent = question.feedback;
+                     labFeedback.className = 'mb-4 p-3 rounded-md text-center font-semibold bg-green-100 text-green-800';
+                }
+               
+                questionArea.querySelectorAll('.lab-option').forEach((btn, i) => {
+                    btn.disabled = true;
+                    if(i === question.correct) btn.classList.add('correct');
+                    else if (i === selectedIndex) btn.classList.add('incorrect');
+                });
+
+                currentQuestionIndex++;
+                if (currentQuestionIndex < labQuestions.length) {
+                    setTimeout(() => loadQuestion(currentQuestionIndex), 3000);
+                } else {
+                    setTimeout(() => {
+                        questionArea.innerHTML = `<p class="text-center font-bold text-lg text-yellow-400">Análisis completado. Amenaza identificada y contenida. Buen trabajo, analista.</p>`;
+                    }, 3000);
+                }
+            }
+        });
+        loadQuestion(0);
+    }
+});
+</script>
+</body>
+</html>
+
