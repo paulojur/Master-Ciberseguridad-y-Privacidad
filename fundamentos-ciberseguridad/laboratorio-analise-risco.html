@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laboratório de Análise de Risco - Reto 1: Videovigilância</title>
+    <title>Laboratório Táctico: Análise de Risco Avançada</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Palette: Cool Blue & Slate -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8fafc; /* slate-50 */
+        }
+        .font-mono {
+            font-family: 'Roboto Mono', monospace;
         }
         .modal-overlay {
             transition: opacity 0.3s ease;
@@ -33,54 +35,51 @@
 
     <header class="bg-white shadow-md">
         <div class="container mx-auto px-6 py-5 text-center">
-            <h1 class="text-3xl font-bold text-sky-800">Laboratório de Análise de Risco: Videovigilância</h1>
-            <p class="text-slate-600 mt-1">Aplique a metodologia de gestão de riscos em um cenário prático.</p>
+            <h1 class="text-3xl font-bold text-sky-800">Laboratório Táctico: Análise de Risco Avançada</h1>
+            <p class="text-slate-600 mt-1">Reto 1 - Cenário de Videovigilância Corporativa.</p>
         </div>
     </header>
 
     <main class="container mx-auto px-6 py-10">
 
-        <!-- Seção Glossário Interativo -->
         <section id="glossario" class="mb-16">
-            <h2 class="text-2xl font-bold mb-2 text-center">1. Glossário Interativo para o Reto 1</h2>
-            <p class="text-center text-slate-600 mb-8">Clique em um termo para revisar os conceitos fundamentais do "Reto 1".</p>
+            <h2 class="text-2xl font-bold mb-2 text-center">1. Arsenal de Conceitos para o Reto 1</h2>
+            <p class="text-center text-slate-600 mb-8">Clique em um termo para um briefing tático.</p>
             <div id="glossary-container" class="flex flex-wrap justify-center gap-3">
                 <!-- Termos serão injetados pelo JS -->
             </div>
         </section>
 
-        <!-- Seção Simulador de Cenários -->
         <section id="simulador" class="mb-16">
-            <h2 class="text-2xl font-bold mb-2 text-center">2. Simulador: Avaliação de Segurança</h2>
-            <p class="text-center text-slate-600 mb-8">Você está avaliando uma nova solução de videovigilância. Tome as decisões corretas.</p>
+            <h2 class="text-2xl font-bold mb-2 text-center">2. Simulador: Decisão Tática de Segurança</h2>
+            <p class="text-center text-slate-600 mb-8">Tu rol: experto de seguridad evaluando una nueva solución de videovigilancia. Cada decisión cuenta.</p>
             <div id="scenario-container" class="bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto">
                 <!-- Conteúdo do cenário será injetado pelo JS -->
             </div>
         </section>
         
-        <!-- Seção Plano de Ação -->
         <section id="plano-acao" class="mb-12">
-            <h2 class="text-2xl font-bold mb-2 text-center">3. Checklist para o Relatório do Reto 1</h2>
-            <p class="text-center text-slate-600 mb-8">Use esta checklist para estruturar seu relatório de segurança sobre a solução de videovigilância.</p>
+            <h2 class="text-2xl font-bold mb-2 text-center">3. Estrutura do Relatório de Análise (Checklist)</h2>
+            <p class="text-center text-slate-600 mb-8">Use esta estrutura para preparar seu informe de segurança para o Reto 1.</p>
             <div class="max-w-4xl mx-auto space-y-4">
                  <div class="bg-white p-5 rounded-lg shadow-md">
-                    <h3 class="font-semibold text-lg mb-3">Estrutura do Relatório de Segurança</h3>
-                    <ul class="list-disc list-inside space-y-3 text-slate-700">
-                        <li><span class="font-semibold">Identificação de Ativos:</span> Listar todos os componentes da solução (Câmeras IP, NVR, Servidor Cloud, Aplicação de Acesso, Rede).</li>
-                        <li><span class="font-semibold">Análise de Ameaças:</span> Identificar 3 ameaças potenciais (ex: Acesso não autorizado, Ransomware nos vídeos, Interceptação de dados).</li>
-                        <li><span class="font-semibold">Análise de Vulnerabilidades:</span> Para cada ameaça, listar vulnerabilidades que poderiam ser exploradas (ex: Senhas padrão, Firmware desatualizado, Tráfego sem criptografia).</li>
-                        <li><span class="font-semibold">Avaliação de Risco:</span> Escolher um par Ameaça/Vulnerabilidade e avaliar o Risco (Probabilidade x Impacto), justificando sua análise.</li>
-                        <li><span class="font-semibold">Recomendação de Controles:</span> Propor um conjunto de controles de segurança (Técnicos e Administrativos) para mitigar os riscos identificados.</li>
-                         <li><span class="font-semibold">Considerações sobre Nuvem:</span> Descrever as responsabilidades de segurança da empresa vs. provedor de nuvem para o armazenamento dos vídeos.</li>
-                    </ul>
-                </div>
+                     <h3 class="font-semibold text-lg mb-3">Componentes do Informe de Segurança</h3>
+                     <ul class="list-disc list-inside space-y-3 text-slate-700">
+                         <li><span class="font-semibold">Identificación de Activos:</span> Listar todos los componentes de la solución (Cámaras IP, NVR, Servidor Cloud, Aplicación de Acceso, Red).</li>
+                         <li><span class="font-semibold">Perfil del Actor de Amenaza:</span> Definir el perfil del adversario más probable para esta empresa (ej. Ciber-criminal motivado económicamente) y justificar por qué.</li>
+                         <li><span class="font-semibold">Análisis de Amenazas y Vulnerabilidades:</span> Identificar 3 pares Ameaça/Vulnerabilidad (ej. Ransomware explotando firmware desactualizado; Acceso no autorizado usando credenciales por defecto; Interceptación de datos por falta de cifrado). Mencionar CVEs si aplica.</li>
+                         <li><span class="font-semibold">Evaluación de Riesgo (Cuantitativa/Cualitativa):</span> Escolher um par Ameaça/Vulnerabilidad y evaluar el Riesgo (Probabilidad x Impacto), justificando sua análise.</li>
+                         <li><span class="font-semibold">Plan de Mitigación (Controles):</span> Proponer un conjunto de controles (Técnicos, Administrativos, Físicos) para mitigar los riesgos, explicando cómo cada control reduce la probabilidad o el impacto.</li>
+                         <li><span class="font-semibold">Consideraciones sobre Cloud (CSA):</span> Descrever as responsabilidades de segurança da empresa vs. provedor de nuvem, referenciando o modelo de responsabilidade compartilhada e mencionando a importância de frameworks como o CSA CCM.</li>
+                     </ul>
+                 </div>
             </div>
         </section>
 
     </main>
     
     <!-- Modal para o Glossário -->
-    <div id="glossary-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 hidden z-50">
+    <div id="glossary-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 hidden z-50 opacity-0">
         <div id="modal-content-box" class="modal-content bg-white rounded-lg shadow-xl w-full max-w-lg p-6 relative transform scale-95">
             <button id="modal-close-btn" class="absolute top-4 right-4 text-slate-500 hover:text-slate-800 text-3xl font-bold">&times;</button>
             <div id="modal-body">
@@ -91,7 +90,7 @@
     
     <footer class="bg-slate-200 mt-12">
         <div class="container mx-auto px-6 py-4 text-center text-slate-600">
-            <p>&copy; 2025 Laboratório Interativo. Ferramenta de apoio para o Reto 1.</p>
+            <p>&copy; 2025 Laboratório Táctico. Ferramenta de apoio para o Reto 1 de Fundamentos de Ciberseguridad.</p>
         </div>
     </footer>
 
@@ -100,12 +99,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- LÓGICA DO GLOSSÁRIO ---
     const glossaryTerms = [
-        { term: 'Ativo', definition: 'Qualquer componente de valor para a organização.', example: 'Câmeras IP, o servidor de gravação (NVR), as imagens de vídeo armazenadas e a aplicação de monitoramento.', secPlus: 'Relacionado a `Asset Management` e `Data Classification`.' },
-        { term: 'Vulnerabilidade', definition: 'Uma fraqueza em um ativo que pode ser explorada por uma ameaça.', example: 'Firmware de uma câmera IP desatualizado, ou o uso de senhas padrão de fábrica.', secPlus: 'Fundamental para `Vulnerability Scanning` e `Patch Management`.' },
-        { term: 'Ameaça', definition: 'Qualquer evento ou agente que pode causar dano a um ativo.', example: 'Um atacante externo tentando acessar as câmeras, ou um malware que sequestra as gravações.', secPlus: 'Conceito central de `Threat Intelligence`.' },
-        { term: 'Risco', definition: 'A probabilidade de uma ameaça explorar uma vulnerabilidade e o impacto resultante.', example: 'O risco de vazamento de imagens confidenciais devido ao acesso não autorizado a uma câmera com senha padrão.', secPlus: 'Essencial para `Risk Assessment` e `Risk Management`.' },
-        { term: 'Controle', definition: 'Medida de segurança (salvaguarda) para mitigar um risco.', example: 'Segmentar a rede de câmeras (VLAN), implementar uma política de senhas fortes, criptografar o vídeo.', secPlus: 'Categorias de controle (Técnico, Administrativo, Físico) são um tópico chave.' },
-        { term: 'Cloud Security', definition: 'Práticas para proteger dados e aplicações hospedadas na nuvem.', example: 'Configurar corretamente as permissões de acesso (IAM) ao bucket de armazenamento dos vídeos.', secPlus: 'Cobre `Cloud Security Posture Management (CSPM)` e modelos de responsabilidade.' }
+        { term: 'Activo', definition: 'Cualquier componente de valor para la organización.', example: 'Cámaras IP, NVR, las imágenes de vídeo, y la aplicación de monitoramento.' },
+        { term: 'Vulnerabilidad', definition: 'Una debilidad en un activo que puede ser explotada por una amenaza.', example: 'Firmware de cámara desactualizado (ej. con un CVE público), uso de contraseñas por defecto.' },
+        { term: 'Amenaza', definition: 'Cualquier evento o agente que puede causar daño a un activo.', example: 'Un grupo de ciber-criminales (actor) ejecutando un ransomware (evento).' },
+        { term: 'Riesgo', definition: 'La probabilidad de que una amenaza explote una vulnerabilidad y el impacto resultante.', example: 'El riesgo de extorsión por ransomware debido a un firmware vulnerable.' },
+        { term: 'Control', definition: 'Medida (salvaguarda) para mitigar un riesgo.', example: 'Política de gestión de parches, segmentación de red (VLAN), política de contraseñas fuertes.' },
+        { term: 'Threat Actor', definition: 'El individuo o grupo detrás de una amenaza.', example: 'Estado-nación (espionaje), ciber-criminal (lucro), hacktivista (ideología).' },
+        { term: 'CVE', definition: 'Common Vulnerabilities and Exposures. Identificador único para una vulnerabilidad de seguridad conocida públicamente.', example: 'CVE-2017-7921, una vulnerabilidad crítica en cámaras Hikvision.' },
+        { term: 'APT', definition: 'Amenaza Persistente Avanzada. Campaña de ciberataque sigilosa y a largo plazo.', example: 'Un actor estatal que infiltra una red y exfiltra datos durante meses sin ser detectado.' },
     ];
 
     const glossaryContainer = document.getElementById('glossary-container');
@@ -122,11 +123,8 @@ document.addEventListener('DOMContentLoaded', () => {
             modalBody.innerHTML = `
                 <h3 class="text-2xl font-bold mb-3 text-sky-800">${item.term}</h3>
                 <p class="text-slate-700 mb-2">${item.definition}</p>
-                <div class="bg-slate-100 p-3 rounded-md mb-3">
-                    <p><strong class="font-semibold">Exemplo (Videovigilância):</strong> ${item.example}</p>
-                </div>
-                <div class="bg-sky-50 p-3 rounded-md border-l-4 border-sky-500">
-                    <p><strong class="font-semibold text-sky-900">Conexão com Security+:</strong> ${item.secPlus}</p>
+                <div class="bg-slate-100 p-3 rounded-md">
+                    <p><strong class="font-semibold">Ejemplo Táctico:</strong> ${item.example}</p>
                 </div>
             `;
             modal.classList.remove('hidden');
@@ -150,9 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     modalCloseBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeModal();
-        }
+        if (e.target === modal) closeModal();
     });
 
     // --- LÓGICA DO SIMULADOR DE CENÁRIOS ---
@@ -162,56 +158,44 @@ document.addEventListener('DOMContentLoaded', () => {
     const scenarioSteps = [
         {
             step: 1,
-            title: "Fase 1: Identificação de Ativos",
-            description: "Você está analisando a arquitetura da solução de videovigilância. Ela consiste em câmeras IP, um NVR local que armazena temporariamente os vídeos, e um upload para um bucket na nuvem para armazenamento de longo prazo. O acesso é feito por uma aplicação web.",
-            question: "Qual é a forma mais completa de definir os ativos a serem protegidos?",
+            title: "Fase 1: Perfil de la Amenaza",
+            description: "Tu empresa es del sector financiero. Estás evaluando una solución de videovigilancia para monitorizar áreas restringidas con información sensible. Debes anticipar al adversario.",
+            question: "¿Cuál es el perfil del actor de amenaza (Threat Actor) más probable contra este objetivo?",
             options: [
-                { text: "Apenas as imagens de vídeo, pois são os dados sensíveis.", correct: false, feedback: "Incorreto. As imagens são um ativo crucial, mas proteger apenas os dados e não os sistemas que os capturam, processam e armazenam é uma estratégia falha." },
-                { text: "As câmeras IP e o servidor NVR, pois são o hardware.", correct: false, feedback: "Incompleto. Hardware é um ativo importante, mas você esqueceu dos dados, do software de acesso e da rede que os conecta. A visão precisa ser holística." },
-                { text: "Hardware (Câmeras, NVR), Software (Aplicação Web, Firmware), Dados (Vídeos) e a Rede de conexão.", correct: true, feedback: "Correto! Você demonstrou uma visão completa, entendendo que a segurança deve abranger todas as camadas da solução. Essa é a base para uma análise de risco eficaz." }
+                { text: "Un hacktivista que busca protestar contra el sistema financiero.", correct: false, feedback: "Análisis incompleto. Aunque es posible, la motivación ideológica es menos común que la económica contra objetivos financieros. El impacto sería probablemente de denegación de servicio, no robo de datos." },
+                { text: "Un grupo de ciber-crimen organizado con motivación económica, buscando datos para extorsión o venta.", correct: true, feedback: "Análisis correcto. Este es el adversario más probable. Su objetivo es el lucro, y los datos de una empresa financiera son un activo de alto valor para ellos. Sus tácticas incluirán ransomware y exfiltración de datos." },
+                { text: "Un 'script kiddie' probando herramientas de hacking de forma aleatoria.", correct: false, feedback: "Poco probable para un objetivo de alto valor. Un ataque oportunista podría ocurrir, pero la amenaza principal y más peligrosa proviene de actores con recursos y una motivación clara." }
             ]
         },
         {
             step: 2,
-            title: "Fase 2: Análise de Risco",
-            description: "Durante a análise, você descobre que as câmeras IP vêm com senhas de administrador padrão ('admin'/'admin') e o tráfego de vídeo da câmera para o NVR não é criptografado por padrão.",
-            question: "Qual é o risco mais crítico derivado destas vulnerabilidades?",
+            title: "Fase 2: Análisis de Vulnerabilidades (CVE)",
+            description: "Evalúas dos proveedores de cámaras. El Proveedor A usa un firmware propietario con un historial limpio. El Proveedor B ofrece cámaras más baratas, pero una búsqueda rápida en cve.org revela el <strong class='font-mono'>CVE-2021-31166</strong>, una vulnerabilidad crítica de ejecución remota de código en su servidor web, con parches disponibles.",
+            question: "¿Qué decisión tomas, basándote en la gestión de vulnerabilidades?",
             options: [
-                { text: "Um funcionário mal-intencionado poderia danificar fisicamente uma câmera.", correct: false, feedback: "Incorreto. Isso é uma ameaça física, mas as vulnerabilidades identificadas são lógicas (software/configuração). O risco deve conectar a ameaça à vulnerabilidade." },
-                { text: "Risco de acesso não autorizado e interceptação ('sniffing') do feed de vídeo por um atacante na rede, levando ao vazamento de informações confidenciais.", correct: true, feedback: "Exato! Você conectou perfeitamente as ameaças (acesso não autorizado, interceptação) com as vulnerabilidades (senhas padrão, falta de criptografia) e o impacto (vazamento de dados). Esta é a essência da análise de risco." },
-                { text: "O servidor NVR pode ficar sem espaço de armazenamento.", correct: false, feedback: "Incorreto. Isso é um risco operacional de disponibilidade, mas não está diretamente relacionado às vulnerabilidades de segurança de senhas fracas e falta de criptografia." }
+                { text: "Elegir el Proveedor B porque es más barato y el parche se puede aplicar después.", correct: false, feedback: "Decisión arriesgada. Un historial de vulnerabilidades críticas, incluso con parches, indica un posible mal ciclo de desarrollo seguro. El riesgo residual es alto y requerirá un esfuerzo de gestión de parches constante." },
+                { text: "Descartar ambos, ya que cualquier cámara puede tener una vulnerabilidad de día cero (0-day).", correct: false, feedback: "Demasiado cauteloso. Si bien los 0-days son un riesgo, la gestión de riesgos se basa en inteligencia conocida. Descartar todo por un riesgo desconocido e inmanejable no es práctico." },
+                { text: "Elegir el Proveedor A, ya que un historial de seguridad limpio y la ausencia de CVEs críticos conocidos reduce significativamente la superficie de ataque inicial.", correct: true, feedback: "Decisión táctica correcta. Priorizas una menor superficie de ataque desde el principio. Aunque ninguna solución es 100% segura, empiezas desde una posición de mayor fortaleza, reduciendo el riesgo conocido." }
             ]
         },
         {
             step: 3,
-            title: "Fase 3: Tratamento do Risco (Seleção de Controles)",
-            description: "Agora você precisa propor controles para mitigar o risco crítico de acesso não autorizado e interceptação de vídeo.",
-            question: "Qual conjunto de controles oferece a proteção mais robusta e em camadas (defesa em profundidade)?",
+            title: "Fase 3: Tratamiento del Riesgo (Defensa en Profundidad)",
+            description: "Has elegido el proveedor más seguro. Ahora debes proponer controles para mitigar riesgos residuales, como un posible ataque de APT que busque acceso a largo plazo.",
+            question: "¿Qué conjunto de controles es más eficaz contra una amenaza persistente?",
             options: [
-                { text: "Apenas comprar um antivírus para o servidor NVR.", correct: false, feedback: "Insuficiente. Um antivírus é importante, mas não resolve o problema fundamental das senhas fracas nas câmeras nem a falta de criptografia na rede." },
-                { text: "1) Criar uma política de senhas fortes e alterar todas as credenciais padrão. 2) Habilitar a criptografia (TLS/SRTP) no tráfego de vídeo. 3) Segmentar a rede, colocando as câmeras em uma VLAN separada.", correct: true, feedback: "Perfeito! Você propôs uma solução completa: corrige a vulnerabilidade de acesso (senhas), protege os dados em trânsito (criptografia) e limita a superfície de ataque (segmentação de rede). Isso é defesa em profundidade." },
-                { text: "Treinar os funcionários para não clicarem em e-mails de phishing.", correct: false, feedback: "Importante, mas é um controle para outra categoria de ameaça. Ele não mitiga diretamente o risco das vulnerabilidades técnicas identificadas no sistema de câmeras." }
-            ]
-        },
-        {
-            step: 4,
-            title: "Fase 4: Segurança na Nuvem",
-            description: "Os vídeos são armazenados em um provedor de nuvem (IaaS). O time de TI questiona quem é responsável por garantir que apenas pessoas autorizadas acessem os vídeos armazenados.",
-            question: "De acordo com o modelo de responsabilidade compartilhada, de quem é essa tarefa?",
-            options: [
-                { text: "Do provedor de nuvem, pois eles são donos da infraestrutura física.", correct: false, feedback: "Incorreto. O provedor garante a segurança *DA* nuvem (hardware, data centers), mas não *NA* nuvem." },
-                { text: "Da nossa empresa. Somos responsáveis por configurar o controle de acesso (IAM), políticas de bucket e criptografia dos dados armazenados.", correct: true, feedback: "Excelente! Você compreendeu corretamente o modelo de responsabilidade compartilhada. A configuração de acesso e a segurança dos dados na nuvem é responsabilidade do cliente." },
-                { text: "É uma responsabilidade 50/50, sem uma definição clara.", correct: false, feedback: "Incorreto. O modelo é bem definido. O provedor oferece as ferramentas de segurança, mas a configuração e gestão corretas são responsabilidade do cliente." }
+                { text: "Solo una política de contraseñas fuertes.", correct: false, feedback: "Insuficiente. Las contraseñas fuertes son un control fundamental, pero una APT tiene múltiples vectores de ataque. La defensa debe ser en capas." },
+                { text: "Una combinación de: 1) Segmentación de red (VLAN para las cámaras), 2) Monitorización continua del tráfico de red para detectar anomalías (posible C2), y 3) Un plan de gestión de parches riguroso.", correct: true, feedback: "Excelente. Esta es la esencia de la defensa en profundidad. La segmentación contiene, la monitorización detecta y la gestión de parches reduce las oportunidades. Es la estrategia más resiliente contra un adversario avanzado." },
+                { text: "Instalar un antivirus en la estación del guardia de seguridad.", correct: false, feedback: "Control necesario, pero de alcance muy limitado. No protege la red de cámaras ni el NVR de ataques directos o movimientos laterales." }
             ]
         }
     ];
 
     function renderScenarioStep(stepIndex) {
         const stepData = scenarioSteps[stepIndex];
-        let optionsHtml = '';
-        stepData.options.forEach((opt, index) => {
-            optionsHtml += `<div class="scenario-option border-2 border-slate-200 p-4 rounded-lg cursor-pointer bg-slate-50 hover:bg-white" data-correct="${opt.correct}" data-feedback="${opt.feedback}">${opt.text}</div>`;
-        });
+        let optionsHtml = stepData.options.map(opt => 
+            `<div class="scenario-option border-2 border-slate-200 p-4 rounded-lg cursor-pointer bg-slate-50 hover:bg-white" data-correct="${opt.correct}" data-feedback="${opt.feedback}">${opt.text}</div>`
+        ).join('');
 
         scenarioContainer.innerHTML = `
             <div class="mb-6">
@@ -222,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="space-y-3">${optionsHtml}</div>
             <div id="feedback-area" class="mt-6"></div>
             <div class="flex justify-end mt-6">
-                <button id="next-step-btn" class="bg-sky-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-sky-700 transition-all duration-300 hidden">Próximo Passo &rarr;</button>
+                <button id="next-step-btn" class="bg-sky-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-sky-700 transition-all duration-300 hidden">Próximo Paso &rarr;</button>
                 <button id="restart-btn" class="bg-slate-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-slate-700 transition-all duration-300 hidden">Recomeçar Avaliação</button>
             </div>
         `;
@@ -230,8 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function addOptionListeners() {
-        const options = scenarioContainer.querySelectorAll('.scenario-option');
-        options.forEach(opt => {
+        scenarioContainer.querySelectorAll('.scenario-option').forEach(opt => {
             opt.addEventListener('click', handleOptionClick, { once: true });
         });
     }
@@ -242,30 +225,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const feedback = selectedOption.dataset.feedback;
         const feedbackArea = document.getElementById('feedback-area');
         
-        const allOptions = scenarioContainer.querySelectorAll('.scenario-option');
-        allOptions.forEach(opt => {
+        scenarioContainer.querySelectorAll('.scenario-option').forEach(opt => {
             opt.style.pointerEvents = 'none';
-            if (opt !== selectedOption) {
-                opt.classList.add('opacity-50');
-            }
+            if (opt !== selectedOption) opt.classList.add('opacity-50');
         });
 
         if (isCorrect) {
-            selectedOption.classList.remove('border-slate-200');
             selectedOption.classList.add('border-green-500', 'bg-green-50');
-            feedbackArea.innerHTML = `<div class="p-4 bg-green-50 text-green-800 border-l-4 border-green-500 rounded-r-lg"><strong class="font-semibold">Análise Correta!</strong> ${feedback}</div>`;
+            feedbackArea.innerHTML = `<div class="p-4 bg-green-50 text-green-800 border-l-4 border-green-500 rounded-r-lg"><strong class="font-semibold">Análisis Correcto!</strong> ${feedback}</div>`;
             
             if (currentStep < scenarioSteps.length - 1) {
                 document.getElementById('next-step-btn').classList.remove('hidden');
             } else {
-                 feedbackArea.innerHTML += `<div class="mt-4 p-4 bg-sky-50 text-sky-800 border-l-4 border-sky-500 rounded-r-lg"><strong class="font-semibold">Avaliação Concluída!</strong> Você demonstrou compreender o ciclo de gestão de riscos.</div>`;
+                feedbackArea.innerHTML += `<div class="mt-4 p-4 bg-sky-50 text-sky-800 border-l-4 border-sky-500 rounded-r-lg"><strong class="font-semibold">Evaluación Concluida!</strong> Has aplicado con éxito los conceptos avanzados de riesgo y amenaza.</div>`;
                 document.getElementById('restart-btn').classList.remove('hidden');
             }
-
         } else {
-            selectedOption.classList.remove('border-slate-200');
             selectedOption.classList.add('border-red-500', 'bg-red-50');
-            feedbackArea.innerHTML = `<div class="p-4 bg-red-50 text-red-800 border-l-4 border-red-500 rounded-r-lg"><strong class="font-semibold">Ponto de Atenção.</strong> ${feedback}</div>`;
+            feedbackArea.innerHTML = `<div class="p-4 bg-red-50 text-red-800 border-l-4 border-red-500 rounded-r-lg"><strong class="font-semibold">Punto de Atención.</strong> ${feedback}</div>`;
             document.getElementById('restart-btn').classList.remove('hidden');
         }
     }
@@ -282,7 +259,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     renderScenarioStep(currentStep);
-
 });
 </script>
 </body>
