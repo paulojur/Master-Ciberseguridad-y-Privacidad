@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laboratorio Práctico: Reto 1 - Anatomía de una Red Doméstica</title>
+    <title>Simulador Práctico: PEC1 - Fundamentos de Redes</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
@@ -14,45 +15,13 @@
             background-color: #f8fafc; /* slate-50 */
             color: #1e293b; /* slate-800 */
         }
-        .font-mono {
-            font-family: 'Roboto Mono', monospace;
-        }
-        .pt-instruction {
-            background-color: #f1f5f9; /* slate-100 */
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        .intel-drop {
+            background-color: #f0f9ff; /* sky-50 */
             border-left: 4px solid #0ea5e9; /* sky-500 */
         }
-        .lab-option {
-            transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
-        }
-        .lab-option:hover:not(:disabled) {
-            transform: translateY(-2px);
-            border-color: #0369a1; /* sky-700 */
-            background-color: #f0f9ff; /* sky-50 */
-        }
-        .lab-option.correct {
-            background-color: #ecfdf5 !important;
-            border-color: #10b981 !important;
-            color: #065f46 !important;
-        }
-        .lab-option.incorrect {
-            background-color: #fef2f2 !important;
-            border-color: #ef4444 !important;
-            color: #991b1b !important;
-        }
-        .feedback {
-            padding: 1rem;
-            border-radius: 0.375rem;
-            font-weight: 500;
-        }
-        .feedback-correct {
-            background-color: #ecfdf5; /* green-50 */
-            color: #065f46; /* green-800 */
-            border-left: 4px solid #10b981; /* green-500 */
-        }
-        .feedback-incorrect {
-            background-color: #fef2f2; /* red-50 */
-            color: #991b1b; /* red-800 */
-            border-left: 4px solid #ef4444; /* red-500 */
+        .packet-part {
+            transition: all 0.3s ease-in-out;
         }
     </style>
 </head>
@@ -60,156 +29,151 @@
 
     <header class="bg-white shadow-md">
         <div class="container mx-auto px-6 py-5 text-center">
-            <h1 class="text-3xl font-bold text-sky-800">Laboratorio Práctico: Anatomía de una Red Doméstica</h1>
-            <p class="text-slate-600 mt-1">Módulo: Fundamentos de Redes y Arquitecturas - Reto 1</p>
+            <h1 class="text-3xl font-bold text-sky-800">Simulador Práctico: PEC1</h1>
+            <p class="text-slate-600 mt-1">Módulo: Fundamentos de Redes y Arquitecturas</p>
         </div>
     </header>
 
     <main class="container mx-auto px-4 py-12">
-        <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
+        <div class="max-w-4xl mx-auto space-y-12">
+
+            <!-- INTRODUCCIÓN -->
+            <div class="text-center">
+                 <h2 class="text-2xl font-bold text-slate-800">BRIEFING DE LA MISIÓN: PEC1</h2>
+                 <p class="text-slate-600 mt-2 max-w-3xl mx-auto">Tu objetivo es completar la PEC1. Este simulador no te dará las respuestas, sino que te proporcionará la inteligencia y las herramientas necesarias para que construyas tus propias conclusiones y obtengas la máxima calificación.</p>
+            </div>
             
-            <div class="text-center mb-8">
-                <h2 class="text-2xl font-bold text-slate-800">BRIEFING DE LA MISIÓN</h2>
-                <p class="text-slate-600 mt-2 max-w-3xl mx-auto">Tu objetivo es construir y validar una red doméstica básica utilizando Packet Tracer. A través de este proceso, aplicarás conceptos fundamentales de topología, direccionamiento IP y herramientas de diagnóstico. Sigue las fases en orden.</p>
+            <!-- EJERCICIO 1 -->
+            <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold text-sky-800 mb-1">Ejercicio 1: Orígenes de Internet</h3>
+                <p class="text-sm text-slate-500 mb-4">Pregunta teórica sobre la evolución de ARPANET.</p>
+                <div class="intel-drop p-4 rounded-md mb-6">
+                    <h4 class="font-bold text-sky-900 font-mono text-sm">&gt; INTEL DROP: Sección 1.1 "Computer Networking"</h4>
+                    <p class="text-slate-700 mt-2 text-sm">Internet nació como **ARPANET**, un proyecto del Departamento de Defensa de EE. UU. en los años 60. Su objetivo principal era crear una red de comunicaciones **descentralizada** y robusta, capaz de sobrevivir a un ataque nuclear. Esta falta de un punto central de fallo es su legado más importante.</p>
+                    <p class="text-slate-700 mt-2 text-sm font-semibold">Hitos Clave a considerar en tu respuesta:</p>
+                    <ul class="list-disc list-inside mt-1 space-y-1 text-sm">
+                        <li>**1970s - Creación de TCP/IP:** Vint Cerf y Bob Kahn desarrollan los protocolos que se convierten en el lenguaje universal de Internet.</li>
+                        <li>**1983 - Creación del DNS:** Se introduce el sistema de nombres de dominio, haciendo la red más accesible para los humanos.</li>
+                        <li>**1990s - Invención de la World Wide Web:** Tim Berners-Lee crea el hipertexto (HTTP, HTML), haciendo la red gráfica y navegable para el público masivo.</li>
+                    </ul>
+                </div>
+                <h4 class="font-semibold text-lg mb-3">Tu Tarea:</h4>
+                <p class="text-slate-700">Usando este "Intel Drop", estructura tu respuesta explicando cómo cada uno de estos hitos transformó ARPANET en el Internet que conocemos hoy, enfocándote en cómo cambió la manera en que los usuarios interactúan con la red.</p>
             </div>
 
-            <!-- Contenedor de Fases del Laboratorio -->
-            <div id="lab-phases">
-                <!-- Fase 1: Reconocimiento -->
-                <div id="phase-1" class="lab-phase">
-                    <div class="border-b border-slate-200 pb-3 mb-6">
-                        <h3 class="text-xl font-bold text-sky-700">Fase 1: Reconocimiento y Construcción Inicial</h3>
-                        <p class="text-slate-500 text-sm">Identifica los componentes esenciales y establece la conexión básica a Internet.</p>
-                    </div>
-                    <div class="pt-instruction font-mono text-sm mb-6 p-4 rounded-md">
-                        <p class="font-bold text-sky-700 mb-2">&gt; Instrucciones para Packet Tracer:</p>
-                        <ol class="list-decimal list-inside space-y-1 text-slate-700">
-                            <li>Añade un 'PC' (End Devices).</li>
-                            <li>Añade un 'Router-PT' (Routers).</li>
-                            <li>Añade una 'Cloud-PT' (WAN).</li>
-                            <li>Conecta el PC al Router (FastEthernet0/0) y el Router (FastEthernet1/0) a la Cloud usando el cable de cobre directo (Copper Straight-Through).</li>
-                        </ol>
-                    </div>
-                    <div id="q1-container" class="question-container">
-                        <p class="font-semibold mb-4 text-slate-800">Pregunta 1: Para que el PC pueda comunicarse con internet, el router debe realizar una función clave que "traduce" la dirección IP privada del PC a una dirección IP pública. ¿Cómo se llama esta función?</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <button class="lab-option p-3 rounded-md text-left border bg-slate-50" onclick="checkAnswer(1, 'a')">A) DHCP (Dynamic Host Configuration Protocol)</button>
-                            <button class="lab-option p-3 rounded-md text-left border bg-slate-50" onclick="checkAnswer(1, 'b')">B) NAT (Network Address Translation)</button>
-                            <button class="lab-option p-3 rounded-md text-left border bg-slate-50" onclick="checkAnswer(1, 'c')">C) DNS (Domain Name System)</button>
-                            <button class="lab-option p-3 rounded-md text-left border bg-slate-50" onclick="checkAnswer(1, 'd')">D) ARP (Address Resolution Protocol)</button>
-                        </div>
-                        <div id="f1" class="feedback mt-4 hidden"></div>
+            <!-- EJERCICIO 3: ENCAPSULACIÓN -->
+            <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold text-sky-800 mb-1">Ejercicio 3: Visualizador de Encapsulación</h3>
+                <p class="text-sm text-slate-500 mb-4">Entiende cómo se "visten" los datos para viajar por la red.</p>
+                <div class="intel-drop p-4 rounded-md mb-6">
+                    <h4 class="font-bold text-sky-900 font-mono text-sm">&gt; INTEL DROP: Sección 1.5 "Computer Networking"</h4>
+                    <p class="text-slate-700 mt-2 text-sm">Al enviar datos, cada capa del modelo TCP/IP añade (encapsula) su propia información de control (cabecera) a los datos que recibe de la capa superior. Este proceso asegura que el paquete tenga toda la información necesaria para llegar a su destino y ser interpretado correctamente.</p>
+                </div>
+                <div class="border rounded-lg p-4">
+                    <p class="text-center mb-4 font-semibold">Simulador: Construcción de una Trama Ethernet</p>
+                    <div id="packet-builder" class="space-y-2">
+                        <div class="packet-part bg-purple-200 p-2 rounded-md text-center text-purple-800 font-mono text-sm">Cabecera de Enlace (MAC Origen/Destino)</div>
+                        <div class="packet-part bg-red-200 p-2 rounded-md text-center text-red-800 font-mono text-sm ml-4">Cabecera de Red (IP Origen/Destino)</div>
+                        <div class="packet-part bg-green-200 p-2 rounded-md text-center text-green-800 font-mono text-sm ml-8">Cabecera de Transporte (Puertos Origen/Destino)</div>
+                        <div class="packet-part bg-blue-200 p-2 rounded-md text-center text-blue-800 font-mono text-sm ml-12">Datos (Ej: "07")</div>
                     </div>
                 </div>
+                 <h4 class="font-semibold text-lg mb-3 mt-6">Tu Tarea:</h4>
+                <p class="text-slate-700">Describe en tu respuesta este proceso. Explica qué información clave (y para qué) se añade en cada cabecera. Por ejemplo: "En la capa de Transporte, se añade la cabecera TCP/UDP, que incluye los puertos de origen y destino para que el sistema operativo sepa a qué aplicación entregar los datos..."</p>
+            </div>
 
-                <!-- Fase 2: Expansión y Configuración -->
-                <div id="phase-2" class="lab-phase hidden">
-                    <div class="border-b border-slate-200 pb-3 mb-6">
-                        <h3 class="text-xl font-bold text-sky-700">Fase 2: Expansión de la Red Local (LAN)</h3>
-                        <p class="text-slate-500 text-sm">Añade más dispositivos y configúralos para que coexistan en la misma red.</p>
+             <!-- EJERCICIO 5: CÁLCULO DE ATENUACIÓN -->
+            <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold text-sky-800 mb-1">Ejercicio 5: Calculadora de Atenuación WiFi (FSPL)</h3>
+                <p class="text-sm text-slate-500 mb-4">Comprueba cómo la distancia y la frecuencia afectan a la señal WiFi.</p>
+                <div class="intel-drop p-4 rounded-md mb-6">
+                    <h4 class="font-bold text-sky-900 font-mono text-sm">&gt; INTEL DROP: Física de la Señal</h4>
+                    <p class="text-slate-700 mt-2 text-sm">La fórmula de Free Space Path Loss (FSPL) nos da una estimación de la pérdida de potencia de una señal en el espacio libre. Frecuencias más altas (como 5 GHz) tienen ondas más cortas y "chocan" más con los obstáculos, perdiendo energía más rápido que las frecuencias bajas (2.4 GHz). Sin embargo, 5 GHz ofrece más canales y menos interferencias, resultando en mayor velocidad a corta distancia.</p>
+                </div>
+                <div class="grid sm:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <label for="distance" class="block text-sm font-medium text-slate-700">Distancia (metros):</label>
+                        <input type="range" id="distance" min="1" max="100" value="10" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer mt-1">
+                        <p class="text-center text-sm font-mono mt-1">Distancia: <span id="distance-val">10</span> m</p>
                     </div>
-                    <div class="pt-instruction font-mono text-sm mb-6 p-4 rounded-md">
-                        <p class="font-bold text-sky-700 mb-2">&gt; Instrucciones para Packet Tracer:</p>
-                        <ol class="list-decimal list-inside space-y-1 text-slate-700">
-                            <li>Añade un 'Switch-PT' (Switches) y conéctalo al Router (FastEthernet0/0).</li>
-                            <li>Desconecta el PC del Router y conéctalo al Switch.</li>
-                            <li>Añade un 'Server-PT' (End Devices) y conéctalo al Switch.</li>
-                            <li>Configura IPs estáticas: PC (192.168.1.10) y Servidor (192.168.1.11). Máscara de subred: 255.255.255.0. Gateway: 192.168.1.1 (la IP del router en la LAN).</li>
-                        </ol>
-                    </div>
-                    <div id="q2-container" class="question-container">
-                        <p class="font-semibold mb-4 text-slate-800">Pregunta 2: El switch opera principalmente en una capa del modelo OSI para dirigir el tráfico basándose en direcciones físicas (MAC). ¿Cuál es esa capa?</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <button class="lab-option p-3 rounded-md text-left border bg-slate-50" onclick="checkAnswer(2, 'a')">A) Capa 1 (Física)</button>
-                            <button class="lab-option p-3 rounded-md text-left border bg-slate-50" onclick="checkAnswer(2, 'b')">B) Capa 3 (Red)</button>
-                            <button class="lab-option p-3 rounded-md text-left border bg-slate-50" onclick="checkAnswer(2, 'c')">C) Capa 2 (Enlace de Datos)</button>
-                            <button class="lab-option p-3 rounded-md text-left border bg-slate-50" onclick="checkAnswer(2, 'd')">D) Capa 4 (Transporte)</button>
+                    <div class="space-y-2">
+                        <div class="bg-slate-100 p-3 rounded-md">
+                            <p class="font-semibold">Pérdida a 2.4 GHz: <span id="loss-2.4" class="font-mono text-red-600"></span> dB</p>
                         </div>
-                        <div id="f2" class="feedback mt-4 hidden"></div>
+                         <div class="bg-slate-100 p-3 rounded-md">
+                            <p class="font-semibold">Pérdida a 5 GHz: <span id="loss-5" class="font-mono text-red-600"></span> dB</p>
+                        </div>
                     </div>
                 </div>
+                <h4 class="font-semibold text-lg mb-3 mt-6">Tu Tarea:</h4>
+                <p class="text-slate-700">Usa esta calculadora para generar los datos de tu gráfica. En tu respuesta, explica la relación que observas: a medida que aumenta la distancia, ambas bandas pierden potencia, pero la de 5 GHz lo hace más rápido. Luego, justifica por qué se usa 5 GHz a pesar de tener menor alcance (ventaja: más canales, menos interferencia, más velocidad).</p>
+            </div>
 
-                <!-- Fase 3: Verificación de Conectividad -->
-                <div id="phase-3" class="lab-phase hidden">
-                    <div class="border-b border-slate-200 pb-3 mb-6">
-                        <h3 class="text-xl font-bold text-sky-700">Fase 3: Verificación de Conectividad</h3>
-                        <p class="text-slate-500 text-sm">Utiliza herramientas de diagnóstico para confirmar que tu red funciona como se espera.</p>
-                    </div>
-                    <div class="pt-instruction font-mono text-sm mb-6 p-4 rounded-md">
-                        <p class="font-bold text-sky-700 mb-2">&gt; Instrucciones para Packet Tracer:</p>
-                        <ol class="list-decimal list-inside space-y-1 text-slate-700">
-                            <li>Abre la terminal del PC (Desktop &gt; Command Prompt).</li>
-                            <li>Ejecuta el comando: <code class="text-fuchsia-600">ping 192.168.1.11</code>. Deberías recibir 4 respuestas exitosas.</li>
-                        </ol>
-                    </div>
-                    <div id="q3-container" class="question-container">
-                        <p class="font-semibold mb-4 text-slate-800">Pregunta 3: El comando <code class="font-mono text-fuchsia-600">ping</code> utiliza un protocolo específico para enviar sus "echo requests" y recibir "echo replies", operando en la capa de Red. ¿Qué protocolo es?</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <button class="lab-option p-3 rounded-md text-left border bg-slate-50" onclick="checkAnswer(3, 'a')">A) TCP (Transmission Control Protocol)</button>
-                            <button class="lab-option p-3 rounded-md text-left border bg-slate-50" onclick="checkAnswer(3, 'b')">B) UDP (User Datagram Protocol)</button>
-                            <button class="lab-option p-3 rounded-md text-left border bg-slate-50" onclick="checkAnswer(3, 'c')">C) HTTP (Hypertext Transfer Protocol)</button>
-                            <button class="lab-option p-3 rounded-md text-left border bg-slate-50" onclick="checkAnswer(3, 'd')">D) ICMP (Internet Control Message Protocol)</button>
-                        </div>
-                        <div id="f3" class="feedback mt-4 hidden"></div>
-                    </div>
+            <!-- GUÍA PACKET TRACER -->
+            <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold text-sky-800 mb-4">Ejercicios 6-13: Guía de Campo para Packet Tracer</h3>
+                <p class="text-slate-700 mb-6">Esta sección te guiará a través de las tareas prácticas en Packet Tracer, proporcionando la inteligencia necesaria para responder a las preguntas teóricas asociadas a cada ejercicio.</p>
+                <ul class="space-y-4">
+                    <li><strong class="text-sky-700">Ej. 9 (Cable Cruzado):</strong> Al conectar dos dispositivos iguales (PC a PC) directamente, Packet Tracer usará un cable cruzado (crossover). ¿Por qué? Porque los pines de transmisión (TX) de un lado deben conectarse a los de recepción (RX) del otro. Los switches modernos hacen esto automáticamente (Auto-MDIX).</li>
+                    <li><strong class="text-sky-700">Ej. 10 y 11 (Routing RIP):</strong> RIP es un protocolo de enrutamiento simple. Al añadir una nueva red (tu `Home Router`), debes "anunciarla" en el router de Internet al que te conectas para que el resto de la topología sepa cómo llegar a ella.</li>
+                    <li><strong class="text-sky-700">Ej. 12 (Análisis de Paquetes):</strong> Al seguir un paquete ICMP (ping) en modo simulación, notarás que en cada salto (hop) entre routers, la **Capa 2 (direcciones MAC) cambia**, porque se refiere al siguiente salto físico. Sin embargo, la **Capa 3 (direcciones IP) permanece igual**, porque se refiere al origen y destino final del viaje.</li>
+                </ul>
+            </div>
+
+             <!-- EJERCICIO 14 y 15 -->
+            <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold text-sky-800 mb-1">Ejercicios 14 y 15: Análisis de Rendimiento</h3>
+                <p class="text-sm text-slate-500 mb-4">Mide y analiza la performance de una conexión.</p>
+                <div class="intel-drop p-4 rounded-md mb-6">
+                    <h4 class="font-bold text-sky-900 font-mono text-sm">&gt; INTEL DROP: Métricas de Rendimiento</h4>
+                    <ul class="list-disc list-inside mt-2 space-y-2 text-sm">
+                        <li><strong>Retardo Total (Ej. 14):</strong> Para el esquema stop-and-wait, el tiempo total es el número de paquetes multiplicado por el tiempo de ida y vuelta de un paquete (RTT). El RTT incluye el tiempo de transmisión del paquete de datos, el de propagación en ambos sentidos, y el de transmisión del ACK. Las retransmisiones por errores (BER) añaden más retardos.</li>
+                        <li><strong>Jitter (Ej. 15):</strong> Es la variación del retardo. Un jitter alto es malo para aplicaciones en tiempo real como VoIP o gaming. Un boxplot ancho en tu gráfica indica un jitter alto.</li>
+                        <li><strong>PDF/CDF (Ej. 15):</strong> La Función de Densidad de Probabilidad (PDF) te mostrará en torno a qué valor de RTT se agrupan la mayoría de tus pings. Una curva PDF estrecha y alta significa una conexión estable. La Función de Distribución Acumulada (CDF) te dirá qué porcentaje de paquetes llegó por debajo de un cierto RTT (ej. "el 90% de los paquetes tuvo un RTT menor de 50ms").</li>
+                    </ul>
                 </div>
-                 <!-- Fase 4: Finalización -->
-                <div id="phase-4" class="lab-phase hidden text-center">
-                    <h3 class="text-2xl font-bold text-green-600">LABORATORIO COMPLETADO</h3>
-                    <p class="text-slate-600 mt-4">Has construido, configurado y verificado con éxito una red básica. Has demostrado comprender la función de los componentes clave, el direccionamiento IP y las herramientas de diagnóstico fundamentales.</p>
-                </div>
+                 <h4 class="font-semibold text-lg mb-3">Tu Tarea:</h4>
+                <p class="text-slate-700">Usa estos "Intel Drops" como guía para tus cálculos. Para el Ejercicio 14, desglosa el problema: calcula el tiempo por paquete y luego multiplícalo. Para el Ejercicio 15, céntrate en la interpretación de las gráficas: una conexión a un servidor más lejano (Rice University) probablemente mostrará un RTT medio más alto y un jitter mayor (boxplot más ancho) que una conexión a un servidor más cercano (UOC).</p>
             </div>
         </div>
     </main>
 
-    <footer class="text-center py-6 mt-12 bg-slate-100">
-        <p class="text-slate-500 text-sm">Este laboratorio es una simulación de entrenamiento. Las configuraciones son simplificadas con fines educativos.</p>
+    <footer class="bg-slate-100 mt-12 py-4">
+        <div class="container mx-auto px-6 text-center text-slate-500 text-sm">
+            <p>Este simulador es tu campo de entrenamiento para la PEC1. ¡Buena suerte, analista!</p>
+        </div>
     </footer>
 
 <script>
-    const answers = {
-        1: { correct: 'b', feedback: '¡Correcto! NAT es esencial para permitir que múltiples dispositivos en una red privada compartan una única IP pública para acceder a Internet.' },
-        2: { correct: 'c', feedback: '¡Exacto! El switch utiliza las direcciones MAC (Capa 2) para reenviar tramas solo al puerto donde se encuentra el dispositivo de destino, a diferencia de un hub.' },
-        3: { correct: 'd', feedback: '¡Preciso! ICMP es el protocolo de diagnóstico de la suite TCP/IP, usado por herramientas como ping y traceroute para reportar errores y enviar mensajes de control.' }
-    };
+    document.addEventListener('DOMContentLoaded', () => {
+        const distanceSlider = document.getElementById('distance');
+        const distanceVal = document.getElementById('distance-val');
+        const loss24 = document.getElementById('loss-2.4');
+        const loss5 = document.getElementById('loss-5');
 
-    function checkAnswer(questionNum, selectedOption) {
-        const question = answers[questionNum];
-        const feedbackEl = document.getElementById(`f${questionNum}`);
-        const containerEl = document.getElementById(`q${questionNum}-container`);
-        const options = containerEl.querySelectorAll('.lab-option');
-
-        options.forEach(opt => {
-            opt.disabled = true;
-        });
-
-        const selectedButton = Array.from(options).find(opt => opt.getAttribute('onclick').includes(`'${selectedOption}'`));
-        
-        if (selectedOption === question.correct) {
-            feedbackEl.innerHTML = `<p>${question.feedback}</p>`;
-            feedbackEl.className = 'feedback feedback-correct';
-            if(selectedButton) selectedButton.classList.add('correct');
-            
-            setTimeout(() => {
-                document.getElementById(`phase-${questionNum}`).classList.add('hidden');
-                document.getElementById(`phase-${questionNum + 1}`).classList.remove('hidden');
-            }, 2500);
-
-        } else {
-            feedbackEl.innerHTML = `<p><strong>Análisis Incorrecto.</strong> Revisa los conceptos del Centro de Mando e inténtalo de nuevo.</p>`;
-            feedbackEl.className = 'feedback feedback-incorrect';
-            if(selectedButton) selectedButton.classList.add('incorrect');
-
-            setTimeout(() => {
-                feedbackEl.classList.add('hidden');
-                if(selectedButton) selectedButton.classList.remove('incorrect');
-                options.forEach(opt => {
-                    opt.disabled = false;
-                });
-            }, 3000);
+        function calculateFSPL(dist, freqHz) {
+            if (dist <= 0) return 0;
+            const f = freqHz;
+            const d = dist;
+            const log10d = Math.log10(d);
+            const log10f = Math.log10(f);
+            const loss = 20 * log10d + 20 * log10f - 147.55;
+            return loss.toFixed(2);
         }
-        feedbackEl.classList.remove('hidden');
-    }
+
+        function updateLosses() {
+            const dist = distanceSlider.value;
+            distanceVal.textContent = dist;
+            const freq2_4GHz = 2.4 * 1e9;
+            const freq5GHz = 5 * 1e9;
+
+            loss24.textContent = calculateFSPL(dist, freq2_4GHz);
+            loss5.textContent = calculateFSPL(dist, freq5GHz);
+        }
+
+        distanceSlider.addEventListener('input', updateLosses);
+        updateLosses(); // Initial calculation
+    });
 </script>
 
 </body>
