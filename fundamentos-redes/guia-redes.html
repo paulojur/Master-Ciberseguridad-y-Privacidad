@@ -14,21 +14,24 @@
             background-color: #f5f5f4; /* stone-100 */
             color: #1c1917; /* stone-900 */
         }
-        .font-mono {
-            font-family: 'Roboto Mono', monospace;
-        }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
         .nav-link { transition: color 0.3s, border-bottom-color 0.3s; }
         .nav-link:hover, .nav-link.active { color: #0d9488; border-bottom-color: #0d9488; }
         .layer { cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .layer:hover { transform: scale(1.02); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .layer:hover { transform: translateY(-5px); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .strategic-insight {
             border-left: 4px solid #0d9488; /* teal-600 */
             background-color: #f0fdfa; /* teal-50 */
         }
-        /* Estilos Laboratorio */
         .lab-option { transition: background-color 0.3s, border-color 0.3s, color 0.3s; cursor: pointer; }
-        .lab-option.correct { background-color: #10b981 !important; border-color: #059669 !important; color: white !important; }
+        .lab-option.correct { background-color: #10b981 !important; border-color: #059669 !important; color: white !important; transform: scale(1.05); }
         .lab-option.incorrect { background-color: #ef4444 !important; border-color: #dc2626 !important; color: white !important; }
+        .feedback-box { transition: opacity 0.5s; }
+        .packet-part {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -36,122 +39,114 @@
     <header class="bg-stone-100 shadow-sm sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <h1 class="text-xl font-bold text-teal-700">Centro de Mando de Redes</h1>
-            <div class="hidden md:flex space-x-4 text-sm">
+            <div class="hidden md:flex space-x-6 text-sm font-semibold">
                 <a href="#briefing" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Briefing</a>
-                <a href="#internet-structure" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Estructura de Internet</a>
+                <a href="#anatomia" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Anatomía</a>
                 <a href="#performance" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Performance</a>
-                <a href="#protocols" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Protocolos</a>
+                <a href="#protocolos" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Protocolos</a>
                 <a href="#laboratorio" class="nav-link font-bold text-yellow-600 border-b-2 border-transparent pb-1">LAB (PEC1)</a>
             </div>
             <button id="mobile-menu-button" class="md:hidden text-stone-700">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
         </nav>
-        <div id="mobile-menu" class="hidden md:hidden">
-            <a href="#briefing" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Briefing</a>
-            <a href="#internet-structure" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Estructura de Internet</a>
-            <a href="#performance" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Performance</a>
-            <a href="#protocols" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Protocolos</a>
-            <a href="#laboratorio" class="block py-2 px-4 text-sm font-bold text-yellow-600 hover:bg-stone-200">LAB (PEC1)</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg">
+            <a href="#briefing" class="block py-3 px-6 text-sm text-stone-600 hover:bg-stone-200">Briefing</a>
+            <a href="#anatomia" class="block py-3 px-6 text-sm text-stone-600 hover:bg-stone-200">Anatomía</a>
+            <a href="#performance" class="block py-3 px-6 text-sm text-stone-600 hover:bg-stone-200">Performance</a>
+            <a href="#protocolos" class="block py-3 px-6 text-sm text-stone-600 hover:bg-stone-200">Protocolos</a>
+            <a href="#laboratorio" class="block py-3 px-6 text-sm font-bold text-yellow-600 hover:bg-stone-200">LAB (PEC1)</a>
         </div>
     </header>
 
     <main class="container mx-auto px-6 py-12">
 
-        <section id="briefing" class="text-center mb-20">
+        <section id="briefing" class="text-center mb-24">
             <h2 class="text-4xl font-bold text-stone-800 mb-4">Módulo de Operaciones de Red</h2>
             <p class="text-lg text-stone-600 max-w-3xl mx-auto">
-                Las redes son el sistema circulatorio de los datos y el principal campo de batalla en ciberseguridad. Este centro de mando integra la inteligencia de "El papel de las redes" y el Capítulo 1 de "Computer Networking: A Top-Down Approach" para convertirla en conocimiento accionable.
+                Las redes son el sistema circulatorio de los datos y el principal campo de batalla en ciberseguridad. Este centro de mando integra la inteligencia clave para convertirla en conocimiento accionable para la PEC1.
             </p>
         </section>
 
-        <section id="internet-structure" class="mb-20">
+        <section id="anatomia" class="mb-24">
             <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Anatomía de Internet: El Extremo y el Núcleo</h2>
             <div class="grid md:grid-cols-2 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="font-bold text-xl mb-3">El Extremo de la Red (The Edge)</h3>
-                    <p class="text-stone-600">Aquí es donde vivimos. Está compuesto por:</p>
-                    <ul class="list-disc list-inside mt-3 space-y-2 text-sm text-stone-700">
-                        <li><strong>Hosts / End Systems:</strong> Cualquier dispositivo conectado a la red (PC, smartphone, servidor, IoT).</li>
-                        <li><strong>Clientes y Servidores:</strong> Modelos de aplicación. Los clientes solicitan, los servidores responden.</li>
-                        <li><strong>Redes de Acceso:</strong> La tecnología que te conecta al primer router de tu ISP (DSL, Cable, Fibra/FTTH, WiFi, 4G/5G).</li>
+                <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                    <h3 class="font-bold text-2xl mb-4 text-sky-700">El Extremo de la Red (The Edge)</h3>
+                    <p class="text-stone-600">Aquí es donde operamos. Está compuesto por:</p>
+                    <ul class="list-disc list-inside mt-4 space-y-2 text-stone-700">
+                        <li><strong>Hosts / End Systems:</strong> Dispositivos finales (PC, smartphone, servidor).</li>
+                        <li><strong>Redes de Acceso:</strong> La tecnología que te conecta al primer router (DSL, Fibra/FTTH, WiFi, 5G).</li>
                     </ul>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="font-bold text-xl mb-3">El Núcleo de la Red (The Core)</h3>
-                    <p class="text-stone-600">La malla de routers e ISPs que interconecta todo. Su función es simple: mover paquetes de A a B.</p>
-                     <ul class="list-disc list-inside mt-3 space-y-2 text-sm text-stone-700">
-                        <li><strong>Conmutación de Paquetes (Packet Switching):</strong> Los datos se dividen en paquetes, se envían de forma independiente y se reensamblan en el destino. No se reserva un camino fijo.</li>
-                        <li><strong>Red de Redes (Network of Networks):</strong> Internet es un conjunto jerárquico de ISPs (Tier-1, regionales, de acceso) que se interconectan entre sí.</li>
+                <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                    <h3 class="font-bold text-2xl mb-4 text-rose-700">El Núcleo de la Red (The Core)</h3>
+                    <p class="text-stone-600">La malla de routers e ISPs que interconecta todo. Su función es mover paquetes.</p>
+                     <ul class="list-disc list-inside mt-4 space-y-2 text-stone-700">
+                        <li><strong>Conmutación de Paquetes:</strong> Los datos se dividen, viajan de forma independiente y se reensamblan en el destino.</li>
+                        <li><strong>Red de Redes:</strong> Internet es una jerarquía de ISPs (Tier-1, regionales, etc.) interconectados.</li>
                     </ul>
                 </div>
             </div>
         </section>
 
-        <section id="performance" class="mb-20">
-            <h2 class="text-3xl font-bold text-center text-stone-800 mb-2">Análisis de Performance de Red</h2>
-            <p class="text-center text-stone-600 mb-12">El rendimiento de una red se mide por su velocidad y fiabilidad. Entender los componentes del retardo es clave para diagnosticar problemas.</p>
-            <div class="bg-white p-8 rounded-lg shadow-lg">
-                <h3 class="text-2xl font-bold text-center mb-6">Componentes del Retardo Nodal (<span class="font-mono">d_nodal</span>)</h3>
-                <p class="text-center text-stone-500 text-sm font-mono mb-8">d_nodal = d_proc + d_queue + d_trans + d_prop</p>
+        <section id="performance" class="mb-24">
+             <div class="bg-white p-8 rounded-lg shadow-lg">
+                <h2 class="text-3xl font-bold text-center text-stone-800 mb-2">Análisis de Performance de Red</h2>
+                <p class="text-center text-stone-600 mb-10">El rendimiento depende del retardo total. Entender sus componentes es clave para el diagnóstico.</p>
+                <h3 class="text-2xl font-bold text-center mb-6">Fórmula del Retardo Nodal</h3>
+                <p class="text-center text-stone-500 text-lg font-mono mb-10 bg-stone-50 p-3 rounded-md">d_nodal = d_proc + d_queue + d_trans + d_prop</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="text-center border-t-4 border-sky-500 pt-4">
-                        <h4 class="font-bold text-lg">Procesamiento (<span class="font-mono">d_proc</span>)</h4>
-                        <p class="text-sm text-stone-600 mt-1">Tiempo que tarda un router en examinar la cabecera del paquete para decidir a dónde enviarlo. (Microsegundos)</p>
-                    </div>
-                     <div class="text-center border-t-4 border-red-500 pt-4">
-                        <h4 class="font-bold text-lg">Cola (<span class="font-mono">d_queue</span>)</h4>
-                        <p class="text-sm text-stone-600 mt-1">Tiempo que un paquete espera en el buffer de salida antes de ser transmitido. Depende de la congestión.</p>
-                    </div>
-                     <div class="text-center border-t-4 border-yellow-500 pt-4">
-                        <h4 class="font-bold text-lg">Transmisión (<span class="font-mono">d_trans</span>)</h4>
-                        <p class="text-sm text-stone-600 mt-1">Tiempo necesario para "empujar" todos los bits del paquete al enlace. <strong class="font-mono">L/R</strong> (Tamaño Paquete / Ancho de Banda).</p>
-                    </div>
-                     <div class="text-center border-t-4 border-green-500 pt-4">
-                        <h4 class="font-bold text-lg">Propagación (<span class="font-mono">d_prop</span>)</h4>
-                        <p class="text-sm text-stone-600 mt-1">Tiempo que tarda un bit en viajar físicamente por el medio desde el emisor al receptor. <strong class="font-mono">d/s</strong> (Distancia / Velocidad).</p>
-                    </div>
+                    <!-- Cards de Delay -->
                 </div>
-                 <div class="strategic-insight p-4 rounded-lg mt-8">
-                     <h4 class="font-bold text-lg text-teal-700 font-mono">&gt; Insight de Analista: Throughput vs. Ancho de Banda</h4>
-                     <p class="text-stone-700 mt-2 text-sm">El <strong class="text-black">Ancho de Banda</strong> (Bandwidth) es la capacidad teórica máxima de un enlace (ej. 1 Gbps). El <strong class="text-black">Throughput</strong> es la velocidad *real* que obtienes. El throughput siempre está limitado por el enlace más lento de la ruta, el "cuello de botella" (bottleneck link).</p>
-                 </div>
-            </div>
-        </section>
-
-        <section id="protocols" class="mb-20">
-            <h2 class="text-3xl font-bold text-center text-stone-800 mb-2">Arquitecturas de Protocolos</h2>
-            <p class="text-center text-stone-600 mb-12">Las capas dividen la complejidad de la comunicación en funciones manejables. Cada capa ofrece un servicio a la capa superior.</p>
-            <div class="grid md:grid-cols-2 gap-8 items-start">
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <h3 class="text-2xl font-bold text-center mb-4">Modelo OSI vs. TCP/IP</h3>
-                     <div class="space-y-3">
-                        <div class="layer bg-sky-600 text-white p-3 rounded-md text-center"><b>Aplicación, Presentación, Sesión (OSI) -> Aplicación (TCP/IP)</b></div>
-                        <div class="layer bg-teal-600 text-white p-3 rounded-md text-center"><b>Transporte</b> (TCP/UDP)</div>
-                        <div class="layer bg-emerald-600 text-white p-3 rounded-md text-center"><b>Red (OSI) -> Internet (TCP/IP)</b> (IP, Enrutamiento)</div>
-                        <div class="layer bg-rose-700 text-white p-3 rounded-md text-center"><b>Enlace de Datos, Física (OSI) -> Acceso a la Red (TCP/IP)</b></div>
-                    </div>
-                </div>
-                 <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <h3 class="text-2xl font-bold text-center mb-4">Encapsulación</h3>
-                    <p class="text-stone-600 mb-4">Al bajar por las capas, cada una añade su propia cabecera (<span class="font-mono">Header</span>) a los datos de la capa superior.</p>
-                    <ul class="space-y-2 font-mono text-sm">
-                        <li class="bg-gray-100 p-2 rounded">Capa Aplicación: <span class="text-blue-600">Mensaje</span></li>
-                        <li class="bg-gray-100 p-2 rounded">Capa Transporte: [<span class="text-green-600">H_t</span>] <span class="text-blue-600">Mensaje</span> = Segmento</li>
-                        <li class="bg-gray-100 p-2 rounded">Capa Red: [<span class="text-red-600">H_n</span>] [<span class="text-green-600">H_t</span>] <span class="text-blue-600">Mensaje</span> = Datagrama</li>
-                        <li class="bg-gray-100 p-2 rounded">Capa Enlace: [<span class="text-purple-600">H_l</span>] [<span class="text-red-600">H_n</span>] [<span class="text-green-600">H_t</span>] <span class="text-blue-600">Mensaje</span> = Trama</li>
-                    </ul>
+                 <div class="strategic-insight p-6 rounded-lg mt-10">
+                   <h4 class="font-bold text-xl text-teal-800 font-mono">&gt; Insight de Analista: Throughput vs. Ancho de Banda</h4>
+                   <p class="text-stone-700 mt-2">El <strong class="text-black">Ancho de Banda</strong> es la capacidad teórica máxima de un enlace (ej. 1 Gbps). El <strong class="text-black">Throughput</strong> es la velocidad *real* que obtienes. El throughput siempre está limitado por el enlace más lento de la ruta, el **"cuello de botella" (bottleneck link)**.</p>
                 </div>
             </div>
         </section>
 
-        <!-- #################### LABORATORIO: SIMULADOR TÁCTICO PARA PEC1 #################### -->
+        <section id="protocolos" class="mb-24">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-12">Arquitectura de Protocolos y Encapsulación</h2>
+            <div class="grid lg:grid-cols-2 gap-8 items-start">
+                <div class="bg-white p-8 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-bold text-center mb-6">Pila de Protocolos TCP/IP</h3>
+                    <div class="space-y-3" id="layers-container">
+                        <!-- Layers will be injected here -->
+                    </div>
+                </div>
+                 <div class="bg-white p-8 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-bold text-center mb-6">Simulador de Encapsulación</h3>
+                    <p class="text-stone-600 text-center mb-4">Pulsa para ver cómo se construye una Trama Ethernet.</p>
+                    <div class="font-mono text-sm space-y-2 p-4 border rounded-md bg-stone-50 min-h-[220px]">
+                        <div id="part-trama" class="packet-part flex items-center">
+                            <span class="bg-purple-600 text-white font-bold p-2 rounded-l-md">H_Enlace</span>
+                            <div class="border p-2 rounded-r-md bg-white w-full">...</div>
+                        </div>
+                        <div id="part-datagrama" class="packet-part flex items-center ml-4">
+                            <span class="bg-red-600 text-white font-bold p-2 rounded-l-md">H_Red</span>
+                            <div class="border p-2 rounded-r-md bg-white w-full">...</div>
+                        </div>
+                        <div id="part-segmento" class="packet-part flex items-center ml-8">
+                            <span class="bg-green-600 text-white font-bold p-2 rounded-l-md">H_Transporte</span>
+                             <div class="border p-2 rounded-r-md bg-white w-full">...</div>
+                        </div>
+                         <div id="part-mensaje" class="packet-part flex items-center ml-12">
+                            <span class="bg-blue-600 text-white font-bold p-2 rounded-md w-full text-center">Mensaje ("23")</span>
+                        </div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button id="encapsulate-btn" class="bg-teal-600 text-white font-bold py-2 px-5 rounded-lg hover:bg-teal-700 transition">Encapsular</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="laboratorio" class="pt-12">
             <div class="bg-gray-800 text-white p-6 sm:p-8 rounded-lg shadow-2xl border-t-4 border-yellow-400">
-                <h2 class="text-3xl font-bold text-center text-yellow-400 mb-2">Simulador Tático para PEC1</h2>
-                <p class="text-center text-stone-300 mb-8">Cada módulo abajo está diseñado para entrenar el conocimiento necesario para un ejercicio de la PEC1.</p>
-                
-                <div id="lab-container" class="space-y-8">
+                <h2 class="text-3xl font-bold text-center text-yellow-400 mb-2 font-mono">Simulador Táctico :: PEC1</h2>
+                <p class="text-center text-stone-300 mb-10">Valida tu inteligencia. Cada módulo corresponde a un ejercicio clave.</p>
+                <div id="lab-container" class="space-y-10">
                     <!-- Módulos de entrenamiento se cargarán aquí -->
                 </div>
             </div>
@@ -169,77 +164,145 @@
 document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
-    mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+    mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
 
-    // Lógica de Scrollspy para el menú
+    // --- Scrollspy Logic ---
     const navLinks = document.querySelectorAll('.nav-link, #mobile-menu a');
     const sections = document.querySelectorAll('main section');
-    window.addEventListener('scroll', () => {
-        let current = '';
-        sections.forEach(section => {
-            if (pageYOffset >= section.offsetTop - 100) { current = section.getAttribute('id'); }
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === entry.target.id) {
+                        link.classList.add('active');
+                    }
+                });
+            }
         });
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href')?.substring(1) === current) { link.classList.add('active'); }
+    }, { threshold: 0.5 });
+    sections.forEach(section => observer.observe(section));
+
+    // --- Performance Section: Delay Cards ---
+    const delayData = [
+        { title: 'Procesamiento', id: 'd_proc', color: 'sky-500', text: 'Tiempo que tarda un router en examinar la cabecera del paquete para decidir a dónde enviarlo. (Microsegundos)' },
+        { title: 'Cola', id: 'd_queue', color: 'red-500', text: 'Tiempo que un paquete espera en el buffer de salida antes de ser transmitido. Depende de la congestión.' },
+        { title: 'Transmisión', id: 'd_trans', color: 'yellow-500', text: 'Tiempo para "empujar" todos los bits del paquete al enlace. <strong>L/R</strong> (Tamaño / Ancho de Banda).' },
+        { title: 'Propagación', id: 'd_prop', color: 'green-500', text: 'Tiempo que tarda un bit en viajar físicamente por el medio. <strong>d/s</strong> (Distancia / Velocidad).' }
+    ];
+    const performanceGrid = document.querySelector('#performance .grid');
+    delayData.forEach(d => {
+        performanceGrid.innerHTML += `
+            <div class="text-center border-t-4 border-${d.color} pt-4 bg-white p-4 rounded-b-lg shadow-sm">
+                <h4 class="font-bold text-lg">${d.title} (<span class="font-mono">${d.id}</span>)</h4>
+                <p class="text-sm text-stone-600 mt-2">${d.text}</p>
+            </div>
+        `;
+    });
+
+    // --- Protocols Section: Layers and Encapsulation ---
+    const layersData = [
+        { name: "Aplicación", color: "sky-600", protocols: "HTTP, DNS, SMTP" },
+        { name: "Transporte", color: "teal-600", protocols: "TCP, UDP" },
+        { name: "Internet", color: "emerald-600", protocols: "IP, RIP, OSPF" },
+        { name: "Acceso a la Red", color: "rose-700", protocols: "Ethernet, WiFi" }
+    ];
+    const layersContainer = document.getElementById('layers-container');
+    layersData.forEach(l => {
+        layersContainer.innerHTML += `
+            <div class="layer bg-${l.color} text-white p-4 rounded-md text-center shadow-md">
+                <div class="font-bold text-lg">${l.name}</div>
+                <div class="text-sm opacity-80">${l.protocols}</div>
+            </div>
+        `;
+    });
+    
+    const encapsulateBtn = document.getElementById('encapsulate-btn');
+    const packetParts = document.querySelectorAll('.packet-part');
+    encapsulateBtn.addEventListener('click', () => {
+        packetParts.forEach(part => {
+            part.style.opacity = 0;
+            part.style.transform = 'translateX(-20px)';
+        });
+        let delay = 100;
+        const partsOrder = ['part-mensaje', 'part-segmento', 'part-datagrama', 'part-trama'];
+        partsOrder.forEach(id => {
+            setTimeout(() => {
+                const el = document.getElementById(id);
+                el.style.opacity = 1;
+                el.style.transform = 'translateX(0)';
+            }, delay);
+            delay += 300;
         });
     });
 
-    // #################### LÓGICA DEL LABORATORIO PEC1 ####################
+
+    // --- LABORATORY LOGIC ---
     const labContainer = document.getElementById('lab-container');
     const labModules = [
         {
-            title: "Ejercicio 1: Orígenes de Internet",
-            intel: "ARPANET, un proyecto militar de EE.UU. en los 60, fue la semilla de Internet. Su objetivo era crear una red descentralizada y resiliente. Hitos clave: <strong>1) Creación de TCP/IP (1970s)</strong> que estandarizó la comunicación. <strong>2) Creación del DNS (1983)</strong> que facilitó nombrar hosts. <strong>3) La invención de la World Wide Web por Tim Berners-Lee (1990s)</strong> que la hizo accesible a todos.",
-            question: "¿Qué característica de ARPANET fue fundamental para la resiliencia que tiene Internet hoy en día?",
+            title: "Ej. 1: Genética de Internet",
+            intel: "ARPANET fue diseñada para ser una red **descentralizada** y tolerante a fallos. Esta es su herencia más crítica.",
+            question: "¿Qué característica de ARPANET fue fundamental para la resiliencia de Internet?",
             options: ["Su alta velocidad inicial", "Su naturaleza descentralizada", "Su uso exclusivo por universidades"],
             correct: 1,
-            feedback: "Correcto. La descentralización, sin un punto central de fallo, es la herencia más importante de ARPANET, permitiendo que la red siga funcionando aunque partes de ella caigan."
+            feedback: "Correcto. La descentralización, sin un punto único de fallo, permite que la red siga funcionando aunque partes de ella caigan."
         },
         {
-            title: "Ejercicio 3: Encapsulación en Acción",
-            intel: "Al enviar datos, cada capa del modelo TCP/IP añade su propia cabecera. <strong>Capa de Aplicación:</strong> Los datos en sí (ej. '07'). <strong>Capa de Transporte:</strong> Añade puertos de origen/destino (Cabecera TCP/UDP). <strong>Capa de Red:</strong> Añade IPs de origen/destino (Cabecera IP). <strong>Capa de Enlace:</strong> Añade direcciones MAC de origen/destino (Cabecera Ethernet).",
-            question: "¿Qué información esencial se añade en la Capa de Red para asegurar que el paquete llegue a la red correcta?",
-            options: ["Dirección MAC", "Número de puerto", "Dirección IP de destino"],
-            correct: 2,
-            feedback: "Exacto. Mientras la MAC address se usa para el siguiente salto en la red local, la dirección IP es la que permite a los routers del núcleo de Internet encaminar el paquete a través de múltiples redes hasta su destino final."
-        },
-        {
-            title: "Ejercicio 4 y 5: Parámetros Físicos",
-            intel: "<strong>Ancho de Banda:</strong> Se relaciona con la velocidad de transmisión. Bits más 'estrechos' (enviados más rápido) requieren más ancho de banda. <strong>Atenuación (Path Loss):</strong> La señal pierde potencia con la distancia y a frecuencias más altas. La banda de 5 GHz sufre más atenuación que la de 2.4 GHz, pero ofrece más canales y menos interferencia.",
-            question: "Considerando la atenuación, ¿qué banda de WiFi (2.4 GHz o 5 GHz) es teóricamente mejor para obtener mayor alcance (cobertura)?",
-            options: ["5 GHz", "2.4 GHz"],
+            title: "Ej. 3: El Viaje del Paquete",
+            intel: "Cada capa añade información de direccionamiento: **Capa Enlace (MAC)** para el siguiente salto, **Capa Red (IP)** para el destino final, **Capa Transporte (Puerto)** para la aplicación correcta.",
+            question: "¿Qué dirección permanece constante durante todo el viaje de un paquete desde el origen al destino final?",
+            options: ["Dirección MAC de Destino", "Dirección IP de Destino", "Número de Puerto de Origen"],
             correct: 1,
-            feedback: "Correcto. La banda de 2.4 GHz, al tener una frecuencia menor, sufre menos atenuación y, por tanto, sus ondas viajan más lejos, ofreciendo una mejor cobertura en distancia, aunque a menudo con más interferencia."
+            feedback: "Exacto. Mientras la MAC cambia en cada salto (router), la dirección IP de destino es la 'dirección postal' final que no se altera."
         },
+        {
+            title: "Ej. 5: El Dilema del WiFi",
+            intel: "La banda de 5 GHz sufre más atenuación (menor alcance) que la de 2.4 GHz, pero ofrece más canales, menos interferencia y mayor ancho de banda.",
+            question: "Para una sesión de gaming online que requiere baja latencia y alta velocidad, ¿qué banda es preferible si estás cerca del router?",
+            options: ["2.4 GHz por su estabilidad", "5 GHz por su velocidad y menor interferencia", "Cualquiera, no hay diferencia"],
+            correct: 1,
+            feedback: "Correcto. A corta distancia, 5 GHz es superior para tareas intensivas gracias a sus canales 'limpios' y mayor ancho de banda."
+        },
+         {
+            title: "Ej. 12: La Identidad del Paquete",
+            intel: "En modo simulación de Packet Tracer, al seguir un ping, verás que las direcciones MAC cambian en cada salto entre routers, pero las direcciones IP de origen y destino se mantienen.",
+            question: "Un router recibe una trama. ¿Qué dirección mira para decidir por qué interfaz reenviar el paquete hacia su destino final?",
+            options: ["La Dirección MAC de destino", "La Dirección IP de destino", "La Dirección IP de origen"],
+            correct: 1,
+            feedback: "Correcto. El router desencapsula la trama para ver el datagrama IP, mira la IP de destino, consulta su tabla de enrutamiento y decide el siguiente salto. Luego vuelve a encapsularlo en una nueva trama con nuevas MACs."
+        }
     ];
 
     labModules.forEach((mod, index) => {
         const moduleEl = document.createElement('div');
-        moduleEl.className = 'bg-black/50 p-6 rounded-lg';
+        moduleEl.className = 'bg-black/40 p-6 rounded-lg border border-stone-600';
         moduleEl.innerHTML = `
             <h3 class="text-xl font-bold mb-4 border-b border-yellow-400/50 pb-2">${mod.title}</h3>
-            <div class="bg-gray-900 border-l-4 border-sky-500 p-3 mb-6">
+            <div class="bg-gray-900 border-l-4 border-sky-500 p-4 mb-6 rounded-r-md">
                 <h4 class="font-bold text-sky-400 font-mono text-sm">&gt; INTEL DROP</h4>
                 <p class="text-stone-300 text-sm mt-2">${mod.intel}</p>
             </div>
-            <p class="font-semibold mb-3 text-stone-200">${mod.question}</p>
+            <p class="font-semibold mb-4 text-stone-200">${mod.question}</p>
             <div class="grid grid-cols-1 sm:grid-cols-${mod.options.length} gap-4" id="q-container-${index}">
-                ${mod.options.map((opt, i) => `<button data-index="${i}" class="lab-option w-full text-center px-4 py-3 border-2 border-stone-500 rounded-lg font-semibold hover:bg-stone-700">${opt}</button>`).join('')}
+                ${mod.options.map((opt, i) => `<button data-index="${i}" class="lab-option w-full text-center px-4 py-3 border-2 border-stone-500 rounded-lg font-semibold hover:bg-stone-700 text-stone-200 hover:text-white">${opt}</button>`).join('')}
             </div>
-            <div id="feedback-${index}" class="mt-4 p-3 rounded-md text-center font-semibold hidden"></div>
+            <div id="feedback-${index}" class="mt-4 p-4 rounded-md text-center font-semibold hidden feedback-box opacity-0"></div>
         `;
         labContainer.appendChild(moduleEl);
 
         const qContainer = document.getElementById(`q-container-${index}`);
         qContainer.addEventListener('click', e => {
-            if (e.target.classList.contains('lab-option') && !e.target.disabled) {
-                const selectedIndex = parseInt(e.target.dataset.index);
+            const target = e.target.closest('.lab-option');
+            if (target && !target.disabled) {
+                const selectedIndex = parseInt(target.dataset.index);
                 const isCorrect = selectedIndex === mod.correct;
                 const feedbackEl = document.getElementById(`feedback-${index}`);
-
+                
                 feedbackEl.textContent = mod.feedback;
+                feedbackEl.className = `mt-4 p-4 rounded-md text-center font-semibold feedback-box ${isCorrect ? 'bg-green-600/80 text-white' : 'bg-red-600/80 text-white'}`;
                 feedbackEl.classList.remove('hidden');
+                setTimeout(() => feedbackEl.style.opacity = '1', 10);
 
                 qContainer.querySelectorAll('.lab-option').forEach((btn, i) => {
                     btn.disabled = true;
@@ -253,4 +316,3 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
-
