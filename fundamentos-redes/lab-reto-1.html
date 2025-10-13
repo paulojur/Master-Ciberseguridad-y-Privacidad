@@ -3,179 +3,504 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador Práctico: PEC1 - Fundamentos de Redes</title>
+    <title>Laboratorio Interactivo: PEC1 - Fundamentos de Redes</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-box-and-violin-plot@4.3.0/build/index.umd.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* slate-50 */
+            background-color: #f1f5f9; /* slate-100 */
             color: #1e293b; /* slate-800 */
         }
         .font-mono { font-family: 'Roboto Mono', monospace; }
         .intel-drop {
-            background-color: #f0f9ff; /* sky-50 */
+            background-color: #e0f2fe; /* sky-100 */
             border-left: 4px solid #0ea5e9; /* sky-500 */
         }
-        .packet-part {
-            transition: all 0.3s ease-in-out;
+        .tab-button.active {
+            background-color: #0c4a6e; /* sky-900 */
+            color: white;
+            border-color: #0c4a6e;
         }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        /* Custom scrollbar for better UX on data tables */
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #e2e8f0; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #64748b; }
     </style>
 </head>
 <body class="antialiased">
 
-    <header class="bg-white shadow-md">
-        <div class="container mx-auto px-6 py-5 text-center">
-            <h1 class="text-3xl font-bold text-sky-800">Simulador Práctico: PEC1</h1>
-            <p class="text-slate-600 mt-1">Módulo: Fundamentos de Redes y Arquitecturas</p>
+    <header class="bg-slate-800 shadow-lg sticky top-0 z-10">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold text-white">Laboratorio Interactivo: PEC1</h1>
+                <p class="text-sky-300">Fundamentos de Redes y Arquitecturas</p>
+            </div>
+            <div class="font-mono text-sky-300 text-sm">STATUS: <span class="text-green-400 font-bold">ONLINE</span></div>
         </div>
     </header>
 
-    <main class="container mx-auto px-4 py-12">
-        <div class="max-w-4xl mx-auto space-y-12">
+    <main class="container mx-auto px-4 py-8">
+        
+        <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+             <h2 class="text-2xl font-bold text-slate-800">BRIEFING DE LA MISIÓN</h2>
+             <p class="text-slate-600 mt-2">Bienvenido, analista. Tu misión es completar la PEC1. Este laboratorio no te dará las respuestas, sino las herramientas y la inteligencia para construirlas. Cada pestaña corresponde a un ejercicio o grupo de ejercicios. Utiliza los simuladores para verificar tus cálculos y entender los conceptos a fondo.</p>
+        </div>
 
-            <!-- INTRODUCCIÓN -->
-            <div class="text-center">
-                 <h2 class="text-2xl font-bold text-slate-800">BRIEFING DE LA MISIÓN: PEC1</h2>
-                 <p class="text-slate-600 mt-2 max-w-3xl mx-auto">Tu objetivo es completar la PEC1. Este simulador no te dará las respuestas, sino que te proporcionará la inteligencia y las herramientas necesarias para que construyas tus propias conclusiones y obtengas la máxima calificación.</p>
+        <!-- TABS -->
+        <div class="bg-white rounded-lg shadow-md">
+            <div class="border-b border-slate-200">
+                <nav id="tabs" class="-mb-px flex space-x-4 overflow-x-auto px-4" aria-label="Tabs">
+                    <!-- Tab buttons will be inserted here by JS -->
+                </nav>
             </div>
-            
-            <!-- EJERCICIO 1 -->
-            <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
-                <h3 class="text-xl font-bold text-sky-800 mb-1">Ejercicio 1: Orígenes de Internet</h3>
-                <p class="text-sm text-slate-500 mb-4">Pregunta teórica sobre la evolución de ARPANET.</p>
-                <div class="intel-drop p-4 rounded-md mb-6">
-                    <h4 class="font-bold text-sky-900 font-mono text-sm">&gt; INTEL DROP: Sección 1.1 "Computer Networking"</h4>
-                    <p class="text-slate-700 mt-2 text-sm">Internet nació como **ARPANET**, un proyecto del Departamento de Defensa de EE. UU. en los años 60. Su objetivo principal era crear una red de comunicaciones **descentralizada** y robusta, capaz de sobrevivir a un ataque nuclear. Esta falta de un punto central de fallo es su legado más importante.</p>
-                    <p class="text-slate-700 mt-2 text-sm font-semibold">Hitos Clave a considerar en tu respuesta:</p>
-                    <ul class="list-disc list-inside mt-1 space-y-1 text-sm">
-                        <li>**1970s - Creación de TCP/IP:** Vint Cerf y Bob Kahn desarrollan los protocolos que se convierten en el lenguaje universal de Internet.</li>
-                        <li>**1983 - Creación del DNS:** Se introduce el sistema de nombres de dominio, haciendo la red más accesible para los humanos.</li>
-                        <li>**1990s - Invención de la World Wide Web:** Tim Berners-Lee crea el hipertexto (HTTP, HTML), haciendo la red gráfica y navegable para el público masivo.</li>
-                    </ul>
-                </div>
-                <h4 class="font-semibold text-lg mb-3">Tu Tarea:</h4>
-                <p class="text-slate-700">Usando este "Intel Drop", estructura tu respuesta explicando cómo cada uno de estos hitos transformó ARPANET en el Internet que conocemos hoy, enfocándote en cómo cambió la manera en que los usuarios interactúan con la red.</p>
-            </div>
-
-            <!-- EJERCICIO 3: ENCAPSULACIÓN -->
-            <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
-                <h3 class="text-xl font-bold text-sky-800 mb-1">Ejercicio 3: Visualizador de Encapsulación</h3>
-                <p class="text-sm text-slate-500 mb-4">Entiende cómo se "visten" los datos para viajar por la red.</p>
-                <div class="intel-drop p-4 rounded-md mb-6">
-                    <h4 class="font-bold text-sky-900 font-mono text-sm">&gt; INTEL DROP: Sección 1.5 "Computer Networking"</h4>
-                    <p class="text-slate-700 mt-2 text-sm">Al enviar datos, cada capa del modelo TCP/IP añade (encapsula) su propia información de control (cabecera) a los datos que recibe de la capa superior. Este proceso asegura que el paquete tenga toda la información necesaria para llegar a su destino y ser interpretado correctamente.</p>
-                </div>
-                <div class="border rounded-lg p-4">
-                    <p class="text-center mb-4 font-semibold">Simulador: Construcción de una Trama Ethernet</p>
-                    <div id="packet-builder" class="space-y-2">
-                        <div class="packet-part bg-purple-200 p-2 rounded-md text-center text-purple-800 font-mono text-sm">Cabecera de Enlace (MAC Origen/Destino)</div>
-                        <div class="packet-part bg-red-200 p-2 rounded-md text-center text-red-800 font-mono text-sm ml-4">Cabecera de Red (IP Origen/Destino)</div>
-                        <div class="packet-part bg-green-200 p-2 rounded-md text-center text-green-800 font-mono text-sm ml-8">Cabecera de Transporte (Puertos Origen/Destino)</div>
-                        <div class="packet-part bg-blue-200 p-2 rounded-md text-center text-blue-800 font-mono text-sm ml-12">Datos (Ej: "07")</div>
-                    </div>
-                </div>
-                 <h4 class="font-semibold text-lg mb-3 mt-6">Tu Tarea:</h4>
-                <p class="text-slate-700">Describe en tu respuesta este proceso. Explica qué información clave (y para qué) se añade en cada cabecera. Por ejemplo: "En la capa de Transporte, se añade la cabecera TCP/UDP, que incluye los puertos de origen y destino para que el sistema operativo sepa a qué aplicación entregar los datos..."</p>
-            </div>
-
-             <!-- EJERCICIO 5: CÁLCULO DE ATENUACIÓN -->
-            <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
-                <h3 class="text-xl font-bold text-sky-800 mb-1">Ejercicio 5: Calculadora de Atenuación WiFi (FSPL)</h3>
-                <p class="text-sm text-slate-500 mb-4">Comprueba cómo la distancia y la frecuencia afectan a la señal WiFi.</p>
-                <div class="intel-drop p-4 rounded-md mb-6">
-                    <h4 class="font-bold text-sky-900 font-mono text-sm">&gt; INTEL DROP: Física de la Señal</h4>
-                    <p class="text-slate-700 mt-2 text-sm">La fórmula de Free Space Path Loss (FSPL) nos da una estimación de la pérdida de potencia de una señal en el espacio libre. Frecuencias más altas (como 5 GHz) tienen ondas más cortas y "chocan" más con los obstáculos, perdiendo energía más rápido que las frecuencias bajas (2.4 GHz). Sin embargo, 5 GHz ofrece más canales y menos interferencias, resultando en mayor velocidad a corta distancia.</p>
-                </div>
-                <div class="grid sm:grid-cols-2 gap-6 items-center">
-                    <div>
-                        <label for="distance" class="block text-sm font-medium text-slate-700">Distancia (metros):</label>
-                        <input type="range" id="distance" min="1" max="100" value="10" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer mt-1">
-                        <p class="text-center text-sm font-mono mt-1">Distancia: <span id="distance-val">10</span> m</p>
-                    </div>
-                    <div class="space-y-2">
-                        <div class="bg-slate-100 p-3 rounded-md">
-                            <p class="font-semibold">Pérdida a 2.4 GHz: <span id="loss-2.4" class="font-mono text-red-600"></span> dB</p>
-                        </div>
-                         <div class="bg-slate-100 p-3 rounded-md">
-                            <p class="font-semibold">Pérdida a 5 GHz: <span id="loss-5" class="font-mono text-red-600"></span> dB</p>
-                        </div>
-                    </div>
-                </div>
-                <h4 class="font-semibold text-lg mb-3 mt-6">Tu Tarea:</h4>
-                <p class="text-slate-700">Usa esta calculadora para generar los datos de tu gráfica. En tu respuesta, explica la relación que observas: a medida que aumenta la distancia, ambas bandas pierden potencia, pero la de 5 GHz lo hace más rápido. Luego, justifica por qué se usa 5 GHz a pesar de tener menor alcance (ventaja: más canales, menos interferencia, más velocidad).</p>
-            </div>
-
-            <!-- GUÍA PACKET TRACER -->
-            <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
-                <h3 class="text-xl font-bold text-sky-800 mb-4">Ejercicios 6-13: Guía de Campo para Packet Tracer</h3>
-                <p class="text-slate-700 mb-6">Esta sección te guiará a través de las tareas prácticas en Packet Tracer, proporcionando la inteligencia necesaria para responder a las preguntas teóricas asociadas a cada ejercicio.</p>
-                <ul class="space-y-4">
-                    <li><strong class="text-sky-700">Ej. 9 (Cable Cruzado):</strong> Al conectar dos dispositivos iguales (PC a PC) directamente, Packet Tracer usará un cable cruzado (crossover). ¿Por qué? Porque los pines de transmisión (TX) de un lado deben conectarse a los de recepción (RX) del otro. Los switches modernos hacen esto automáticamente (Auto-MDIX).</li>
-                    <li><strong class="text-sky-700">Ej. 10 y 11 (Routing RIP):</strong> RIP es un protocolo de enrutamiento simple. Al añadir una nueva red (tu `Home Router`), debes "anunciarla" en el router de Internet al que te conectas para que el resto de la topología sepa cómo llegar a ella.</li>
-                    <li><strong class="text-sky-700">Ej. 12 (Análisis de Paquetes):</strong> Al seguir un paquete ICMP (ping) en modo simulación, notarás que en cada salto (hop) entre routers, la **Capa 2 (direcciones MAC) cambia**, porque se refiere al siguiente salto físico. Sin embargo, la **Capa 3 (direcciones IP) permanece igual**, porque se refiere al origen y destino final del viaje.</li>
-                </ul>
-            </div>
-
-             <!-- EJERCICIO 14 y 15 -->
-            <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
-                <h3 class="text-xl font-bold text-sky-800 mb-1">Ejercicios 14 y 15: Análisis de Rendimiento</h3>
-                <p class="text-sm text-slate-500 mb-4">Mide y analiza la performance de una conexión.</p>
-                <div class="intel-drop p-4 rounded-md mb-6">
-                    <h4 class="font-bold text-sky-900 font-mono text-sm">&gt; INTEL DROP: Métricas de Rendimiento</h4>
-                    <ul class="list-disc list-inside mt-2 space-y-2 text-sm">
-                        <li><strong>Retardo Total (Ej. 14):</strong> Para el esquema stop-and-wait, el tiempo total es el número de paquetes multiplicado por el tiempo de ida y vuelta de un paquete (RTT). El RTT incluye el tiempo de transmisión del paquete de datos, el de propagación en ambos sentidos, y el de transmisión del ACK. Las retransmisiones por errores (BER) añaden más retardos.</li>
-                        <li><strong>Jitter (Ej. 15):</strong> Es la variación del retardo. Un jitter alto es malo para aplicaciones en tiempo real como VoIP o gaming. Un boxplot ancho en tu gráfica indica un jitter alto.</li>
-                        <li><strong>PDF/CDF (Ej. 15):</strong> La Función de Densidad de Probabilidad (PDF) te mostrará en torno a qué valor de RTT se agrupan la mayoría de tus pings. Una curva PDF estrecha y alta significa una conexión estable. La Función de Distribución Acumulada (CDF) te dirá qué porcentaje de paquetes llegó por debajo de un cierto RTT (ej. "el 90% de los paquetes tuvo un RTT menor de 50ms").</li>
-                    </ul>
-                </div>
-                 <h4 class="font-semibold text-lg mb-3">Tu Tarea:</h4>
-                <p class="text-slate-700">Usa estos "Intel Drops" como guía para tus cálculos. Para el Ejercicio 14, desglosa el problema: calcula el tiempo por paquete y luego multiplícalo. Para el Ejercicio 15, céntrate en la interpretación de las gráficas: una conexión a un servidor más lejano (Rice University) probablemente mostrará un RTT medio más alto y un jitter mayor (boxplot más ancho) que una conexión a un servidor más cercano (UOC).</p>
+            <div id="tab-contents" class="p-5">
+                <!-- Tab contents will be inserted here by JS -->
             </div>
         </div>
     </main>
 
-    <footer class="bg-slate-100 mt-12 py-4">
-        <div class="container mx-auto px-6 text-center text-slate-500 text-sm">
-            <p>Este simulador es tu campo de entrenamiento para la PEC1. ¡Buena suerte, analista!</p>
+    <footer class="bg-slate-800 mt-12 py-6">
+        <div class="container mx-auto px-6 text-center text-slate-400 text-sm">
+            <p>Laboratorio diseñado para la resolución de la PEC1. ¡Éxito en la misión!</p>
         </div>
     </footer>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const distanceSlider = document.getElementById('distance');
-        const distanceVal = document.getElementById('distance-val');
-        const loss24 = document.getElementById('loss-2.4');
-        const loss5 = document.getElementById('loss-5');
+document.addEventListener('DOMContentLoaded', () => {
+    const exercises = [
+        { title: 'Ej. 1-3: Conceptos', id: 'conceptos', content: `
+            <div class="space-y-8">
+                <!-- Ejercicio 1 -->
+                <div>
+                    <h3 class="text-xl font-bold text-sky-800">Ejercicio 1: Orígenes de Internet</h3>
+                    <div class="intel-drop p-4 mt-2 rounded-md">
+                        <h4 class="font-bold text-sky-900 font-mono text-sm">&gt; INTEL DROP: Sección 1.7 "Computer Networking"</h4>
+                        <p class="text-slate-700 mt-2 text-sm">La red nació como **ARPANET** (años 60), un proyecto militar de EE.UU. que buscaba una red de comunicaciones **descentralizada y tolerante a fallos**.</p>
+                        <p class="text-slate-700 mt-2 text-sm font-semibold">Hitos Clave:</p>
+                        <ul class="list-disc list-inside mt-1 space-y-1 text-sm">
+                            <li><strong>1972 - E-mail:</strong> Convirtió la red en una herramienta de comunicación humana.</li>
+                            <li><strong>1983 - Adopción de TCP/IP:</strong> Creó un lenguaje universal para interconectar diferentes redes.</li>
+                            <li><strong>1991 - World Wide Web (HTTP/HTML):</strong> Hizo la red gráfica y accesible para el público masivo, desatando la era comercial.</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Ejercicio 2 -->
+                <div>
+                    <h3 class="text-xl font-bold text-sky-800">Ejercicio 2: Mi Red Doméstica</h3>
+                     <div class="intel-drop p-4 mt-2 rounded-md">
+                        <h4 class="font-bold text-sky-900 font-mono text-sm">&gt; INTEL DROP: Sección 1.2 "Computer Networking"</h4>
+                        <p class="text-slate-700 mt-2 text-sm">Una red doméstica típica es una LAN (Local Area Network) en topología de estrella. El router del ISP es el centro, actuando como módem, router, switch y punto de acceso Wi-Fi. Los dispositivos finales (hosts) se conectan a él para acceder a la red local y a Internet (WAN).</p>
+                    </div>
+                </div>
+                <!-- Ejercicio 3 -->
+                <div>
+                    <h3 class="text-xl font-bold text-sky-800">Ejercicio 3: Visualizador de Encapsulación</h3>
+                    <div id="encapsulation-visualizer" class="relative border-2 border-dashed border-slate-300 p-6 rounded-lg mt-4 min-h-[300px] overflow-hidden">
+                        <div class="absolute top-4 left-4 text-slate-500 font-mono text-sm">PC Origen</div>
+                        <div class="absolute top-4 right-4 text-slate-500 font-mono text-sm">Router</div>
+                        <div class="absolute bottom-4 right-4 text-slate-500 font-mono text-sm">PC Destino</div>
+                        <div id="packet-ej3" class="absolute bg-sky-500 rounded-full w-6 h-6" style="top: 50%; left: 10%; transition: all 2s ease-in-out;"></div>
+                    </div>
+                     <div class="mt-4 text-center">
+                        <button id="start-encap-animation" class="bg-sky-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-800 transition-colors">Simular Envío</button>
+                    </div>
+                </div>
+            </div>
+        `},
+        { title: 'Ej. 4: Señales', id: 'senales', content: `
+            <h3 class="text-xl font-bold text-sky-800">Ejercicio 4: Ancho de Banda y Señales Binarias</h3>
+            <div class="intel-drop p-4 mt-2 rounded-md">
+                <h4 class="font-bold text-sky-900 font-mono text-sm">&gt; INTEL DROP: "El papel de las redes", Sec. 2.4</h4>
+                <p class="text-slate-700 mt-2 text-sm">Una mayor velocidad de transmisión implica enviar más bits en el mismo tiempo. Para ello, los pulsos de la señal (los "bits") deben ser más cortos y los cambios de nivel (0 a 1) más rápidos. Esto requiere componentes de frecuencia más altas en la señal, lo que se traduce en un mayor consumo de ancho de banda.</p>
+            </div>
+            <div class="mt-4">
+                <canvas id="signal-canvas" class="w-full bg-slate-50 border rounded-lg"></canvas>
+                <div class="mt-4 flex justify-center space-x-4">
+                    <button id="draw-low-speed" class="bg-slate-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-slate-700">Dibujar Baja Velocidad (bits anchos)</button>
+                    <button id="draw-high-speed" class="bg-sky-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-800">Dibujar Alta Velocidad (bits estrechos)</button>
+                </div>
+            </div>
+        `},
+        { title: 'Ej. 5: Atenuación', id: 'atenuacion', content: `
+            <h3 class="text-xl font-bold text-sky-800">Ejercicio 5: Calculadora y Gráfica de Atenuación WiFi (FSPL)</h3>
+             <div class="intel-drop p-4 mt-2 rounded-md">
+                <h4 class="font-bold text-sky-900 font-mono text-sm">&gt; INTEL DROP: Trade-off de Frecuencias WiFi</h4>
+                <p class="text-slate-700 mt-2 text-sm"><strong>2.4 GHz:</strong> Menor atenuación = Mayor cobertura y mejor penetración de paredes. PERO, menos canales, más interferencia y menor velocidad.</p>
+                <p class="text-slate-700 mt-2 text-sm"><strong>5 GHz:</strong> Mayor atenuación = Menor cobertura. PERO, muchos más canales, menos interferencia y mayor ancho de banda por canal = velocidades mucho más altas. Ideal para streaming y gaming a corta distancia.</p>
+            </div>
+            <div class="mt-6">
+                <canvas id="fspl-chart"></canvas>
+            </div>
+        `},
+        { title: 'Ej. 6-13: Packet Tracer', id: 'packet-tracer', content: `
+             <h3 class="text-xl font-bold text-sky-800">Ejercicios 6-13: Guía de Campo para Packet Tracer</h3>
+             <div class="intel-drop p-4 mt-2 rounded-md">
+                <h4 class="font-bold text-sky-900 font-mono text-sm">&gt; INTEL DROPS CLAVE:</h4>
+                <ul class="list-disc list-inside mt-2 space-y-3 text-sm text-slate-800">
+                    <li><strong class="text-sky-700">Ej. 9 (Cable Cruzado):</strong> Al conectar PC a PC, se usa un cable cruzado (TX -> RX, RX -> TX). Los switches modernos hacen esto automáticamente (Auto-MDIX), por eso a un switch se conecta con cable directo.</li>
+                    <li><strong class="text-sky-700">Ej. 10 y 11 (Routing RIP):</strong> Al añadir una nueva red, debes "anunciarla" con el comando \`network <direccion_de_red>\` en la configuración RIP del router conectado a ella. Así, el router comparte esa ruta con sus vecinos.</li>
+                    <li><strong class="text-sky-700">Ej. 12 (Análisis de Paquete):</strong> ¡Concepto CRÍTICO! Al seguir un paquete en modo simulación, observa que en cada salto entre routers:
+                        <ul class="list-circle list-inside ml-4 mt-1">
+                           <li>Las **Direcciones MAC (Capa 2) CAMBIAN**. Se refieren al siguiente salto físico.</li>
+                           <li>Las **Direcciones IP (Capa 3) PERMANECEN IGUALES**. Se refieren al origen y destino final del viaje.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        `},
+        { title: 'Ej. 14: Retardo', id: 'retardo', content: `
+            <h3 class="text-xl font-bold text-sky-800">Ejercicio 14: Calculadora de Retardo Total (Stop-and-Wait)</h3>
+            <div class="intel-drop p-4 mt-2 rounded-md">
+                <h4 class="font-bold text-sky-900 font-mono text-sm">&gt; INTEL DROP: Desglose de Fórmulas</h4>
+                <p class="text-slate-700 mt-2 text-sm">El tiempo total se compone del número de paquetes multiplicado por el tiempo de ida y vuelta (RTT) de cada uno, ajustado por la probabilidad de retransmisión. No olvides convertir todas las unidades (GB a bits, Mbps a bps, km a m).</p>
+            </div>
+            <div class="bg-slate-50 p-6 rounded-lg mt-4 border">
+                <h4 class="font-semibold text-lg mb-4">Calculadora de Simulación</h4>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Inputs -->
+                    <div class="space-y-4">
+                        <div><label class="font-medium">Tamaño Archivo (GB): <input id="fileSize" type="number" value="10" class="w-full mt-1 p-2 border rounded-md"></label></div>
+                        <div><label class="font-medium">MTU (Bytes): <input id="mtu" type="number" value="1500" class="w-full mt-1 p-2 border rounded-md"></label></div>
+                        <div><label class="font-medium">Cabeceras (Bytes): <input id="headers" type="number" value="54" class="w-full mt-1 p-2 border rounded-md"></label></div>
+                        <div><label class="font-medium">Capacidad Enlace (Mbps): <input id="linkSpeed" type="number" value="10" class="w-full mt-1 p-2 border rounded-md"></label></div>
+                        <div><label class="font-medium">Nº Saltos (h): <input id="hops" type="number" value="5" class="w-full mt-1 p-2 border rounded-md"></label></div>
+                        <div><label class="font-medium">BER (ej. 0.0001): <input id="ber" type="number" step="0.00001" value="0.0001" class="w-full mt-1 p-2 border rounded-md"></label></div>
+                    </div>
+                    <!-- Outputs -->
+                    <div class="bg-white p-4 rounded-lg shadow-inner space-y-3">
+                        <h5 class="font-bold text-center">Resultados de la Simulación</h5>
+                        <p><strong>Nº Total de Paquetes:</strong> <span id="res-packets" class="font-mono font-bold text-sky-700"></span></p>
+                        <p><strong>RTT por Paquete (ideal):</strong> <span id="res-rtt" class="font-mono font-bold text-sky-700"></span> ms</p>
+                        <p><strong>Prob. Éxito del Paquete (con BER):</strong> <span id="res-success-prob" class="font-mono font-bold text-sky-700"></span></p>
+                        <hr>
+                        <p class="text-lg"><strong>Retardo Total (sin BER):</strong> <span id="res-total-ideal" class="font-mono font-bold text-green-600"></span></p>
+                        <p class="text-lg"><strong>Retardo Total (con BER):</strong> <span id="res-total-ber" class="font-mono font-bold text-red-600"></span></p>
+                    </div>
+                </div>
+                 <div class="mt-4 text-center">
+                    <button id="calculate-delay" class="bg-sky-700 text-white font-bold py-2 px-6 rounded-lg hover:bg-sky-800 transition-colors">Calcular</button>
+                </div>
+            </div>
+        `},
+        { title: 'Ej. 15: Análisis Ping', id: 'ping', content: `
+            <h3 class="text-xl font-bold text-sky-800">Ejercicio 15: Análisis de Rendimiento con Ping</h3>
+            <div class="intel-drop p-4 mt-2 rounded-md">
+                <h4 class="font-bold text-sky-900 font-mono text-sm">&gt; INTEL DROP: Interpretación de Gráficas</h4>
+                <p class="text-slate-700 mt-2 text-sm"><strong>Boxplot:</strong> Una caja pequeña y bigotes cortos = bajo jitter (conexión estable). <strong>PDF:</strong> Un pico alto y estrecho = la mayoría de los RTTs son muy similares (conexión consistente). <strong>CDF:</strong> Una curva que sube muy rápido = la mayoría de los paquetes llegan muy rápido (buen rendimiento).</p>
+            </div>
+            <div class="mt-4 grid lg:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="font-semibold text-lg mb-2">Pega aquí tus 100 resultados de Ping (solo los ms):</h4>
+                    <textarea id="ping-data" rows="10" class="w-full p-2 border rounded-md font-mono text-sm custom-scrollbar" placeholder="Ej:&#10;34.5&#10;35.1&#10;34.8&#10;..."></textarea>
+                     <button id="analyze-ping" class="bg-sky-700 mt-2 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-800">Analizar Datos</button>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-lg border">
+                     <h4 class="font-semibold text-lg mb-2">Resultados Estadísticos</h4>
+                     <p><strong>Media RTT:</strong> <span id="ping-avg" class="font-mono font-bold text-sky-700"></span> ms</p>
+                     <p><strong>Jitter (StdDev):</strong> <span id="ping-jitter" class="font-mono font-bold text-sky-700"></span> ms</p>
+                     <p><strong>Min RTT:</strong> <span id="ping-min" class="font-mono font-bold text-green-600"></span> ms</p>
+                     <p><strong>Max RTT:</strong> <span id="ping-max" class="font-mono font-bold text-red-600"></span> ms</p>
+                </div>
+            </div>
+            <div class="mt-6">
+                <h4 class="font-semibold text-lg mb-2">Gráficas de Distribución</h4>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div><canvas id="ping-boxplot-chart"></canvas></div>
+                    <div><canvas id="ping-pdf-chart"></canvas></div>
+                </div>
+                 <div class="mt-4"><canvas id="ping-cdf-chart"></canvas></div>
+            </div>
+        `}
+    ];
 
-        function calculateFSPL(dist, freqHz) {
-            if (dist <= 0) return 0;
-            const f = freqHz;
-            const d = dist;
-            const log10d = Math.log10(d);
-            const log10f = Math.log10(f);
-            const loss = 20 * log10d + 20 * log10f - 147.55;
-            return loss.toFixed(2);
-        }
+    const tabsContainer = document.getElementById('tabs');
+    const tabContentsContainer = document.getElementById('tab-contents');
+    let activeTab = exercises[0].id;
 
-        function updateLosses() {
-            const dist = distanceSlider.value;
-            distanceVal.textContent = dist;
-            const freq2_4GHz = 2.4 * 1e9;
-            const freq5GHz = 5 * 1e9;
+    exercises.forEach((ex, index) => {
+        // Create tab button
+        const button = document.createElement('button');
+        button.id = `${ex.id}-tab`;
+        button.className = `tab-button whitespace-nowrap py-3 px-4 border-b-2 font-medium text-sm transition-colors duration-200 ${index === 0 ? 'active' : 'text-slate-500 hover:text-slate-700 hover:border-slate-300'}`;
+        button.textContent = ex.title;
+        button.addEventListener('click', () => showTab(ex.id));
+        tabsContainer.appendChild(button);
 
-            loss24.textContent = calculateFSPL(dist, freq2_4GHz);
-            loss5.textContent = calculateFSPL(dist, freq5GHz);
-        }
-
-        distanceSlider.addEventListener('input', updateLosses);
-        updateLosses(); // Initial calculation
+        // Create tab content
+        const contentDiv = document.createElement('div');
+        contentDiv.id = `${ex.id}-content`;
+        contentDiv.className = `tab-content ${index === 0 ? 'active' : ''}`;
+        contentDiv.innerHTML = ex.content;
+        tabContentsContainer.appendChild(contentDiv);
     });
-</script>
+    
+    function showTab(tabId) {
+        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active', 'text-slate-500', 'hover:text-slate-700', 'hover:border-slate-300'));
+        document.getElementById(`${tabId}-tab`).classList.add('active');
+        
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        document.getElementById(`${tabId}-content`).classList.add('active');
+        activeTab = tabId;
+        
+        // Re-initialize charts if the tab is shown
+        if (activeTab === 'atenuacion') initFsplChart();
+    }
+    
+    // --- Specific initializations for each tab ---
 
+    // Ej 3: Encapsulation
+    const startEncapBtn = document.getElementById('start-encap-animation');
+    if(startEncapBtn) {
+        startEncapBtn.addEventListener('click', () => {
+            const packet = document.getElementById('packet-ej3');
+            packet.style.transform = 'translateX(0) scale(1)';
+            packet.style.backgroundColor = '#38bdf8'; // sky-400
+            setTimeout(() => {
+                packet.style.transform = 'translateX(600%) scale(1.5)';
+                packet.style.backgroundColor = '#ef4444'; // red-500
+            }, 100);
+             setTimeout(() => {
+                packet.style.transform = 'translateX(0) scale(1)';
+                 packet.style.backgroundColor = '#38bdf8';
+            }, 2200);
+        });
+    }
+
+    // Ej 4: Signal Drawing
+    const canvas = document.getElementById('signal-canvas');
+    if(canvas) {
+        const ctx = canvas.getContext('2d');
+        const drawSignal = (bitWidth) => {
+            const w = canvas.width;
+            const h = canvas.height;
+            const bits = Math.floor(w / bitWidth);
+            const midY = h / 2;
+            const amp = h / 4;
+            ctx.clearRect(0, 0, w, h);
+            ctx.strokeStyle = '#0c4a6e';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(0, midY);
+            let currentLevel = 1;
+            for (let i = 0; i < bits; i++) {
+                const x = i * bitWidth;
+                const y = midY - (currentLevel * amp);
+                ctx.lineTo(x, y);
+                ctx.lineTo(x + bitWidth, y);
+                currentLevel *= -1;
+            }
+            ctx.stroke();
+        };
+        document.getElementById('draw-low-speed').addEventListener('click', () => drawSignal(80));
+        document.getElementById('draw-high-speed').addEventListener('click', () => drawSignal(20));
+        drawSignal(80);
+    }
+    
+    // Ej 5: FSPL Chart
+    let fsplChart = null;
+    function initFsplChart() {
+        const ctx = document.getElementById('fspl-chart');
+        if (!ctx) return;
+        
+        const distances = Array.from({length: 100}, (_, i) => i + 1);
+        const calculateFSPL = (dist, freqHz) => 20 * Math.log10(dist) + 20 * Math.log10(freqHz) - 147.55;
+        
+        const loss2_4 = distances.map(d => calculateFSPL(d, 2.4 * 1e9));
+        const loss5 = distances.map(d => calculateFSPL(d, 5 * 1e9));
+
+        if (fsplChart) {
+            fsplChart.destroy();
+        }
+
+        fsplChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: distances,
+                datasets: [
+                    {
+                        label: 'Pérdida a 2.4 GHz (dB)',
+                        data: loss2_4,
+                        borderColor: 'rgb(59, 130, 246)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Pérdida a 5 GHz (dB)',
+                        data: loss5,
+                        borderColor: 'rgb(239, 68, 68)',
+                        backgroundColor: 'rgba(239, 68, 68, 0.5)',
+                        tension: 0.1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: { display: true, text: 'Pérdida de Señal (FSPL) vs. Distancia' }
+                },
+                scales: {
+                    x: { title: { display: true, text: 'Distancia (m)' } },
+                    y: { title: { display: true, text: 'Pérdida de Potencia (dB)' } }
+                }
+            }
+        });
+    }
+
+    // Ej 14: Delay Calculator
+    const calculateDelayBtn = document.getElementById('calculate-delay');
+    if(calculateDelayBtn) {
+        calculateDelayBtn.addEventListener('click', () => {
+            const fileSizeGB = parseFloat(document.getElementById('fileSize').value);
+            const mtuBytes = parseFloat(document.getElementById('mtu').value);
+            const headersBytes = parseFloat(document.getElementById('headers').value);
+            const linkSpeedMbps = parseFloat(document.getElementById('linkSpeed').value);
+            const h = parseFloat(document.getElementById('hops').value);
+            const ber = parseFloat(document.getElementById('ber').value);
+
+            const dataPerPacketBytes = mtuBytes - headersBytes;
+            const fileSizeBits = fileSizeGB * 1e9 * 8;
+            const totalPackets = Math.ceil((fileSizeGB * 1e9) / dataPerPacketBytes);
+
+            const linkSpeedBps = linkSpeedMbps * 1e6;
+            const tTransData = (mtuBytes * 8) / linkSpeedBps;
+            const tTransAck = (headersBytes * 8) / linkSpeedBps;
+            const tProp = (1000) / (2 * 1e8);
+
+            const RTT = ((h + 1) * tTransData) + ((h + 1) * tTransAck) + (2 * h * tProp);
+            const totalIdealDelay = totalPackets * RTT;
+
+            const packetSuccessProb = Math.pow(1 - ber, mtuBytes * 8);
+            const totalSuccessProb = Math.pow(packetSuccessProb, h + 1);
+            const avgTransmissions = 1 / totalSuccessProb;
+            const totalBerDelay = totalPackets * avgTransmissions * RTT;
+
+            document.getElementById('res-packets').textContent = totalPackets.toLocaleString();
+            document.getElementById('res-rtt').textContent = (RTT * 1000).toFixed(4);
+            document.getElementById('res-success-prob').textContent = totalSuccessProb.toFixed(6);
+
+            const formatTime = (seconds) => {
+                if (seconds < 60) return `${seconds.toFixed(2)} seg`;
+                if (seconds < 3600) return `${(seconds / 60).toFixed(2)} min`;
+                return `${(seconds / 3600).toFixed(2)} horas`;
+            };
+
+            document.getElementById('res-total-ideal').textContent = formatTime(totalIdealDelay);
+            document.getElementById('res-total-ber').textContent = formatTime(totalBerDelay);
+        });
+        calculateDelayBtn.click(); // Initial calculation
+    }
+
+    // Ej 15: Ping Analyzer
+    let pingBoxplotChart, pingPdfChart, pingCdfChart;
+    const analyzePingBtn = document.getElementById('analyze-ping');
+    if(analyzePingBtn) {
+        analyzePingBtn.addEventListener('click', () => {
+            const dataText = document.getElementById('ping-data').value.trim();
+            if (!dataText) { alert('Por favor, pega los datos de ping.'); return; }
+            
+            const rttData = dataText.split(/\s+/).map(Number).filter(n => !isNaN(n) && n > 0);
+            if (rttData.length === 0) { alert('No se encontraron datos válidos.'); return; }
+
+            const n = rttData.length;
+            const sum = rttData.reduce((a, b) => a + b, 0);
+            const mean = sum / n;
+            const min = Math.min(...rttData);
+            const max = Math.max(...rttData);
+            const variance = rttData.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / n;
+            const stddev = Math.sqrt(variance);
+
+            document.getElementById('ping-avg').textContent = mean.toFixed(2);
+            document.getElementById('ping-jitter').textContent = stddev.toFixed(2);
+            document.getElementById('ping-min').textContent = min.toFixed(2);
+            document.getElementById('ping-max').textContent = max.toFixed(2);
+
+            rttData.sort((a, b) => a - b);
+            
+            // Boxplot Data
+            const q1 = rttData[Math.floor(n / 4)];
+            const median = rttData[Math.floor(n / 2)];
+            const q3 = rttData[Math.floor((3 * n) / 4)];
+            
+            if (pingBoxplotChart) pingBoxplotChart.destroy();
+            pingBoxplotChart = new Chart(document.getElementById('ping-boxplot-chart'), {
+                type: 'boxplot',
+                data: {
+                    labels: ['RTT Data'],
+                    datasets: [{
+                        label: 'Distribución de RTT',
+                        data: [rttData],
+                        backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                        borderColor: 'rgb(59, 130, 246)',
+                        borderWidth: 1
+                    }]
+                },
+                options: { responsive: true, plugins: { title: { display: true, text: 'Boxplot de RTTs' }}}
+            });
+
+            // PDF/Histogram Data
+            const binSize = stddev / 2 || 1;
+            const bins = {};
+            rttData.forEach(val => {
+                const bin = Math.floor(val / binSize) * binSize;
+                bins[bin] = (bins[bin] || 0) + 1;
+            });
+            const pdfLabels = Object.keys(bins).map(Number).sort((a,b)=>a-b);
+            const pdfData = pdfLabels.map(label => (bins[label] / n) / binSize);
+
+            if(pingPdfChart) pingPdfChart.destroy();
+            pingPdfChart = new Chart(document.getElementById('ping-pdf-chart'), {
+                type: 'bar',
+                data: {
+                    labels: pdfLabels.map(l => l.toFixed(1)),
+                    datasets: [{
+                        label: 'PDF (Histograma)',
+                        data: pdfData,
+                        backgroundColor: 'rgba(239, 68, 68, 0.5)',
+                        borderColor: 'rgb(239, 68, 68)',
+                    }]
+                },
+                options: { responsive: true, plugins: { title: { display: true, text: 'Función de Densidad de Probabilidad (PDF)' }}}
+            });
+
+            // CDF Data
+            const cdfData = [];
+            let cumulative = 0;
+            pdfLabels.forEach((label, i) => {
+                cumulative += pdfData[i] * binSize;
+                cdfData.push(cumulative);
+            });
+
+            if (pingCdfChart) pingCdfChart.destroy();
+            pingCdfChart = new Chart(document.getElementById('ping-cdf-chart'), {
+                type: 'line',
+                data: {
+                    labels: pdfLabels.map(l => l.toFixed(1)),
+                    datasets: [{
+                        label: 'CDF',
+                        data: cdfData,
+                        borderColor: 'rgb(22, 163, 74)',
+                        backgroundColor: 'rgba(22, 163, 74, 0.5)',
+                        stepped: true
+                    }]
+                },
+                options: { responsive: true, plugins: { title: { display: true, text: 'Función de Distribución Acumulada (CDF)' }}}
+            });
+
+        });
+    }
+
+    // Activate the first tab and its specific JS
+    showTab(exercises[0].id);
+
+});
+</script>
 </body>
 </html>
-
