@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Mando de Redes v2.1 (Didático)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@sgratzl/chartjs-chart-boxplot@4.3.0/build/index.umd.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f5f5f4; color: #1c1917; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        .nav-link { transition: color 0.3s, border-bottom-color 0.3s; }
+        .nav-link:hover, .nav-link.active { color: #0d9488; border-bottom-color: #0d9488; }
+        .strategic-insight { border-left: 4px solid #0d9488; background-color: #f0fdfa; }
+        .accordion-button { transition: background-color 0.2s; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
+        .packet-part { opacity: 0; transform: translateX(-20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #e2e8f0; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-stone-100 shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-teal-700">Centro de Mando PEC1</h1>
+            <div class="hidden md:flex space-x-6 text-sm font-semibold">
+                <a href="#briefing" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Briefing</a>
+                <a href="#lab-conceptos" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Conceptos</a>
+                <a href="#lab-packet-tracer" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Packet Tracer</a>
+                <a href="#lab-rendimiento" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Rendimiento</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-stone-700">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg">
+            <!-- Mobile nav links here -->
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-12">
+
+        <section id="briefing" class="text-center mb-20">
+            <h2 class="text-4xl font-bold text-stone-800 mb-4">Módulo de Operações de Redes</h2>
+            <p class="text-lg text-stone-600 max-w-3xl mx-auto">
+                Este centro de comando unificado contém toda a inteligência e as ferramentas interativas necessárias para executar a missão PEC1 com a máxima eficiência.
+            </p>
+        </section>
+
+        <!-- Seções Anteriores (Conceptos, Packet Tracer) permanecem as mesmas -->
+        <section id="lab-conceptos" class="mb-20 space-y-12">
+             <h2 class="text-3xl font-bold text-center text-stone-800">PARTE 1: FUNDAMENTOS E CONCEITOS</h2>
+             <div id="ej1-container"></div>
+             <div id="ej2-container"></div>
+             <div id="ej3-container"></div>
+             <div id="ej4-container"></div>
+             <div id="ej5-container"></div>
+        </section>
+        <section id="lab-packet-tracer" class="mb-20">
+              <div class="bg-gray-800 text-white p-6 sm:p-8 rounded-lg shadow-2xl">
+                 <h2 class="text-3xl font-bold text-center text-sky-400 mb-2 font-mono">PARTE 2 :: GUIA DE CAMPO PACKET TRACER</h2>
+                 <p class="text-center text-stone-300 mb-10">Inteligência e diretrizes para os exercícios 6 a 13.</p>
+                 <div id="packet-tracer-accordion" class="space-y-4">
+                 </div>
+             </div>
+        </section>
+
+
+        <!-- #################### LABORATORIO: RENDIMIENTO (ATUALIZADO) #################### -->
+        <section id="lab-rendimiento" class="mb-20 space-y-12">
+            <h2 class="text-3xl font-bold text-center text-stone-800">PARTE 3: ANÁLISE DE DESEMPENHO</h2>
+            
+            <div id="ej14-container"></div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+                <h3 class="text-2xl font-bold text-stone-800 mb-4">Exercício 15: Analisador de Ping (Didático)</h3>
+                <div class="strategic-insight p-4 rounded-lg mb-6"><p class="text-stone-700 text-sm"><strong>Jitter</strong> (desvio padrão dos RTTs) mede a estabilidade. Um <strong>Boxplot</strong> largo ou um <strong>PDF</strong> disperso indicam alto Jitter e uma conexão instável.</p></div>
+                
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-semibold text-lg mb-2">1. Cole aqui seus 100 RTTs (em ms):</h4>
+                        <textarea id="ping-data" rows="10" class="w-full p-2 border rounded-md font-mono text-sm custom-scrollbar" placeholder="213&#10;248&#10;252..."></textarea>
+                        <button id="analyze-ping" class="bg-teal-600 mt-2 text-white font-bold py-2 px-4 rounded-lg hover:bg-teal-700">Analisar Dados</button>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-lg border">
+                        <h4 class="font-semibold text-lg text-center mb-4">2. Análise Estatística</h4>
+                        <div class="space-y-3 font-mono text-sm">
+                            <p><strong>Média (RTT&#773;):</strong> <span id="ping-avg" class="font-bold text-teal-700 float-right"></span></p>
+                            <p><strong>Jitter (Desvio Padrão):</strong> <span id="ping-jitter" class="font-bold text-teal-700 float-right"></span></p>
+                            <hr class="my-2">
+                            <h5 class="font-semibold text-center text-base mt-4">Valores para o Boxplot:</h5>
+                            <p><strong>Mínimo:</strong> <span id="ping-min" class="font-bold text-sky-700 float-right"></span></p>
+                            <p><strong>Quartil 1 (Q1 - 25%):</strong> <span id="ping-q1" class="font-bold text-sky-700 float-right"></span></p>
+                            <p><strong>Mediana (Q2 - 50%):</strong> <span id="ping-median" class="font-bold text-sky-700 float-right"></span></p>
+                            <p><strong>Quartil 3 (Q3 - 75%):</strong> <span id="ping-q3" class="font-bold text-sky-700 float-right"></span></p>
+                            <p><strong>Máximo:</strong> <span id="ping-max" class="font-bold text-sky-700 float-right"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <h4 class="font-semibold text-lg mb-4 text-center">3. Gráficos de Distribuição</h4>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div>
+                            <h5 class="font-semibold text-center mb-2">Boxplot</h5>
+                            <canvas id="ping-boxplot-chart"></canvas>
+                        </div>
+                        <div>
+                            <h5 class="font-semibold text-center mb-2">PDF (Histograma)</h5>
+                           <canvas id="ping-pdf-chart"></canvas>
+                        </div>
+                        <div>
+                            <h5 class="font-semibold text-center mb-2">CDF</h5>
+                            <canvas id="ping-cdf-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+    
+    <footer class="bg-stone-200 mt-20">
+        <div class="container mx-auto px-6 py-4 text-center text-stone-600">
+            <p class="text-xs">&copy; 2025 Centro de Mando de Redes. Todos os sistemas nominais.</p>
+        </div>
+    </footer>
+
+<script>
+// Script completo da versão anterior, com a lógica de navegação e módulos, mais a lógica atualizada do Analisador de Ping
+document.addEventListener('DOMContentLoaded', function() {
+    // Código de navegação e dos módulos dos exercícios 1-14 (omitido para brevidade, mas deve ser incluído aqui)
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    document.querySelectorAll('header .hidden.md\\:flex a').forEach(link => {
+        const clone = link.cloneNode(true);
+        clone.className = 'block py-3 px-6 text-sm hover:bg-stone-200';
+        mobileMenu.appendChild(clone);
+    });
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === entry.target.id) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }, { rootMargin: '-50% 0px -50% 0px' });
+    document.querySelectorAll('main section').forEach(section => observer.observe(section));
+    const createModule = (id, title, content) => { const container = document.getElementById(id); if(container) container.innerHTML = `<div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">${title}${content}</div>`; };
+    createModule('ej1-container',`<h3 class="text-2xl font-bold text-stone-800 mb-4">Exercício 1: Origens da Internet</h3>`,`<p class="text-stone-600 mb-6">A rede moderna é o resultado de décadas de evolução. A seguir estão os marcos que a definiram.</p><div class="grid md:grid-cols-3 gap-6 text-center"><div class="bg-stone-50 p-4 rounded-md border-t-4 border-teal-500"><h4 class="font-bold">ARPANET (1960s)</h4><p class="text-sm mt-1">Nasce com um objetivo militar: criar uma rede <strong>descentralizada e tolerante a falhas.</strong></p></div><div class="bg-stone-50 p-4 rounded-md border-t-4 border-sky-500"><h4 class="font-bold">TCP/IP & E-mail (1970s-83)</h4><p class="text-sm mt-1">Cria-se a <strong>linguagem universal</strong> da Internet (TCP/IP) e sua primeira "killer app" (e-mail).</p></div><div class="bg-stone-50 p-4 rounded-md border-t-4 border-rose-500"><h4 class="font-bold">WWW (1990s)</h4><p class="text-sm mt-1">Tim Berners-Lee inventa o <strong>hipertexto (HTTP, HTML)</strong>, tornando a rede acessível ao público.</p></div></div>`);
+    createModule('ej2-container',`<h3 class="text-2xl font-bold text-stone-800 mb-4">Exercício 2: Anatomia de uma Rede Doméstica</h3>`,`<div class="strategic-insight p-4 rounded-lg"><p class="text-stone-700 text-sm">Sua rede doméstica é uma topologia em estrela. O roteador do ISP é o centro, atuando como Modem, Roteador, Switch e AP WiFi. Os dispositivos finais (PCs, celulares) se conectam a ele para formar a Rede de Área Local (LAN) e acessar a Internet (WAN).</p></div>`);
+    createModule('ej3-container',`<h3 class="text-2xl font-bold text-stone-800 mb-4">Exercício 3: Simulador de Encapsulamento</h3>`,`<p class="text-stone-600 text-center mb-4">Clique para ver como uma Trama Ethernet é construída, camada por camada.</p><div class="font-mono text-sm space-y-2 p-4 border rounded-md bg-stone-50 min-h-[240px]"><div id="part-trama" class="packet-part flex items-center"><span class="bg-purple-600 text-white font-bold py-2 px-3 rounded-l-md">H_Enlace (MACs)</span><div class="border p-2 rounded-r-md bg-white w-full text-stone-400">...</div></div><div id="part-datagrama" class="packet-part flex items-center ml-5"><span class="bg-red-600 text-white font-bold py-2 px-3 rounded-l-md">H_Red (IPs)</span><div class="border p-2 rounded-r-md bg-white w-full text-stone-400">...</div></div><div id="part-segmento" class="packet-part flex items-center ml-10"><span class="bg-green-600 text-white font-bold py-2 px-3 rounded-l-md">H_Transp (Portas)</span><div class="border p-2 rounded-r-md bg-white w-full text-stone-400">...</div></div><div id="part-mensaje" class="packet-part flex items-center ml-16"><span class="bg-blue-600 text-white font-bold py-2 px-3 rounded-md w-full text-center">Mensagem ("23")</span></div></div><div class="text-center mt-4"><button id="encapsulate-btn" class="bg-teal-600 text-white font-bold py-2 px-5 rounded-lg hover:bg-teal-700 transition">Encapsular</button></div>`);
+    const encapsulateBtn = document.getElementById('encapsulate-btn'); const packetParts = document.querySelectorAll('.packet-part'); if(encapsulateBtn) encapsulateBtn.addEventListener('click', () => { packetParts.forEach(part => { part.style.opacity = 0; part.style.transform = 'translateX(-20px)'; }); let delay = 100; ['part-mensaje', 'part-segmento', 'part-datagrama', 'part-trama'].forEach(id => { setTimeout(() => { const el = document.getElementById(id); el.style.opacity = 1; el.style.transform = 'translateX(0)'; }, delay); delay += 300; }); });
+    createModule('ej4-container',`<h3 class="text-2xl font-bold text-stone-800 mb-4">Exercício 4: Sinais e Largura de Banda</h3>`,`<div class="strategic-insight p-4 rounded-lg mb-6"><p class="text-stone-700 text-sm">Mais velocidade → bits mais curtos → mudanças de sinal mais rápidas → são necessárias frequências mais altas → consome-se mais largura de banda.</p></div><canvas id="signal-canvas" height="100" class="w-full bg-slate-50 border rounded-lg"></canvas><div class="mt-4 flex justify-center space-x-4"><button id="draw-low-speed" class="bg-stone-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-stone-700">Baixa Velocidade (bits largos)</button><button id="draw-high-speed" class="bg-teal-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-teal-700">Alta Velocidade (bits estreitos)</button></div>`);
+    const canvas = document.getElementById('signal-canvas'); if(canvas){ const ctxSignal = canvas.getContext('2d'); const drawSignal = (bitWidth) => { const w = canvas.width, h = canvas.height, midY = h / 2, amp = h / 3; ctxSignal.clearRect(0, 0, w, h); ctxSignal.strokeStyle = '#0d9488'; ctxSignal.lineWidth = 3; ctxSignal.beginPath(); ctxSignal.moveTo(0, midY); let level = 1; for (let x = 0; x < w; x += bitWidth) { const y = midY - (level * amp); ctxSignal.lineTo(x, y); ctxSignal.lineTo(x + bitWidth, y); level *= -1; } ctxSignal.stroke(); }; document.getElementById('draw-low-speed').addEventListener('click', () => drawSignal(80)); document.getElementById('draw-high-speed').addEventListener('click', () => drawSignal(20)); drawSignal(80); }
+    createModule('ej5-container',`<h3 class="text-2xl font-bold text-stone-800 mb-4">Exercício 5: Atenuação WiFi (FSPL)</h3>`,`<div class="strategic-insight p-4 rounded-lg mb-6"><p class="text-stone-700 text-sm"><strong>Trade-off:</strong> 2.4 GHz tem mais alcance (menor atenuação), mas 5 GHz oferece mais velocidade e menos interferência a curta distância graças a seus canais mais limpos e largos.</p></div><canvas id="fspl-chart"></canvas>`);
+    const ctxFspl = document.getElementById('fspl-chart'); if(ctxFspl){ const distances = Array.from({length: 100}, (_, i) => i + 1); const calculateFSPL = (d, f) => 20 * Math.log10(d) + 20 * Math.log10(f) - 147.55; new Chart(ctxFspl, { type: 'line', data: { labels: distances, datasets: [ { label: 'Perda a 2.4 GHz (dB)', data: distances.map(d => calculateFSPL(d, 2.4e9)), borderColor: 'rgb(59, 130, 246)', tension: 0.1 }, { label: 'Perda a 5 GHz (dB)', data: distances.map(d => calculateFSPL(d, 5e9)), borderColor: 'rgb(239, 68, 68)', tension: 0.1 } ] }, options: { responsive: true, plugins: { title: { display: true, text: 'Perda de Sinal (FSPL) vs. Distância' } }, scales: { x: { title: { display: true, text: 'Distância (m)' } }, y: { title: { display: true, text: 'Perda (dB)' } } } } }); }
+    const ptAccordion = document.getElementById('packet-tracer-accordion'); if(ptAccordion){ const ptData = [ { title: "Ex. 6: Vista Física", content: `<strong>1. Mover Nós:</strong> Arraste os clusters no mapa.<br><strong>2. Descrever Dispositivos:</strong> Use Shift+N para ver Roteadores, Switches, etc.<br><strong>3. Montar Rack:</strong> Em um DC, arraste um Rack e depois os dispositivos para ele.<br><strong>4. DC Real:</strong> Não se esqueça da refrigeração, energia redundante e segurança física.` }, { title: "Ex. 7: Análise de Topologia", content: `A topologia do núcleo é de <strong>malha parcial (distribuída)</strong>, mas as conexões dos DCs e sua casa são em <strong>estrela (centralizada)</strong>. Os roteadores de borda são pontos únicos de falha. Melhoria: <strong>redundância (multihoming)</strong>.` }, { title: "Ex. 8: Hub/Repetidor", content: `Um Hub é um dispositivo de Camada 1 obsoleto. Sua função é <strong>regenerar o sinal</strong> para estender a distância. Em redes reais não é usado; prefere-se um switch.` }, { title: "Ex. 9: Conexão Direta", content: `Para conectar dois PCs diretamente é necessário um <strong>cabo cruzado (crossover)</strong> para que o pino de transmissão (TX) de um conecte com o de recepção (RX) do outro.` }, { title: "Ex. 10 e 11: Configuração RIP/Estática", content: `RIP é um protocolo de roteamento simples. Para dispositivos que não o suportam (como o HomeRouter), usa-se uma <strong>rota estática</strong> no roteador vizinho para 'ensinar' o caminho.` }, { title: "Ex. 12: Análise de Pacotes", content: `¡Conceito chave! Ao simular um ping, observe que os <strong>endereços MAC (Camada 2) mudam a cada salto</strong>, enquanto os <strong>endereços IP (Camada 3) de origem e destino NUNCA mudam</strong> (exceto por NAT).` } ]; ptData.forEach(item => { const div = document.createElement('div'); div.innerHTML = `<button class="accordion-button bg-gray-700 hover:bg-gray-600 text-left w-full p-4 rounded-md font-bold text-lg text-sky-300 flex justify-between items-center"><span>${item.title}</span><svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button><div class="accordion-content bg-gray-900 text-stone-300 p-4 rounded-b-md"><p class="text-sm">${item.content}</p></div>`; ptAccordion.appendChild(div); const button = div.querySelector('button'); const content = div.querySelector('.accordion-content'); button.addEventListener('click', () => { const isOpen = content.style.maxHeight; document.querySelectorAll('#packet-tracer-accordion .accordion-content').forEach(c => c.style.maxHeight = null); document.querySelectorAll('#packet-tracer-accordion .accordion-button svg').forEach(svg => svg.style.transform = ''); if (!isOpen) { content.style.maxHeight = content.scrollHeight + "px"; button.querySelector('svg').style.transform = 'rotate(180deg)'; } }); }); }
+    createModule('ej14-container',`<h3 class="text-2xl font-bold text-stone-800 mb-4">Exercício 14: Calculadora de Atraso (Stop-and-Wait)</h3>`,`<div class="strategic-insight p-4 rounded-lg mb-6"><p class="text-stone-700 text-sm">O tempo total é o Nº de Pacotes multiplicado pelo RTT de cada um. As retransmissões por erros (BER) aumentam drasticamente esse tempo.</p></div><div class="bg-slate-50 p-6 rounded-lg border"><h4 class="font-semibold text-lg mb-4 text-center">Calculadora de Simulação</h4><div class="grid md:grid-cols-2 gap-6 items-center"><div class="space-y-4"><div><label class="font-medium text-sm">Tamanho do Arquivo (GB): <input id="fileSize" type="number" value="10" class="w-full mt-1 p-2 border rounded-md"></label></div><div><label class="font-medium text-sm">Nº de Saltos (h): <input id="hops" type="number" value="4" class="w-full mt-1 p-2 border rounded-md"></label></div><div><label class="font-medium text-sm">BER (ex. 0.0001): <input id="ber" type="number" step="0.00001" value="0.0001" class="w-full mt-1 p-2 border rounded-md"></label></div></div><div class="bg-white p-4 rounded-lg shadow-inner space-y-3 font-mono text-sm"><h5 class="font-bold text-center text-base">Resultados</h5><p><strong>Nº de Pacotes:</strong> <span id="res-packets" class="font-bold text-teal-700"></span></p><p><strong>RTT (ideal):</strong> <span id="res-rtt" class="font-bold text-teal-700"></span> ms</p><p><strong>Atraso Total (sem BER):</strong> <span id="res-total-ideal" class="font-bold text-green-600"></span></p><p><strong>Atraso Total (com BER):</strong> <span id="res-total-ber" class="font-bold text-red-600"></span></p></div></div><div class="mt-4 text-center"><button id="calculate-delay" class="bg-teal-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-teal-700">Calcular</button></div></div>`);
+    const calculateDelayBtn = document.getElementById('calculate-delay'); if(calculateDelayBtn){ const calculateAndDisplayDelay = () => { const fileSizeGB = parseFloat(document.getElementById('fileSize').value), mtuBytes = 1500, headersBytes = 54, linkSpeedMbps = 10; const h = parseFloat(document.getElementById('hops').value), ber = parseFloat(document.getElementById('ber').value) || 0; const dataPerPacketBytes = mtuBytes - headersBytes; const totalPackets = Math.ceil((fileSizeGB * 1e9) / dataPerPacketBytes); const linkSpeedBps = linkSpeedMbps * 1e6, tTransData = (mtuBytes * 8) / linkSpeedBps, tTransAck = (headersBytes * 8) / linkSpeedBps, tProp = 1000 / 2e8; const RTT = ((h + 1) * (tTransData + tTransAck)) + (2 * (h+1) * tProp); const totalIdealDelay = totalPackets * RTT; document.getElementById('res-packets').textContent = totalPackets.toLocaleString(); document.getElementById('res-rtt').textContent = (RTT * 1000).toFixed(4); const formatTime = s => s < 60 ? `${s.toFixed(2)}s` : s < 3600 ? `${(s/60).toFixed(2)}m` : `${(s/3600).toFixed(2)}h`; document.getElementById('res-total-ideal').textContent = formatTime(totalIdealDelay); if (ber > 0) { const pBitOk = 1 - ber; const pPacketEnlaceOk = Math.pow(pBitOk, mtuBytes * 8); const pViajeOk = Math.pow(pPacketEnlaceOk, h + 1); const avgTransmissions = 1 / pViajeOk; document.getElementById('res-total-ber').textContent = formatTime(totalPackets * avgTransmissions * RTT); } else { document.getElementById('res-total-ber').textContent = formatTime(totalIdealDelay); } }; calculateDelayBtn.addEventListener('click', calculateAndDisplayDelay); calculateAndDisplayDelay(); }
+
+    // --- NOVA LÓGICA DO ANALISADOR DE PING ---
+    let charts = {};
+    const analyzePingBtn = document.getElementById('analyze-ping');
+    if (analyzePingBtn) {
+        analyzePingBtn.addEventListener('click', () => {
+            const data = document.getElementById('ping-data').value.trim().split(/\s+/).map(Number).filter(n => !isNaN(n) && n > 0);
+            if (data.length === 0) return;
+
+            data.sort((a, b) => a - b); // Ordenar para calcular quartis
+
+            const n = data.length;
+            const sum = data.reduce((a, b) => a + b, 0);
+            const mean = sum / n;
+            const stddev = Math.sqrt(data.reduce((a, b) => a + (b - mean) ** 2, 0) / n);
+            
+            const getQuartile = (arr, q) => {
+                const pos = (arr.length - 1) * q;
+                const base = Math.floor(pos);
+                const rest = pos - base;
+                if (arr[base + 1] !== undefined) {
+                    return arr[base] + rest * (arr[base + 1] - arr[base]);
+                } else {
+                    return arr[base];
+                }
+            };
+
+            const min = data[0];
+            const q1 = getQuartile(data, 0.25);
+            const median = getQuartile(data, 0.50);
+            const q3 = getQuartile(data, 0.75);
+            const max = data[data.length - 1];
+
+            document.getElementById('ping-avg').textContent = `${mean.toFixed(2)} ms`;
+            document.getElementById('ping-jitter').textContent = `${stddev.toFixed(2)} ms`;
+            document.getElementById('ping-min').textContent = `${min.toFixed(2)} ms`;
+            document.getElementById('ping-q1').textContent = `${q1.toFixed(2)} ms`;
+            document.getElementById('ping-median').textContent = `${median.toFixed(2)} ms`;
+            document.getElementById('ping-q3').textContent = `${q3.toFixed(2)} ms`;
+            document.getElementById('ping-max').textContent = `${max.toFixed(2)} ms`;
+            
+            // --- GRÁFICOS ---
+            Object.values(charts).forEach(chart => chart.destroy());
+
+            charts.boxplot = new Chart(document.getElementById('ping-boxplot-chart'), {
+                type: 'boxplot',
+                data: { labels: ['RTT (ms)'], datasets: [{ data: [data], backgroundColor: 'rgba(13, 148, 136, 0.5)', borderColor: 'rgb(13, 148, 136)' }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+            });
+
+            const binSize = stddev > 0 ? stddev / 2 : 1;
+            const bins = {};
+            data.forEach(v => { const bin = Math.floor(v / binSize) * binSize; bins[bin] = (bins[bin] || 0) + 1; });
+            const labels = Object.keys(bins).map(Number).sort((a,b) => a - b);
+            const pdfData = labels.map(l => (bins[l] / n));
+            charts.pdf = new Chart(document.getElementById('ping-pdf-chart'), {
+                type: 'bar',
+                data: { labels: labels.map(l => l.toFixed(1)), datasets: [{ data: pdfData, backgroundColor: 'rgba(239, 68, 68, 0.5)' }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+            });
+            
+            const cdfData = []; let cum = 0;
+            const cdfPoints = labels.map(l => {
+                cum += bins[l] / n;
+                return { x: l, y: cum };
+            });
+            charts.cdf = new Chart(document.getElementById('ping-cdf-chart'), {
+                type: 'line',
+                data: { datasets: [{ data: cdfPoints, borderColor: 'rgb(22, 163, 74)', stepped: true }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+            });
+        });
+    }
+});
+</script>
+</body>
+</html>
+
