@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompTIA Security+ SY0-701 Ultimate Practice Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .quiz-container {
+            transition: opacity 0.5s ease-in-out;
+        }
+        .option-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .option-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .option-btn.selected {
+            background-color: #3b82f6;
+            color: white;
+            border-color: #2563eb;
+        }
+        .correct-answer {
+            background-color: #22c55e !important;
+            color: white !important;
+            border-color: #16a34a !important;
+        }
+        .wrong-answer {
+            background-color: #ef4444 !important;
+            color: white !important;
+            border-color: #dc2626 !important;
+        }
+        .explanation {
+            background-color: #f8fafc;
+            border-left: 4px solid #6366f1;
+        }
+        /* Custom scrollbar for review section */
+        .review-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+        .review-scroll::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        .review-scroll::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 10px;
+        }
+        .review-scroll::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 flex items-center justify-center min-h-screen p-4">
+
+    <div id="quiz-app" class="w-full max-w-4xl mx-auto">
+        
+        <!-- Start Screen -->
+        <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-xl">
+            <i class="fas fa-shield-halved text-6xl text-indigo-600 mb-4"></i>
+            <h1 class="text-4xl font-bold text-slate-900 mb-2">Security+ SY0-701 Ultimate Quiz</h1>
+            <p class="text-slate-600 mb-6 max-w-2xl mx-auto">This quiz is engineered to prepare you for success. It features a weighted question bank based on the official CompTIA exam domains. Select the number of questions and start your path to certification.</p>
+            <div class="mb-6">
+                <label for="question-count" class="block text-lg font-medium text-slate-700 mb-2">How many questions?</label>
+                <select id="question-count" class="px-4 py-2 text-center rounded-lg border-slate-300 focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="10">10 (Quick Review)</option>
+                    <option value="25" selected>25 (Focused Practice)</option>
+                    <option value="50">50 (Half Exam)</option>
+                    <option value="90">90 (Full Exam Simulation)</option>
+                </select>
+            </div>
+            <button id="start-btn" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-indigo-700 transition-transform transform hover:scale-105">
+                Start Quiz
+            </button>
+        </div>
+
+        <!-- Quiz Container -->
+        <div id="quiz-container" class="hidden bg-white p-6 sm:p-8 rounded-2xl shadow-xl">
+            <!-- Header -->
+            <div class="flex justify-between items-center border-b border-slate-200 pb-4 mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900">Security+ Practice</h2>
+                    <p id="question-counter" class="text-slate-500"></p>
+                </div>
+                <div id="timer" class="text-lg font-semibold text-indigo-600"></div>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="w-full bg-slate-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-500"></div>
+            </div>
+
+            <!-- Question and Options -->
+            <div id="question-area">
+                <p id="question-text" class="text-xl font-semibold mb-6"></p>
+                <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Options will be dynamically inserted here -->
+                </div>
+            </div>
+            
+            <!-- Navigation -->
+            <div class="mt-8 flex justify-end">
+                <button id="next-btn" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-indigo-700 transition disabled:bg-slate-400 disabled:cursor-not-allowed">Next <i class="fas fa-arrow-right ml-2"></i></button>
+            </div>
+        </div>
+        
+        <!-- Results Screen -->
+        <div id="results-screen" class="hidden bg-white p-8 rounded-2xl shadow-xl text-center">
+            <h2 class="text-3xl font-bold text-slate-900 mb-2">Quiz Complete!</h2>
+            <p class="text-slate-600 mb-6">Here's your performance breakdown. Focus on your weaker domains to improve.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                <div class="bg-slate-100 p-4 rounded-lg">
+                    <p class="text-lg font-semibold text-slate-800">Your Score</p>
+                    <p id="score-percentage" class="text-4xl font-bold text-indigo-600"></p>
+                </div>
+                <div class="bg-slate-100 p-4 rounded-lg">
+                    <p class="text-lg font-semibold text-slate-800">Correct</p>
+                    <p id="correct-answers" class="text-4xl font-bold text-green-500"></p>
+                </div>
+                <div class="bg-slate-100 p-4 rounded-lg">
+                    <p class="text-lg font-semibold text-slate-800">Incorrect</p>
+                    <p id="wrong-answers" class="text-4xl font-bold text-red-500"></p>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-bold text-slate-800 mb-4">Domain Performance</h3>
+            <div id="domain-results" class="space-y-3 text-left max-w-2xl mx-auto mb-8">
+                <!-- Domain results will be inserted here -->
+            </div>
+
+            <div class="flex justify-center space-x-4">
+                <button id="restart-btn" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-indigo-700 transition-transform transform hover:scale-105"><i class="fas fa-redo mr-2"></i>Try Again</button>
+                <button id="review-btn" class="bg-slate-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-slate-800 transition-transform transform hover:scale-105"><i class="fas fa-search mr-2"></i>Review Answers</button>
+            </div>
+        </div>
+
+        <!-- Review Screen -->
+        <div id="review-screen" class="hidden bg-white p-8 rounded-2xl shadow-xl">
+             <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-bold text-slate-900">Review Your Answers</h2>
+                <button id="back-to-results-btn" class="bg-slate-200 text-slate-800 font-bold py-2 px-4 rounded-lg hover:bg-slate-300 transition">&times; Close</button>
+            </div>
+            <div id="review-content" class="space-y-6 max-h-[70vh] overflow-y-auto pr-4 review-scroll">
+                <!-- Review content will be dynamically inserted here -->
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- QUESTION BANK ---
+        // Carefully curated and weighted question bank based on SY0-701 domains.
+        const questionBank = [
+            // Domain 1: General Security Concepts (12%)
+            {
+                domain: "1.0 General Security Concepts",
+                question: "A security analyst is implementing a cryptographic system that requires a secure method for key exchange. Which of the following algorithms is specifically designed for this purpose?",
+                options: ["AES", "RSA", "Diffie-Hellman", "SHA-256"],
+                answer: "Diffie-Hellman",
+                explanation: "Diffie-Hellman is a key exchange protocol used to securely establish a shared secret over an insecure channel. AES is a symmetric encryption algorithm, RSA is an asymmetric algorithm used for encryption and digital signatures, and SHA-256 is a hashing algorithm."
+            },
+            {
+                domain: "1.0 General Security Concepts",
+                question: "Which of the following security principles is best described as providing users and systems with only the access and permissions they absolutely require to perform their tasks?",
+                options: ["Defense in depth", "Least privilege", "Separation of duties", "Security through obscurity"],
+                answer: "Least privilege",
+                explanation: "The principle of least privilege dictates that entities should be granted the minimum level of access necessary. Defense in depth involves layered security, separation of duties prevents single points of compromise, and security through obscurity is the unreliable practice of hiding security flaws."
+            },
+             {
+                domain: "1.0 General Security Concepts",
+                question: "A company wants to ensure that a sender's identity is authenticated and that the message they send has not been tampered with. Which cryptographic control provides both of these assurances?",
+                options: ["Hashing", "Symmetric encryption", "Digital signature", "Steganography"],
+                answer: "Digital signature",
+                explanation: "A digital signature, created with the sender's private key, provides non-repudiation (authenticating the sender) and integrity (ensuring the message hasn't been altered). Hashing only provides integrity. Symmetric encryption provides confidentiality."
+            },
+            {
+                domain: "1.0 General Security Concepts",
+                question: "Which of the following is a fundamental difference between a law, a regulation, and a policy?",
+                options: ["A law is globally applicable, a regulation is national, and a policy is organizational.", "A law is passed by a legislative body, a regulation is issued by a government agency to enforce the law, and a policy is an internal organizational rule.", "A policy is legally binding, a regulation is a suggestion, and a law is an industry standard.", "A regulation carries financial penalties, while laws and policies do not."],
+                answer: "A law is passed by a legislative body, a regulation is issued by a government agency to enforce the law, and a policy is an internal organizational rule.",
+                explanation: "This option correctly defines the hierarchy and origin. Laws are created by legislatures (e.g., Congress), regulations are the detailed rules created by agencies (e.g., SEC, HHS) to implement those laws, and policies are specific to an organization."
+            },
+            {
+                domain: "1.0 General Security Concepts",
+                question: "A company is setting up a new data center and wants to implement a fire suppression system that is safe for humans and electronic equipment. Which of the following would be the MOST appropriate choice?",
+                options: ["Water sprinkler system", "Foam-based system", "Clean agent system (e.g., HFC-227ea)", "Carbon dioxide (CO2) system"],
+                answer: "Clean agent system (e.g., HFC-227ea)",
+                explanation: "Clean agent systems use inert gases or chemical agents that extinguish fires without damaging equipment or leaving a residue, and are safe for occupied spaces. Water and foam would destroy electronics. CO2 systems displace oxygen and are lethal to humans."
+            },
+
+            // Domain 2: Threats, Vulnerabilities, and Mitigations (22%)
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "An attacker is using a technique that involves sending a large volume of unsolicited emails with malicious links to thousands of employees. Which of the following BEST describes this type of attack?",
+                options: ["Spear phishing", "Whaling", "Phishing", "Vishing"],
+                answer: "Phishing",
+                explanation: "Phishing is a broad-based attack that sends a large number of generic malicious emails. Spear phishing is highly targeted to a specific individual or group, Whaling targets high-level executives, and Vishing is voice-based phishing."
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "A web application has a vulnerability where an attacker can input `'; DROP TABLE users; --` into a username field, causing the database to delete the user table. This is an example of what kind of attack?",
+                options: ["Cross-site scripting (XSS)", "SQL injection (SQLi)", "Directory traversal", "Cross-site request forgery (CSRF)"],
+                answer: "SQL injection (SQLi)",
+                explanation: "This is a classic example of SQL injection, where the attacker injects malicious SQL commands into input fields to manipulate the backend database. XSS injects scripts into websites, directory traversal accesses unauthorized files, and CSRF tricks a user into performing an unwanted action."
+            },
+            {
+                domain: "2.0 Threats, vulnerabilities, and Mitigations",
+                question: "During a security audit, a legacy industrial control system (ICS) is found to be running an unpatched, unsupported operating system. The vendor has gone out of business. Which of the following is the BEST mitigation strategy?",
+                options: ["Take the system offline immediately.", "Isolate the system on a segmented network with strict firewall rules.", "Attempt to reverse engineer a patch for the OS.", "Install third-party antivirus software on the system."],
+                answer: "Isolate the system on a segmented network with strict firewall rules.",
+                explanation: "Since the system cannot be patched and may be critical for operations, the best approach is network segmentation. This isolates the vulnerable system, controlling all traffic to and from it with a firewall, thereby reducing its attack surface and preventing lateral movement."
+            },
+             {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "A security analyst notices a gradual increase in network traffic and CPU usage on a critical server over several weeks, with no corresponding increase in legitimate business activity. The activity is traced to malware that is slowly exfiltrating data. This is characteristic of a(n):",
+                options: ["Advanced Persistent Threat (APT)", "Zero-day exploit", "Denial-of-Service (DoS) attack", "Ransomware infection"],
+                answer: "Advanced Persistent Threat (APT)",
+                explanation: "APTs are characterized by their 'low and slow' approach. They aim to remain undetected for long periods while they stealthily gather and exfiltrate data. DoS attacks are noisy and disruptive, while ransomware typically announces its presence immediately."
+            },
+             {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "Which of the following describes a vulnerability created by a race condition?",
+                options: ["An attacker exploits a buffer overflow to execute arbitrary code.", "A web application fails to properly validate user input, allowing for SQL injection.", "Two or more processes attempt to access a shared resource, and the outcome depends on the timing of their execution.", "An attacker uses a stolen session cookie to impersonate a legitimate user."],
+                answer: "Two or more processes attempt to access a shared resource, and the outcome depends on the timing of their execution.",
+                explanation: "A race condition is a timing-based vulnerability where the security of the system is compromised because of an unexpected sequence or timing of events. A classic example is a 'time-of-check to time-of-use' (TOCTOU) attack."
+            },
+             {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "A company's threat intelligence feed reports that a new malware variant is spreading via compromised USB drives. The malware creates a file named `autorun.inf` to execute itself automatically. Which of the following would be an effective host-based mitigation?",
+                options: ["Implementing a host-based firewall", "Enforcing strong password policies", "Disabling AutoPlay/AutoRun functionality via Group Policy", "Encrypting the hard drive with BitLocker"],
+                answer: "Disabling AutoPlay/AutoRun functionality via Group Policy",
+                explanation: "The most direct mitigation for this specific threat is to disable the operating system feature that the malware relies on. Disabling AutoPlay/AutoRun prevents the system from automatically executing commands from removable media, neutralizing this attack vector."
+            },
+            
+            // Domain 3: Security Architecture (18%)
+            {
+                domain: "3.0 Security Architecture",
+                question: "A network architect is designing a secure network topology. They have placed a firewall between the internal corporate network and the internet, and a second firewall to create a separate network segment for publicly accessible servers like web and email servers. What is this segmented network called?",
+                options: ["Honeynet", "Extranet", "Demilitarized Zone (DMZ)", "Intranet"],
+                answer: "Demilitarized Zone (DMZ)",
+                explanation: "A DMZ is a perimeter network that protects an organization's internal LAN from untrusted traffic. It is a separate network segment located between the private network and the internet, hosting public-facing services."
+            },
+            {
+                domain: "3.0 Security Architecture",
+                question: "An organization wants to move its services to the cloud and is looking for a model where the cloud provider manages the hardware, operating system, and middleware, allowing the organization to focus solely on deploying and managing its applications. Which cloud service model BEST fits this requirement?",
+                options: ["Infrastructure as a Service (IaaS)", "Platform as a Service (PaaS)", "Software as a Service (SaaS)", "Anything as a Service (XaaS)"],
+                answer: "Platform as a Service (PaaS)",
+                explanation: "PaaS provides a platform including the OS, middleware, and runtime environment, abstracting away the underlying infrastructure. This allows developers to build and deploy applications without managing servers. IaaS only provides virtualized hardware, and SaaS provides a complete application."
+            },
+            {
+                domain: "3.0 Security Architecture",
+                question: "A company is implementing a zero-trust security model. Which of the following is a core principle of this model?",
+                options: ["Trust all devices on the corporate LAN.", "Authenticate and authorize every access request, regardless of its origin.", "Once a user is authenticated, grant them broad access.", "Focus security efforts primarily on the network perimeter."],
+                answer: "Authenticate and authorize every access request, regardless of its origin.",
+                explanation: "The core tenet of zero trust is 'never trust, always verify.' It assumes that no user or device is trusted by default, whether inside or outside the network. Every access request must be explicitly authenticated and authorized before being granted."
+            },
+             {
+                domain: "3.0 Security Architecture",
+                question: "A security engineer is configuring a new wireless network and wants to use the most secure authentication and encryption protocol available. Which of the following should they implement?",
+                options: ["WEP", "WPA with TKIP", "WPA2 with AES", "WPA3 with SAE"],
+                answer: "WPA3 with SAE",
+                explanation: "WPA3 is the latest and most secure standard for wireless networks. It replaces the WPA2 Pre-Shared Key (PSK) with Simultaneous Authentication of Equals (SAE), which provides stronger protection against offline dictionary attacks. WEP and WPA are outdated and insecure."
+            },
+            {
+                domain: "3.0 Security Architecture",
+                question: "A DevOps team is adopting a security practice where security is integrated into every stage of the software development lifecycle, from design to deployment. What is this practice called?",
+                options: ["Agile development", "Waterfall model", "Continuous integration", "DevSecOps"],
+                answer: "DevSecOps",
+                explanation: "DevSecOps is the philosophy of integrating security practices within the DevOps process. It aims to automate security checks and balances throughout the CI/CD pipeline, making security a shared responsibility rather than a final gate before release."
+            },
+
+            // Domain 4: Security Operations (28%)
+            {
+                domain: "4.0 Security Operations",
+                question: "A security analyst in a Security Operations Center (SOC) is reviewing logs and sees a series of failed login attempts for a privileged account from an unfamiliar IP address, followed by a successful login. What is the MOST likely next step for the analyst?",
+                options: ["Document the event and close the ticket.", "Immediately disable the privileged account and investigate further.", "Block the unfamiliar IP address at the firewall.", "Contact the owner of the privileged account to verify the activity."],
+                answer: "Immediately disable the privileged account and investigate further.",
+                explanation: "Given the high risk associated with a compromised privileged account, the principle of 'containment' dictates taking immediate action to prevent further damage. Disabling the account stops the potential attacker's access while a full investigation begins. Contacting the user or blocking the IP are good secondary steps but disabling the account is the priority."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "In digital forensics, what is the primary purpose of creating a hash of a collected evidence drive?",
+                options: ["To encrypt the evidence for confidentiality.", "To compress the evidence to save storage space.", "To prove the integrity of the evidence has been maintained.", "To scan the evidence for malware."],
+                answer: "To prove the integrity of the evidence has been maintained.",
+                explanation: "Hashing creates a unique digital fingerprint of the data. By hashing the original drive and any forensic copies, investigators can prove that the evidence has not been altered. Any change to the data, however small, will result in a completely different hash value."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "A company's disaster recovery plan specifies a maximum acceptable downtime of 4 hours for critical systems. This metric is known as the:",
+                options: ["Recovery Time Objective (RTO)", "Recovery Point Objective (RPO)", "Mean Time To Recovery (MTTR)", "Mean Time Between Failures (MTBF)"],
+                answer: "Recovery Time Objective (RTO)",
+                explanation: "RTO defines the target time within which a business process must be restored after a disaster to avoid unacceptable consequences. RPO defines the acceptable amount of data loss, measured in time (e.g., 1 hour of data)."
+            },
+             {
+                domain: "4.0 Security Operations",
+                question: "A SOC analyst uses a tool that aggregates log data from firewalls, servers, and applications, correlates events, and generates alerts for suspicious activity. What is this tool?",
+                options: ["Vulnerability scanner", "Network sniffer", "Security Information and Event Management (SIEM)", "Intrusion Detection System (IDS)"],
+                answer: "Security Information and Event Management (SIEM)",
+                explanation: "A SIEM is the central platform for log aggregation, correlation, and analysis in a SOC. It collects security data from across the enterprise, providing a unified view to detect and respond to threats. An IDS detects threats, but a SIEM correlates data from many sources, including the IDS."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "During an incident response, an analyst needs to collect evidence from a running server. According to the order of volatility, which of the following should be collected FIRST?",
+                options: ["Hard drive image", "Archived logs", "CPU registers and cache memory", "Running processes"],
+                answer: "CPU registers and cache memory",
+                explanation: "The order of volatility dictates collecting the most transient data first. CPU registers and cache are the most volatile, followed by RAM (including running processes), temporary file systems, and finally, data on the hard drive. Archived logs are typically the least volatile."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "An organization is conducting a penetration test. The testing team is provided with user-level credentials and network diagrams. What type of penetration test is this?",
+                options: ["Black-box test", "White-box test", "Gray-box test", "Red-team exercise"],
+                answer: "Gray-box test",
+                explanation: "A gray-box test simulates an attacker with some level of internal knowledge or access, such as a standard user account. A white-box test provides full knowledge (source code, admin access), while a black-box test provides no prior knowledge."
+            },
+
+            // Domain 5: Security Program Management and Oversight (20%)
+            {
+                domain: "5.0 Security Program Management and Oversight",
+                question: "A company is assessing the risk of a server failure. The server is valued at $50,000, and it is estimated that a failure would occur once every 4 years, resulting in a 25% loss of the server's value. What is the Annualized Loss Expectancy (ALE)?",
+                options: ["$12,500", "$3,125", "$5,000", "$200,000"],
+                answer: "$3,125",
+                explanation: "First, calculate the Single Loss Expectancy (SLE): Asset Value ($50,000) * Exposure Factor (0.25) = $12,500. Then, calculate the Annualized Rate of Occurrence (ARO): 1 occurrence / 4 years = 0.25. Finally, calculate ALE: SLE ($12,500) * ARO (0.25) = $3,125."
+            },
+            {
+                domain: "5.0 Security Program Management and Oversight",
+                question: "Which of the following documents is a formal agreement between a service provider and a customer that defines the level of service, responsibilities, and performance metrics?",
+                options: ["Memorandum of Understanding (MOU)", "Service Level Agreement (SLA)", "Business Partnership Agreement (BPA)", "Interconnection Security Agreement (ISA)"],
+                answer: "Service Level Agreement (SLA)",
+                explanation: "An SLA is a contract that specifies measurable metrics like uptime, response time, and issue resolution time. An MOU is a less formal agreement of intent, a BPA is for business partners, and an ISA is for connecting systems between different organizations."
+            },
+            {
+                domain: "5.0 Security Program Management and Oversight",
+                question: "A company requires that all departing employees' system access is revoked on their last day of employment. This is an example of what type of security control?",
+                options: ["A detective control", "A corrective control", "A preventative control", "An administrative control"],
+                answer: "An administrative control",
+                explanation: "This is an administrative (or procedural) control because it's a policy or procedure related to personnel management (offboarding). It's also preventative in nature, but its primary classification is administrative, as it's enforced by a business process rather than a technical system."
+            },
+             {
+                domain: "5.0 Security Program Management and Oversight",
+                question: "An organization is legally required to retain financial records for seven years. This is an example of a:",
+                options: ["Data retention policy", "Data classification policy", "Acceptable use policy", "Disaster recovery plan"],
+                answer: "Data retention policy",
+                explanation: "A data retention policy defines how long data must be kept and how it should be disposed of at the end of its lifecycle. These policies are often driven by legal, regulatory, and business requirements. The other policies serve different purposes."
+            },
+             {
+                domain: "5.0 Security Program Management and Oversight",
+                question: "A bank wants to conduct a security assessment to ensure it is compliant with the Payment Card Industry Data Security Standard (PCI DSS). What is the primary focus of this type of assessment?",
+                options: ["Protecting Protected Health Information (PHI)", "Ensuring the security of classified government data", "Securing the Cardholder Data Environment (CDE)", "Validating general cybersecurity best practices"],
+                answer: "Securing the Cardholder Data Environment (CDE)",
+                explanation: "PCI DSS is a security standard specifically designed to protect cardholder data. Its requirements are focused on securing the CDE, which includes all systems, processes, and people that store, process, or transmit credit card information."
+            }
+        ];
+        
+        // --- DOM Elements ---
+        const startScreen = document.getElementById('start-screen');
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsScreen = document.getElementById('results-screen');
+        const reviewScreen = document.getElementById('review-screen');
+        
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backToResultsBtn = document.getElementById('back-to-results-btn');
+        
+        const questionCountSelect = document.getElementById('question-count');
+        const questionCounter = document.getElementById('question-counter');
+        const progressBar = document.getElementById('progress-bar');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+
+        // --- State Variables ---
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let score = 0;
+        let selectedOption = null;
+        let quizStartTime;
+
+        // --- Functions ---
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function getWeightedQuestions(count) {
+            const domains = {
+                "1.0 General Security Concepts": 0.12,
+                "2.0 Threats, Vulnerabilities, and Mitigations": 0.22,
+                "3.0 Security Architecture": 0.18,
+                "4.0 Security Operations": 0.28,
+                "5.0 Security Program Management and Oversight": 0.20
+            };
+
+            let selectedQuestions = [];
+            const shuffledBank = shuffleArray([...questionBank]);
+
+            for (const domain in domains) {
+                const domainQuestions = shuffledBank.filter(q => q.domain === domain);
+                const numToTake = Math.round(count * domains[domain]);
+                selectedQuestions.push(...domainQuestions.slice(0, numToTake));
+            }
+
+            // Adjust if the count is not perfect due to rounding
+            while (selectedQuestions.length < count && shuffledBank.length > 0) {
+                 const remainingQuestions = shuffledBank.filter(q => !selectedQuestions.includes(q));
+                 if (remainingQuestions.length > 0) {
+                    selectedQuestions.push(remainingQuestions[0]);
+                 } else {
+                     break; // No more unique questions
+                 }
+            }
+            
+            return shuffleArray(selectedQuestions.slice(0, count));
+        }
+
+
+        function startQuiz() {
+            const numQuestions = parseInt(questionCountSelect.value);
+            currentQuestions = getWeightedQuestions(numQuestions);
+            
+            if (currentQuestions.length === 0) {
+                alert("Not enough questions in the bank to start the quiz. Please refresh.");
+                return;
+            }
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            quizStartTime = new Date();
+
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            quizContainer.classList.remove('hidden');
+            
+            showQuestion();
+        }
+
+        function showQuestion() {
+            selectedOption = null;
+            const question = currentQuestions[currentQuestionIndex];
+            
+            // Update progress
+            questionCounter.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
+            const progressPercentage = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+
+            // Display question
+            questionText.textContent = question.question;
+            optionsContainer.innerHTML = '';
+            
+            const shuffledOptions = shuffleArray([...question.options]);
+
+            shuffledOptions.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('option-btn', 'w-full', 'p-4', 'border-2', 'border-slate-300', 'rounded-lg', 'text-left', 'hover:bg-indigo-100', 'focus:outline-none', 'focus:ring-2', 'focus:ring-indigo-500');
+                button.addEventListener('click', () => selectOption(button, option));
+                optionsContainer.appendChild(button);
+            });
+
+            nextBtn.disabled = true;
+        }
+
+        function selectOption(button, option) {
+            Array.from(optionsContainer.children).forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+            selectedOption = option;
+            nextBtn.disabled = false;
+        }
+
+        function handleNext() {
+            const question = currentQuestions[currentQuestionIndex];
+            const isCorrect = selectedOption === question.answer;
+            if (isCorrect) {
+                score++;
+            }
+
+            userAnswers.push({
+                question: question,
+                selected: selectedOption,
+                isCorrect: isCorrect
+            });
+
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < currentQuestions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            quizContainer.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / currentQuestions.length) * 100);
+            document.getElementById('score-percentage').textContent = `${percentage}%`;
+            document.getElementById('correct-answers').textContent = `${score} / ${currentQuestions.length}`;
+            document.getElementById('wrong-answers').textContent = `${currentQuestions.length - score} / ${currentQuestions.length}`;
+            
+            displayDomainResults();
+        }
+
+        function displayDomainResults() {
+            const domainStats = {};
+
+            userAnswers.forEach(ans => {
+                const domain = ans.question.domain;
+                if (!domainStats[domain]) {
+                    domainStats[domain] = { correct: 0, total: 0 };
+                }
+                domainStats[domain].total++;
+                if (ans.isCorrect) {
+                    domainStats[domain].correct++;
+                }
+            });
+
+            const domainResultsContainer = document.getElementById('domain-results');
+            domainResultsContainer.innerHTML = '';
+            
+            const sortedDomains = Object.keys(domainStats).sort();
+
+            for (const domain of sortedDomains) {
+                const stats = domainStats[domain];
+                const accuracy = Math.round((stats.correct / stats.total) * 100);
+                let bgColor = 'bg-green-100';
+                let textColor = 'text-green-800';
+                if (accuracy < 75) {
+                    bgColor = 'bg-yellow-100';
+                    textColor = 'text-yellow-800';
+                }
+                if (accuracy < 50) {
+                    bgColor = 'bg-red-100';
+                    textColor = 'text-red-800';
+                }
+
+                const resultHTML = `
+                    <div class="flex items-center justify-between p-3 rounded-lg ${bgColor}">
+                        <span class="font-medium text-slate-700">${domain}</span>
+                        <span class="font-bold px-3 py-1 rounded-full ${textColor}">${stats.correct}/${stats.total} (${accuracy}%)</span>
+                    </div>
+                `;
+                domainResultsContainer.innerHTML += resultHTML;
+            }
+        }
+
+        function reviewAnswers() {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.remove('hidden');
+
+            const reviewContent = document.getElementById('review-content');
+            reviewContent.innerHTML = '';
+
+            userAnswers.forEach((answer, index) => {
+                const question = answer.question;
+                const container = document.createElement('div');
+                container.classList.add('border', 'border-slate-200', 'p-6', 'rounded-xl');
+                
+                let optionsHTML = '';
+                question.options.forEach(option => {
+                    let classes = 'option-btn w-full p-3 border-2 border-slate-300 rounded-lg text-left mt-2 cursor-default';
+                    if (option === question.answer) {
+                        classes += ' correct-answer';
+                    } else if (option === answer.selected) {
+                        classes += ' wrong-answer';
+                    }
+                    optionsHTML += `<div class="${classes}">${option}</div>`;
+                });
+
+                container.innerHTML = `
+                    <p class="text-lg font-semibold mb-4">${index + 1}. ${question.question}</p>
+                    <div>${optionsHTML}</div>
+                    <div class="mt-4 p-4 explanation rounded-lg">
+                        <h4 class="font-bold text-indigo-700">Explanation:</h4>
+                        <p class="text-slate-600">${question.explanation}</p>
+                    </div>
+                `;
+                reviewContent.appendChild(container);
+            });
+        }
+        
+        // --- Event Listeners ---
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', handleNext);
+        restartBtn.addEventListener('click', () => {
+            resultsScreen.classList.add('hidden');
+            reviewScreen.classList.add('hidden');
+            startScreen.classList.remove('hidden');
+        });
+        reviewBtn.addEventListener('click', reviewAnswers);
+        backToResultsBtn.addEventListener('click', () => {
+            reviewScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        });
+    });
+    </script>
+</body>
+</html>
