@@ -35,7 +35,7 @@
             background-color: rgba(34, 211, 238, 0.05);
             border-color: rgba(34, 211, 238, 0.5);
         }
-        .typewriter-cursor {
+       .typewriter-cursor {
             display: inline-block;
             background-color: #22d3ee;
             margin-left: 0.1rem;
@@ -47,6 +47,17 @@
             50%, 99% { background-color: transparent; }
             100% { background-color: #22d3ee; }
         }
+       .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        .status-completed { background-color: #10b981; /* green-500 */ }
+        .status-inprogress { background-color: #f59e0b; /* amber-500 */ }
+        .status-pending { background-color: #6b7280; /* gray-500 */ }
+        .status-text { font-size: 0.75rem; font-weight: bold; padding-left: 5px; }
     </style>
 </head>
 <body class="antialiased">
@@ -63,55 +74,109 @@
 
         <main class="flex-grow grid grid-cols-1 md:grid-cols-2 gap-12">
 
+            <!-- Módulo 01: Fundamentos de Ciberseguridad -->
             <section id="module-01">
                 <h2 class="text-xl font-semibold mb-6 text-neutral-200 border-b border-glow pb-2">
                     <span class="text-cyan-glow">[M01]</span> Fundamentos de Ciberseguridad
                 </h2>
                 <div class="space-y-4">
-                    <a href="./fundamentos-ciberseguridad/guia-fundamentos-ciberseguridad.html" class="link-item flex items-center justify-between p-4 rounded-md">
-                        <div class="flex items-center"><span class="text-cyan-400 mr-3 text-lg">&gt;</span><span class="text-neutral-200 font-medium">Guía 1: Riesgos y Amenazas</span></div>
+                    <!-- Reto 1 Links -->
+                    <a href="reto1.html" class="link-item flex items-center justify-between p-4 rounded-md">
+                         <div class="flex items-center">
+                             <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
+                             <span class="text-neutral-200 font-medium">Reto 1: Identificação e Análise de Riscos</span>
+                         </div>
+                         <div class="flex items-center">
+                             <span class="status-dot status-completed"></span>
+                             <span class="status-text text-green-400">CONCLUÍDO</span>
+                         </div>
+                    </a>
+                    <!-- Guia e Labs Reto 1 -->
+                    <a href="./fundamentos-ciberseguridad/guia-fundamentos-ciberseguridad.html" class="link-item flex items-center justify-between p-4 rounded-md ml-4">
+                        <div class="flex items-center"><span class="text-cyan-400 mr-3 text-lg">&gt;</span><span class="text-neutral-200 font-medium">Guía 1: Riscos e Ameaças</span></div>
                         <span class="text-xs font-bold text-cyan-400 border border-cyan-400/50 px-2 py-1 rounded">GUIA</span>
                     </a>
-                    <a href="./fundamentos-ciberseguridad/laboratorio-analise-risco.html" class="link-item flex items-center justify-between p-4 rounded-md">
-                        <div class="flex items-center"><span class="text-cyan-400 mr-3 text-lg">&gt;</span><span class="text-neutral-200 font-medium">Laboratorio Reto 1</span></div>
+                    <a href="./fundamentos-ciberseguridad/laboratorio-analise-risco.html" class="link-item flex items-center justify-between p-4 rounded-md ml-4">
+                        <div class="flex items-center"><span class="text-cyan-400 mr-3 text-lg">&gt;</span><span class="text-neutral-200 font-medium">Laboratório Reto 1</span></div>
                         <span class="text-xs font-bold text-yellow-400 border border-yellow-400/50 px-2 py-1 rounded">LAB</span>
                     </a>
-                     <a href="./fundamentos-ciberseguridad/simulador-reto-1.html" class="link-item flex items-center justify-between p-4 rounded-md">
+                    <a href="./fundamentos-ciberseguridad/simulador-reto-1.html" class="link-item flex items-center justify-between p-4 rounded-md ml-4">
                         <div class="flex items-center"><span class="text-cyan-400 mr-3 text-lg">&gt;</span><span class="text-neutral-200 font-medium">Simulador táctico Reto 1</span></div>
                         <span class="text-xs font-bold text-yellow-400 border border-yellow-400/50 px-2 py-1 rounded">LAB</span>
                     </a>
+
+                    <!-- Reto 2 Link -->
+                     <a href="reto2.html" class="link-item flex items-center justify-between p-4 rounded-md mt-4">
+                        <div class="flex items-center">
+                             <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
+                             <span class="text-neutral-200 font-medium">Reto 2: Criptografia</span>
+                        </div>
+                         <div class="flex items-center">
+                             <span class="status-dot status-inprogress"></span>
+                             <span class="status-text text-amber-400">EM ANDAMENTO</span>
+                         </div>
+                    </a>
+                    <!-- Adicionar Guias e Labs do Reto 2 aqui, se aplicável -->
+
+                    <!-- Placeholder para Reto 3 -->
+                    <!--
+                    <a href="reto3.html" class="link-item flex items-center justify-between p-4 rounded-md opacity-60 cursor-not-allowed mt-4">
+                        <div class="flex items-center">
+                             <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
+                             <span class="text-neutral-400 font-medium">Reto 3: [Nome do Reto 3]</span>
+                        </div>
+                         <div class="flex items-center">
+                             <span class="status-dot status-pending"></span>
+                             <span class="status-text text-gray-400">PENDENTE</span>
+                         </div>
+                    </a>
+                    -->
                 </div>
             </section>
 
-            <section id="module-02">
+            <!-- Módulo 02: Fundamentos de Redes y Arquitecturas -->
+             <section id="module-02">
                 <h2 class="text-xl font-semibold mb-6 text-neutral-200 border-b border-glow pb-2">
                     <span class="text-cyan-glow">[M02]</span> Fundamentos de Redes y Arquitecturas
                 </h2>
                 <div class="space-y-4">
-                     <a href="./fundamentos-redes/guia-redes.html" class="link-item flex items-center justify-between p-4 rounded-md">
-                         <div class="flex items-center"><span class="text-cyan-400 mr-3 text-lg">&gt;</span><span class="text-neutral-200 font-medium">Guía: Redes y Computadoras</span></div>
-                         <span class="text-xs font-bold text-cyan-400 border border-cyan-400/50 px-2 py-1 rounded">GUIA</span>
-                     </a>
-                     <a href="./fundamentos-redes/lab-reto-1.html" class="link-item flex items-center justify-between p-4 rounded-md">
-                         <div class="flex items-center"><span class="text-cyan-400 mr-3 text-lg">&gt;</span><span class="text-neutral-200 font-medium">Laboratorio Reto 1</span></div>
-                         <span class="text-xs font-bold text-yellow-400 border border-yellow-400/50 px-2 py-1 rounded">LAB</span>
-                     </a>
+                    <a href="./fundamentos-redes/guia-redes.html" class="link-item flex items-center justify-between p-4 rounded-md">
+                        <div class="flex items-center"><span class="text-cyan-400 mr-3 text-lg">&gt;</span><span class="text-neutral-200 font-medium">Guía: Redes y Computadoras</span></div>
+                        <span class="text-xs font-bold text-cyan-400 border border-cyan-400/50 px-2 py-1 rounded">GUIA</span>
+                    </a>
+                    <a href="./fundamentos-redes/lab-reto-1.html" class="link-item flex items-center justify-between p-4 rounded-md">
+                        <div class="flex items-center">
+                            <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
+                            <span class="text-neutral-200 font-medium">Laboratório Reto 1</span>
+                        </div>
+                         <div class="flex items-center">
+                             <span class="status-dot status-completed"></span>
+                             <span class="status-text text-green-400">CONCLUÍDO</span>
+                         </div>
+                    </a>
                 </div>
             </section>
 
-            <section id="module-03">
+             <!-- Módulo 03: Legislación y Protección de Datos -->
+             <section id="module-03">
                 <h2 class="text-xl font-semibold mb-6 text-neutral-200 border-b border-glow pb-2">
                     <span class="text-cyan-glow">[M03]</span> Legislación y Protección de Datos
                 </h2>
                 <div class="space-y-4">
-                     <a href="./legislacion-proteccion-datos/guia-fundamentos-juridicos.html" class="link-item flex items-center justify-between p-4 rounded-md">
-                         <div class="flex items-center"><span class="text-cyan-400 mr-3 text-lg">&gt;</span><span class="text-neutral-200 font-medium">Guia_Fundamentos_Juridicos</span></div>
-                         <span class="text-xs font-bold text-cyan-400 border border-cyan-400/50 px-2 py-1 rounded">GUIA</span>
-                     </a>
-                     <a href="./legislacion-proteccion-datos/laboratorio-reto-1.html" class="link-item flex items-center justify-between p-4 rounded-md">
-                         <div class="flex items-center"><span class="text-cyan-400 mr-3 text-lg">&gt;</span><span class="text-neutral-200 font-medium">Lab_Reto1_Conformidade_RGPD</span></div>
-                         <span class="text-xs font-bold text-yellow-400 border border-yellow-400/50 px-2 py-1 rounded">LAB</span>
-                     </a>
+                    <a href="./legislacion-proteccion-datos/guia-fundamentos-juridicos.html" class="link-item flex items-center justify-between p-4 rounded-md">
+                        <div class="flex items-center"><span class="text-cyan-400 mr-3 text-lg">&gt;</span><span class="text-neutral-200 font-medium">Guia_Fundamentos_Juridicos</span></div>
+                        <span class="text-xs font-bold text-cyan-400 border border-cyan-400/50 px-2 py-1 rounded">GUIA</span>
+                    </a>
+                    <a href="./legislacion-proteccion-datos/laboratorio-reto-1.html" class="link-item flex items-center justify-between p-4 rounded-md">
+                        <div class="flex items-center">
+                            <span class="text-cyan-400 mr-3 text-lg">&gt;</span>
+                            <span class="text-neutral-200 font-medium">Lab_Reto1_Conformidade_RGPD</span>
+                        </div>
+                        <div class="flex items-center">
+                             <span class="status-dot status-completed"></span>
+                             <span class="status-text text-green-400">CONCLUÍDO</span>
+                         </div>
+                    </a>
                 </div>
             </section>
 
