@@ -331,17 +331,24 @@ sudo wireshark
     </footer>
 
 <script>
+// Envolvemos todo el código en el listener 'DOMContentLoaded'
+// para asegurar que el HTML esté completamente cargado antes de ejecutar el script.
 document.addEventListener('DOMContentLoaded', function() {
     
     // Lógica do Menu Móvel
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
-    mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', () => { 
+            mobileMenu.classList.toggle('hidden'); 
+        });
+    }
 
     // Lógica de Navegação Ativa (Scroll)
     const navLinks = document.querySelectorAll('.nav-link, #mobile-menu a');
     const sections = document.querySelectorAll('main section');
-    window.addEventListener('scroll', () => {
+    
+    const onScroll = () => {
         let current = 'briefing'; // Default to briefing
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
@@ -358,13 +365,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 link.classList.remove('text-stone-600', 'border-transparent');
             }
             // Manter o link VOLTAR estilizado
-            if (link.href.includes("index.html")) {
+            if (link.href && link.href.includes("index.html")) {
                 link.classList.remove('text-teal-600', 'border-teal-600');
                 link.classList.add('font-bold', 'text-yellow-600', 'border-transparent');
             }
         });
-    });
-    window.dispatchEvent(new Event('scroll')); // Aciona no carregamento
+    };
+    window.addEventListener('scroll', onScroll);
+    onScroll(); // Aciona no carregamento
+
+    // --- CORRECCIÓN AQUÍ ---
+    // Movemos la lógica de las pestañas DENTRO del 'DOMContentLoaded'
+    // y nos aseguramos de que los contenedores existan.
 
     // Lógica das Abas de Conceitos (80/20)
     const conceptContent = {
@@ -394,45 +406,53 @@ document.addEventListener('DOMContentLoaded', function() {
                 <li><strong>Propriedade Chave (80/20):</strong> É (praticamente) impossível encontrar dois ficheiros diferentes que gerem o mesmo hash (Resistência à Colisão). Mudar 1 bit no ficheiro muda o hash completamente.</li>
                 <li><strong>Uso Prático (Exercício 1):</strong> Garantir a <strong>Integridade</strong>. Você calcula o hash do backup antes de o guardar. Quando o recupera, calcula o hash novamente. Se os hashes baterem, você sabe que o ficheiro não foi alterado ou corrompido.</li>
             </ul>
-            <p class="mt-4 text-sm font-semibold">(Ref: `Funciones hash.pdf` e `Criptografía.pdf` sobre ataques de colisão como *Birthday Attack*).</p>
+            <p class="mt-4 text-sm font-semibold">(Ref: \`Funciones hash.pdf\` e \`Criptografía.pdf\` sobre ataques de colisão como *Birthday Attack*).</p>
         `,
         pki: `
             <h4 class="font-bold text-lg mb-2 text-teal-700">PKI: Resolvendo o Problema da Confiança</h4>
-            <p class="mb-3">Ok, usamos criptografia assimétrica (RSA) para o website. Eu (cliente) pego a chave pública de `ejemplo.site` para cifrar. Mas como sei que essa chave pública é *realmente* do `ejemplo.site` e não de um atacante (Man-in-the-Middle)?</p>
+            <p class="mb-3">Ok, usamos criptografia assimétrica (RSA) para o website. Eu (cliente) pego a chave pública de \`ejemplo.site\` para cifrar. Mas como sei que essa chave pública é *realmente* do \`ejemplo.site\` e não de um atacante (Man-in-the-Middle)?</p>
             <p class="font-semibold text-sm">A Solução (80/20): Infraestrutura de Chave Pública (PKI)</p>
             <ul class="list-disc list-inside text-sm space-y-1 mt-2">
-                <li><strong>Certificado Digital (X.509):</strong> É o "Passaporte" do site. Um ficheiro que "amarra" a chave pública ao domínio (`ejemplo.site`).</li>
+                <li><strong>Certificado Digital (X.509):</strong> É o "Passaporte" do site. Um ficheiro que "amarra" a chave pública ao domínio (\`ejemplo.site\`).</li>
                 <li><strong>Autoridade de Certificação (CA):</strong> É a "Entidade Emissora do Passaporte" (ex: Let's Encrypt, DigiCert). Alguém em quem o seu navegador já confia por defeito.</li>
                 <li><strong>O Processo (Exercício 2):</strong>
-                    <br>1. `ejemplo.site` gera uma Chave Privada e uma CSR (pedido de passaporte).
-                    <br>2. A CA (você, com `LabCA.key`) verifica a CSR e *assina* o certificado com a sua chave privada.
+                    <br>1. \`ejemplo.site\` gera uma Chave Privada e uma CSR (pedido de passaporte).
+                    <br>2. A CA (você, com \`LabCA.key\`) verifica a CSR e *assina* o certificado com a sua chave privada.
                     <br>3. O Navegador recebe o certificado, vê a assinatura, verifica que confia na CA que assinou, e dá o "OK" (cadeado verde).
                 </li>
             </ul>
-            <p class="mt-4 text-sm font-semibold">(Ref: `Infraestructura de clave publica.pdf` e `Criptografía de clave pública.pdf`)</p>
+            <p class="mt-4 text-sm font-semibold">(Ref: \`Infraestructura de clave publica.pdf\` e \`Criptografía de clave pública.pdf\`)</p>
         `,
         tls: `
             <h4 class="font-bold text-lg mb-2 text-teal-700">Protocolos (TLS): A Dança Coreografada</h4>
             <p class="mb-3">TLS (sucessor do SSL) é o protocolo que usa todas as peças anteriores (Simétrica, Assimétrica, Hashes, PKI) para criar um canal seguro na web (HTTPS).</p>
             <p class="font-semibold text-sm">O Handshake (80/20 - O que você verá no Wireshark):</p>
             <ol class="list-decimal list-inside text-sm space-y-1 mt-2">
-                <li><strong>Client Hello:</strong> O navegador diz: "Olá, eu sei falar estas cifras (ex: AES_GCM) e quero aceder a `ejemplo.site` (isso é o SNI)".</li>
-                <li><strong>Server Hello:</strong> O servidor diz: "Olá. Da sua lista, eu escolho esta cifra (`TLS_AES_128_GCM_SHA256`)".</li>
+                <li><strong>Client Hello:</strong> O navegador diz: "Olá, eu sei falar estas cifras (ex: AES_GCM) e quero aceder a \`ejemplo.site\` (isso é o SNI)".</li>
+                <li><strong>Server Hello:</strong> O servidor diz: "Olá. Da sua lista, eu escolho esta cifra (\`TLS_AES_128_GCM_SHA256\`)".</li>
                 <li><strong>Troca de Certificados:</strong> O servidor envia o seu "passaporte" (Certificado X.509) para o cliente provar quem é.</li>
-                <li><strong>mTLS (Exercício 3):</strong> O servidor diz: "Agora você, me mostre o *seu* passaporte" (Mensagem `Certificate Request`). O cliente envia o `dev.client.crt`.</li>
+                <li><strong>mTLS (Exercício 3):</strong> O servidor diz: "Agora você, me mostre o *seu* passaporte" (Mensagem \`Certificate Request\`). O cliente envia o \`dev.client.crt\`.</li>
                 <li><strong>Troca de Chave:</strong> Cliente e Servidor usam Criptografia Assimétrica (RSA ou ECDH) para *negociar* de forma segura uma *chave simétrica* (ex: AES).</li>
                 <li><strong>Finished:</strong> Ambos trocam mensagens (cifradas com a nova chave simétrica) a dizer "Tudo pronto!". A partir daqui, a comunicação (HTTP) é cifrada com AES.</li>
             </ol>
-            <p class="mt-4 text-sm font-semibold">(Ref: `Protocolos criptográficos.pdf` e `Criptografía de clave pública.pdf` sobre Diffie-Hellman/TLS)</p>
+            <p class="mt-4 text-sm font-semibold">(Ref: \`Protocolos criptográficos.pdf\` e \`Criptografía de clave pública.pdf\` sobre Diffie-Hellman/TLS)</p>
         `
     };
     const conceptTabsContainer = document.getElementById('concept-tabs');
     const conceptContentContainer = document.getElementById('concept-content');
 
+    // Función para actualizar el contenido de la pestaña
     function updateConceptContent(conceptKey) {
-        if (!conceptContentContainer) return;
+        if (!conceptContentContainer) {
+            console.error("Erro: Container de conteúdo 'concept-content' não encontrado.");
+            return;
+        }
         conceptContentContainer.innerHTML = conceptContent[conceptKey] || `<p>Seleccione un concepto.</p>`;
         
+        if (!conceptTabsContainer) {
+             console.error("Erro: Container de abas 'concept-tabs' não encontrado.");
+            return;
+        }
         conceptTabsContainer.querySelectorAll('.tab-button').forEach(btn => {
             btn.classList.remove('active', 'text-teal-600', 'border-teal-600');
             btn.classList.add('text-stone-600', 'border-transparent');
@@ -443,15 +463,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    conceptTabsContainer.addEventListener('click', (e) => {
-        if (e.target.classList.contains('tab-button')) {
-            updateConceptContent(e.target.dataset.concept);
-        }
-    });
+    // Añadimos el 'listener' al contenedor de las pestañas
+    if (conceptTabsContainer) {
+        conceptTabsContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('tab-button')) {
+                updateConceptContent(e.target.dataset.concept);
+            }
+        });
+    } else {
+        console.error("Erro fatal: O container de abas 'concept-tabs' não foi encontrado no DOM.");
+    }
     
     // Inicia com a primeira aba ativa
     updateConceptContent('sym'); 
-    
+
 });
 </script>
 </body>
