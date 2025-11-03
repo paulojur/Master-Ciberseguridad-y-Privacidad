@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Centro de Mando - Reto 2: Criptografia</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Embora não usado aqui, mantido do template -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -20,6 +19,16 @@
         }
         .nav-link { transition: color 0.3s, border-bottom-color 0.3s; }
         .nav-link:hover, .nav-link.active { color: #0d9488; border-bottom-color: #0d9488; }
+        .tab-button.active { background-color: #0d9488; color: white; }
+        
+        .strategic-insight {
+            border-left: 4px solid #0d9488; /* teal-600 */
+            background-color: #f0fdfa; /* teal-50 */
+            padding: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.375rem; /* rounded-md */
+        }
         .command {
             background-color: #262626; /* neutral-800 */
             color: #a3e635; /* lime-400 */
@@ -31,44 +40,21 @@
             border-left: 4px solid #5eead4; /* cyan-300 */
             margin-top: 0.5rem;
             margin-bottom: 0.5rem;
-            white-space: pre-wrap; /* Garante quebras de linha e espaços */
-            word-wrap: break-word; /* Quebra palavras longas */
-        }
-        .explanation {
-             background-color: #f0fdfa; /* teal-50 */
-             border-left: 4px solid #0d9488; /* teal-600 */
-             padding: 1rem;
-             margin-top: 1rem;
-             margin-bottom: 1rem;
-             border-radius: 0.375rem; /* rounded-md */
-        }
-        li > strong {
-            color: #0f766e; /* teal-700 */
-        }
-         h3 {
-            border-bottom: 2px solid #5eead4; /* cyan-300 */
-            padding-bottom: 0.25rem;
-            margin-top: 1.5rem; /* Aumenta espaço antes de cada exercício */
-            margin-bottom: 1rem;
-            color: #115e59; /* teal-800 */
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
         .exercise-section {
             background-color: #ffffff;
-            padding: 1.5rem;
+            padding: 1.5rem 2rem;
             margin-bottom: 2rem;
             border-radius: 0.5rem; /* rounded-lg */
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
-        .entregaveis {
-            background-color: #fefce8; /* yellow-50 */
-            border: 1px solid #facc15; /* yellow-400 */
-            padding: 0.75rem;
-            margin-top: 1rem;
-            border-radius: 0.375rem; /* rounded-md */
-            font-size: 0.875rem; /* text-sm */
-        }
-        .entregaveis strong {
-             color: #ca8a04; /* yellow-600 */
+        .exercise-section h3 {
+            border-bottom: 2px solid #5eead4; /* cyan-300 */
+            padding-bottom: 0.25rem;
+            margin-bottom: 1rem;
+            color: #115e59; /* teal-800 */
         }
     </style>
 </head>
@@ -76,151 +62,158 @@
 
     <header class="bg-stone-100 shadow-sm sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="text-xl font-bold text-teal-700">Centro de Mando - Reto 2</h1>
+            <h1 class="text-xl font-bold text-teal-700">Centro de Mando / Reto 2</h1>
             <div class="hidden md:flex space-x-4">
-                <a href="#objetivo" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Objetivo</a>
-                <a href="#recursos" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Recursos</a>
-                <a href="#ferramentas" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Ferramentas</a>
-                <a href="#exercicios" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Exercícios</a>
-                <a href="#entrega" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Entrega</a>
-                 <a href="index.html" class="nav-link font-bold text-yellow-600 border-b-2 border-transparent pb-1">VOLTAR</a>
+                <a href="#briefing" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Briefing</a>
+                <a href="#concepts" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Conceitos 80/20</a>
+                <a href="#arsenal" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Arsenal</a>
+                <a href="#lab" class="nav-link text-stone-600 border-b-2 border-transparent pb-1">Laboratório Tático</a>
+                <a href="index.html" class="nav-link font-bold text-yellow-600 border-b-2 border-transparent pb-1">VOLTAR</a>
             </div>
             <button id="mobile-menu-button" class="md:hidden text-stone-700">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
         </nav>
         <div id="mobile-menu" class="hidden md:hidden">
-            <a href="#objetivo" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Objetivo</a>
-            <a href="#recursos" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Recursos</a>
-            <a href="#ferramentas" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Ferramentas</a>
-            <a href="#exercicios" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Exercícios</a>
-            <a href="#entrega" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Entrega</a>
+            <a href="#briefing" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Briefing</a>
+            <a href="#concepts" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Conceitos 80/20</a>
+            <a href="#arsenal" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Arsenal</a>
+            <a href="#lab" class="block py-2 px-4 text-sm text-stone-600 hover:bg-stone-200">Laboratório Tático</a>
             <a href="index.html" class="block py-2 px-4 text-sm font-bold text-yellow-600 hover:bg-stone-200">VOLTAR</a>
         </div>
     </header>
 
     <main class="container mx-auto px-6 py-12">
 
-        <section id="objetivo" class="text-center mb-16">
-            <h2 class="text-4xl font-bold text-stone-800 mb-4">Reto 2: Criptografia</h2>
+        <section id="briefing" class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-stone-800 mb-4">Missão: Blindar a PANDEFX</h2>
             <p class="text-lg text-stone-700 max-w-3xl mx-auto font-semibold">
-                Objetivo Principal:
+                Objetivo do Reto:
             </p>
             <p class="text-md text-stone-600 max-w-3xl mx-auto mb-4">
-                Aplicar conceitos fundamentais de criptografia simétrica, assimétrica, funções hash e infraestrutura de chave pública (PKI) de forma prática, utilizando principalmente a ferramenta OpenSSL para proteger dados e comunicações, culminando na análise de um handshake TLS.
+                O Reto 1 identificou o risco: a propriedade intelectual da PANDEFX é o alvo. A direção agora exige ação. Sua missão é usar a criptografia para reforçar a <strong class="text-teal-700">confidencialidade</strong> (ninguém lê) e a <strong class="text-teal-700">integridade</strong> (nada é alterado) dos dados críticos da empresa.
             </p>
             <p class="text-lg text-stone-700 max-w-3xl mx-auto font-semibold">
-                Contexto:
+                Alvos a Proteger:
             </p>
-            <p class="text-md text-stone-600 max-w-3xl mx-auto">
-                Seguindo a análise de risco da PANDEFX (Reto 1), este reto foca em implementar mecanismos criptográficos para garantir a <strong class="text-teal-700">confidencialidade</strong> e <strong class="text-teal-700">integridade</strong> da propriedade intelectual e das comunicações da empresa.
-            </p>
-        </section>
-
-        <section id="recursos" class="mb-12 exercise-section">
-             <h2 class="text-2xl font-bold text-stone-800 mb-6">📚 Recursos Principais</h2>
-             <ul class="list-disc list-inside space-y-2 text-stone-700">
-                <li><strong class="text-red-700">Criptografía.pdf (Leitura Obrigatória):</strong> Visão geral focada em ataques.</li>
-                <li>Introducción a la criptografía.pdf: Conceitos básicos e história.</li>
-                <li>Fundamentos matemáticos.pdf: Base teórica essencial.</li>
-                <li>Criptografía de clave simétrica.pdf: Cifradores em fluxo e em bloco (AES).</li>
-                <li>Funciones hash.pdf: SHA-256 e aplicações.</li>
-                <li>Criptografía de clave pública.pdf: RSA, ElGamal, assinaturas.</li>
-                <li>Infraestructura de clave publica.pdf: PKI, Certificados X.509.</li>
-                <li>Protocolos criptográficos.pdf: Conceitos avançados.</li>
-             </ul>
-        </section>
-
-        <section id="ferramentas" class="mb-12 exercise-section">
-            <h2 class="text-2xl font-bold text-stone-800 mb-6">🛠️ Ferramentas Principais</h2>
-            <ul class="list-disc list-inside space-y-2 text-stone-700">
-                <li><strong>OpenSSL:</strong> Conjunto de ferramentas criptográficas (essencial).</li>
-                <li><strong>Wireshark:</strong> Analisador de protocolos de rede (Exercício 4).</li>
-                <li><strong>Editor de Texto:</strong> Para criar/editar ficheiros (ex: `v3.ext`).</li>
-                <li><strong>Navegador Web:</strong> Para testes HTTPS e importação de certificados.</li>
-                <li><strong>Máquina Virtual (Kali Linux):</strong> Ambiente recomendado com ferramentas.</li>
-                <li><strong>Terminal/Shell (Bash):</strong> Interface para comandos.</li>
+            <ul class="text-md text-stone-600 max-w-3xl mx-auto list-inside">
+                <li><strong>Ativo 1:</strong> Backups (grandes volumes de dados em repouso).</li>
+                <li><strong>Ativo 2:</strong> Website Corporativo (comunicação em trânsito).</li>
+                <li><strong>Ativo 3:</strong> Desenvolvedores (autenticação de acesso).</li>
             </ul>
-            <div class="explanation">
-                 <p><strong>Nota:</strong> Como você já usa o Kali Linux, terá a maioria dessas ferramentas disponíveis. Certifique-se de que o OpenSSL e o Wireshark estejam atualizados (`sudo apt update && sudo apt install openssl wireshark -y`).</p>
+        </section>
+
+        <section id="concepts" class="mb-16 exercise-section">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-8">Conceitos Criptográficos (O 80/20)</h2>
+            <p class="text-center text-stone-600 -mt-6 mb-8">O que você *realmente* precisa saber dos PDFs para executar a missão.</p>
+            
+            <div id="concept-tabs" class="flex justify-center flex-wrap -mb-px space-x-2 sm:space-x-4 border-b border-stone-300">
+                <button data-concept="sym" class="tab-button px-4 py-2 text-sm sm:text-base font-semibold border-b-2 border-transparent transition text-stone-600 hover:text-teal-600">Simétrico vs. Assimétrico</button>
+                <button data-concept="hash" class="tab-button px-4 py-2 text-sm sm:text-base font-semibold border-b-2 border-transparent transition text-stone-600 hover:text-teal-600">Funções Hash</button>
+                <button data-concept="pki" class="tab-button px-4 py-2 text-sm sm:text-base font-semibold border-b-2 border-transparent transition text-stone-600 hover:text-teal-600">PKI e Certificados</button>
+                <button data-concept="tls" class="tab-button px-4 py-2 text-sm sm:text-base font-semibold border-b-2 border-transparent transition text-stone-600 hover:text-teal-600">Protocolos (TLS)</button>
+            </div>
+
+            <div id="concept-content" class="pt-6 text-stone-700 min-h-[150px]">
+                <!-- Conteúdo será injetado pelo JavaScript -->
             </div>
         </section>
 
-        <section id="exercicios" class="mb-12">
-            <h2 class="text-3xl font-bold text-center text-stone-800 mb-10">🗺️ Estrutura do Reto e Passos</h2>
+        <section id="arsenal" class="mb-16 exercise-section">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-8">Arsenal: Ferramentas e Inteligência</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold text-teal-700 mb-3">Documentos de Inteligência</h3>
+                    <ul class="list-disc list-inside space-y-2 text-stone-700 text-sm">
+                        <li><strong>Criptografía.pdf (Obrigatório):</strong> O *porquê* fazemos isso (foco em ataques).</li>
+                        <li><strong>Criptografía de clave simétrica.pdf:</strong> O *como* do Exercício 1 (AES, CBC).</li>
+                        <li><strong>Funciones hash.pdf:</strong> O *como* do Exercício 1 (SHA-256).</li>
+                        <li><strong>Criptografía de clave pública.pdf:</strong> O *como* do Exercício 2 (RSA).</li>
+                        <li><strong>Infraestructura de clave publica.pdf:</strong> O *como* dos Exercícios 2 e 3 (CA, X.509, PKCS).</li>
+                        <li><strong>Protocolos criptográficos.pdf:</strong> O *porquê* do Exercício 4 (Handshake).</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-teal-700 mb-3">Ferramentas de Execução</h3>
+                    <ul class="list-disc list-inside space-y-2 text-stone-700 text-sm">
+                        <li><strong>OpenSSL:</strong> O "canivete suíço" da criptografia. Usaremos para 90% do reto.</li>
+                        <li><strong>Wireshark:</strong> O "raio-x" da rede. Usaremos para o Exercício 4.</li>
+                        <li><strong>Kali Linux:</strong> Seu sistema operacional, já contém tudo o que precisamos.</li>
+                        <li><strong>Navegador Web:</strong> Nosso "cliente" para testar o HTTPS e mTLS.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="lab" class="mb-12">
+            <h2 class="text-3xl font-bold text-center text-stone-800 mb-10">Laboratório Tático: Plano de Execução</h2>
 
             <!-- Exercício 1 -->
             <div class="exercise-section">
-                <h3 class="text-xl font-bold mb-4">Exercício 1: Cifrado Simétrico e Função Resumo</h3>
-                <p class="text-stone-600 mb-4"><strong>Objetivo:</strong> Proteger confidencialidade e integridade de backups usando AES-CBC e SHA-256 com OpenSSL.</p>
-                <p class="text-stone-600 mb-4"><strong>Conceitos:</strong> Criptografia Simétrica, AES-CBC, SHA-256, Confidencialidade, Integridade.</p>
-                <ol class="list-decimal list-inside space-y-3 text-stone-700">
-                    <li>
-                        <strong>(Bash/Shell)</strong> Configure seu prompt:
-                        <code class="command">export PS1="SeuUsuario-UOC-\$PS1"</code>
-                        (Substitua "SeuUsuario-UOC"). Faça captura de tela.
-                    </li>
-                    <li>
-                        <strong>(1.1)</strong> Crie um ficheiro de teste: `echo "Conteudo secreto do backup da PANDEFX." > backup_test.txt`
-                    </li>
-                    <li>
-                        <strong>(1.1)</strong> Calcule e guarde o hash SHA-256:
-                        <code class="command">openssl dgst -sha256 backup_test.txt > backup_test.sha256</code>
-                        Verifique o conteúdo: `cat backup_test.sha256`
-                    </li>
-                    <li>
-                        <strong>(1.2)</strong> Cifre o ficheiro (guarde a senha!):
-                        <code class="command">openssl enc -aes-256-cbc -salt -pbkdf2 -in backup_test.txt -out backup_test.enc</code>
-                        <div class="explanation">
-                            <strong>Parâmetros:</strong> <code>-aes-256-cbc</code>: Algoritmo AES com chave de 256 bits em modo Cipher Block Chaining. <code>-salt</code>: Adiciona um salt aleatório antes de derivar a chave da senha, tornando ataques de dicionário/rainbow table mais difíceis. <code>-pbkdf2</code> (implícito em versões recentes, mas bom explicitar): Usa PBKDF2 para derivar a chave da senha de forma mais segura. <code>-in</code>: Ficheiro de entrada. <code>-out</code>: Ficheiro de saída.
-                        </div>
-                    </li>
-                    <li>
-                        <strong>(1.3)</strong> Descifre o ficheiro (use a mesma senha):
-                        <code class="command">openssl enc -d -aes-256-cbc -pbkdf2 -in backup_test.enc -out backup_test.dec</code>
-                    </li>
-                     <li>
-                        <strong>(1.4)</strong> Calcule o hash do ficheiro decifrado:
-                        <code class="command">openssl dgst -sha256 backup_test.dec > backup_test.dec.sha256</code>
-                    </li>
-                    <li>
-                        <strong>(1.4)</strong> Compare os hashes (devem ser idênticos):
-                        <code class="command">diff backup_test.sha256 backup_test.dec.sha256</code>
-                        (Se não houver saída, são iguais). Ou compare visualmente com `cat`.
-                    </li>
-                </ol>
-                <div class="entregaveis">
-                    <strong>Entregáveis:</strong> Comandos, capturas de tela (com prompt personalizado), explicação dos parâmetros de cifragem, verificação dos hashes.
+                <h3 class="text-2xl font-bold">Exercício 1: Proteção de Backups (Dados em Repouso)</h3>
+                <p class="text-stone-600 mb-4"><strong>Objetivo:</strong> Aplicar confidencialidade e integridade a um ficheiro de backup.</p>
+                <p class="text-stone-600 mb-4"><strong>Conceitos-Chave (PDFs):</strong> Cifragem Simétrica (AES), Modos de Operação (CBC), Funções Hash (SHA-256).</p>
+                
+                <div class="strategic-insight">
+                    <h4 class="font-bold text-lg text-teal-700 font-mono">&gt; Insight do Analista (80/20)</h4>
+                    <p class="text-stone-700 mt-2 text-sm">Por que usar os dois? Pense nisto como trancar um diário e tirar uma foto dele.
+                    <br>1. <strong>Hash (SHA-256)</strong> é a "foto". Garante a <strong>Integridade</strong>. Se alguém rasgar uma página (alterar o ficheiro), a "foto" não vai bater. (Ref: `Funciones hash.pdf`)
+                    <br>2. <strong>Cifrado (AES)</strong> é o "cadeado". Garante a <strong>Confidencialidade</strong>. Ninguém consegue ler o diário sem a chave. (Ref: `Criptografía de clave simétrica.pdf`)
+                    <br>O enunciado pede AES-CBC, um modo que "acorrenta" os blocos, escondendo padrões. É um cavalo de batalha, mas vulnerável a certos ataques (como *padding oracle*), por isso o *padding* correto é vital. (Ref: `Criptografía.pdf`)</p>
                 </div>
+
+                <h4 class="font-semibold text-lg text-stone-800 mt-6 mb-2">Plano de Ação (Comandos):</h4>
+                <p class="text-sm text-stone-600 mb-2">Configure seu prompt (prova de autoria):</p>
+                <code class="command">export PS1="pdeoliveira-UOC-\$PS1"</code>
+                
+                <p class="text-sm text-stone-600 mb-2 mt-4">1.1: Criar ficheiro e calcular hash (Integridade):</p>
+                <code class="command">echo "Dados confidenciais da PANDEFX" > backup_test.txt
+openssl dgst -sha256 backup_test.txt > backup_test.sha256
+cat backup_test.sha256</code>
+
+                <p class="text-sm text-stone-600 mb-2 mt-4">1.2: Cifrar ficheiro (Confidencialidade):</p>
+                <code class="command"># Use -pbkdf2 para uma derivação de chave mais forte a partir da sua senha
+openssl enc -aes-256-cbc -salt -pbkdf2 -in backup_test.txt -out backup_test.enc</code>
+
+                <p class="text-sm text-stone-600 mb-2 mt-4">1.3: Descifrar ficheiro (Recuperação):</p>
+                <code class="command">openssl enc -d -aes-256-cbc -pbkdf2 -in backup_test.enc -out backup_test.dec</code>
+
+                <p class="text-sm text-stone-600 mb-2 mt-4">1.4: Verificar integridade pós-recuperação:</p>
+                <code class="command">openssl dgst -sha256 backup_test.dec
+# Compare esta saída com o conteúdo de backup_test.sha256. Devem ser idênticos.
+diff <(cat backup_test.sha256) <(openssl dgst -sha256 backup_test.dec)</code>
             </div>
 
             <!-- Exercício 2 -->
             <div class="exercise-section">
-                <h3 class="text-xl font-bold mb-4">Exercício 2: Criptografia Assimétrica (Website Corporativo)</h3>
-                <p class="text-stone-600 mb-4"><strong>Objetivo:</strong> Criar uma mini-PKI (CA de laboratório) e emitir um certificado para um servidor web HTTPS.</p>
-                <p class="text-stone-600 mb-4"><strong>Conceitos:</strong> Criptografia Assimétrica (RSA), PKI, CA, Certificados X.509, CSR, SubjectAltName, HTTPS.</p>
-                 <ol class="list-decimal list-inside space-y-3 text-stone-700">
-                    <li>
-                        <strong>(2.1)</strong> Gerar chave privada da CA:
-                        <code class="command">openssl genrsa -out LabCA.key 4096</code>
-                    </li>
-                    <li>
-                        <strong>(2.1)</strong> Criar certificado auto-assinado da CA (1 ano, CN="Lab CA"):
-                        <code class="command">openssl req -x509 -new -nodes -key LabCA.key -sha256 -days 365 -out LabCA.pem -subj "/C=ES/ST=Catalunya/L=Barcelona/O=UOC Lab/OU=IT/CN=Lab CA"</code>
-                         (Ajuste os campos como preferir, mantendo CN="Lab CA").
-                    </li>
-                    <li>
-                        <strong>(2.2)</strong> Gerar chave privada do servidor:
-                        <code class="command">openssl genrsa -out ejemplo.site.key 2048</code>
-                    </li>
-                     <li>
-                        <strong>(2.2)</strong> Criar CSR do servidor (CN="ejemplo.site"):
-                        <code class="command">openssl req -new -key ejemplo.site.key -out ejemplo.site.csr -subj "/C=ES/ST=Catalunya/L=Barcelona/O=PANDEFX/OU=Web/CN=ejemplo.site"</code>
-                        (Ajuste os campos, **mantenha CN="ejemplo.site"**).
-                    </li>
-                    <li>
-                        <strong>(2.2)</strong> Criar ficheiro de extensões `v3.ext`:
-                        <code class="command">cat &lt;&lt;EOF &gt; v3.ext
+                <h3 class="text-2xl font-bold">Exercício 2: Securizar Website (Dados em Trânsito)</h3>
+                <p class="text-stone-600 mb-4"><strong>Objetivo:</strong> Criar uma PKI de laboratório e emitir um certificado para `ejemplo.site`.</p>
+                <p class="text-stone-600 mb-4"><strong>Conceitos-Chave (PDFs):</strong> PKI, CA (Autoridade de Certificação), Cifragem Assimétrica (RSA), Certificados (X.509), CSR (Certificate Signing Request), SubjectAltName.</p>
+
+                <div class="strategic-insight">
+                    <h4 class="font-bold text-lg text-teal-700 font-mono">&gt; Insight do Analista (80/20)</h4>
+                    <p class="text-stone-700 mt-2 text-sm">O problema: Como o meu navegador sabe que `google.com` é realmente o Google?
+                    <br>A solução (80/20): O Google apresenta um "passaporte" (Certificado X.509) que diz "Eu sou google.com". O seu navegador confia nesse passaporte porque foi emitido por uma "autoridade" (CA) em que ele já confia (ex: DigiCert, Let's Encrypt).
+                    <br>Sua missão aqui é *ser a autoridade*. Você vai criar sua própria CA (`LabCA.pem`) e depois usá-la para "emitir o passaporte" (assinar a CSR) para `ejemplo.site`. (Ref: `Infraestructura de clave publica.pdf`)</p>
+                </div>
+
+                <h4 class="font-semibold text-lg text-stone-800 mt-6 mb-2">Plano de Ação (Comandos):</h4>
+                <p class="text-sm text-stone-600 mb-2 mt-4">2.1: Criar a Autoridade de Certificação (CA):</p>
+                <code class="command"># 1. Gerar a chave privada da CA (longa e segura, 4096 bits)
+openssl genrsa -out LabCA.key 4096
+
+# 2. Gerar o certificado raiz (auto-assinado) da CA (válido por 1 ano, CN="Lab CA")
+openssl req -x509 -new -nodes -key LabCA.key -sha256 -days 365 -out LabCA.pem -subj "/C=ES/ST=Catalunya/O=UOC Lab/CN=Lab CA"</code>
+
+                <p class="text-sm text-stone-600 mb-2 mt-4">2.2: Criar Pedido para o Servidor Web:</p>
+                <code class="command"># 1. Gerar a chave privada do servidor (2048 bits é um bom balanço p/ servidores)
+openssl genrsa -out ejemplo.site.key 2048
+
+# 2. Gerar a Requisição de Assinatura de Certificado (CSR)
+openssl req -new -key ejemplo.site.key -out ejemplo.site.csr -subj "/C=ES/O=PANDEFX/CN=ejemplo.site"
+
+# 3. Criar o ficheiro de extensões (SAN é obrigatório hoje em dia)
+cat &lt;&lt;EOF &gt; v3.ext
 authorityKeyIdentifier=keyid,issuer
 basicConstraints=CA:FALSE
 keyUsage = digitalSignature, keyEncipherment
@@ -229,154 +222,117 @@ subjectAltName = @alt_names
 [alt_names]
 DNS.1 = ejemplo.site
 EOF</code>
-                    </li>
-                    <li>
-                        <strong>(2.3)</strong> Assinar o CSR do servidor com a CA:
-                        <code class="command">openssl x509 -req -in ejemplo.site.csr -CA LabCA.pem -CAkey LabCA.key -CAcreateserial -out ejemplo.site.crt -days 365 -sha256 -extfile v3.ext</code>
-                    </li>
-                    <li>
-                        <strong>(2.4)</strong> Iniciar servidor HTTPS (ex: porta 4433):
-                        <code class="command">openssl s_server -accept 4433 -cert ejemplo.site.crt -key ejemplo.site.key -WWW</code>
-                        Anote o IP da sua máquina Kali (`ip a`).
-                    </li>
-                    <li>
-                        <strong>(2.4)</strong> No Kali (cliente e servidor na mesma máquina), edite `/etc/hosts`:
-                        <code class="command">sudo nano /etc/hosts</code>
-                        Adicione: `127.0.0.1 ejemplo.site` (ou o IP anotado se for diferente). Salve e feche.
-                    </li>
-                     <li>
-                        <strong>(2.5)</strong> Acesse `https://ejemplo.site:4433` no navegador do Kali **antes** de importar a CA. Faça captura do aviso de segurança.
-                    </li>
-                    <li>
-                        <strong>(2.6)</strong> Importe `LabCA.pem` nas autoridades confiáveis do navegador.
-                    </li>
-                    <li>
-                        <strong>(2.6)</strong> Acesse `https://ejemplo.site:4433` novamente. Faça captura mostrando a conexão segura (cadeado).
-                    </li>
-                </ol>
-                <div class="entregaveis">
-                    <strong>Entregáveis:</strong> Comandos, capturas de tela do terminal e do navegador (avisos e conexão segura).
-                </div>
+
+                <p class="text-sm text-stone-600 mb-2 mt-4">2.3: Assinar o Certificado (Ser a CA):</p>
+                <code class="command">openssl x509 -req -in ejemplo.site.csr -CA LabCA.pem -CAkey LabCA.key -CAcreateserial -out ejemplo.site.crt -days 365 -sha256 -extfile v3.ext</code>
+
+                <p class="text-sm text-stone-600 mb-2 mt-4">2.4: Iniciar Servidor e Configurar Cliente:</p>
+                <code class="command"># Crie um index.html para o servidor servir
+echo "&lt;h1&gt;Servidor HTTPS OK (PANDEFX)&lt;/h1&gt;" > index.html
+
+# Inicie o servidor (use uma porta alta como 4433 para não precisar de sudo)
+openssl s_server -accept 4433 -cert ejemplo.site.crt -key ejemplo.site.key -WWW
+
+# Em OUTRO terminal, edite seu ficheiro hosts
+sudo nano /etc/hosts
+# Adicione a linha: 127.0.0.1 ejemplo.site</code>
+
+                <p class="text-sm text-stone-600 mb-2 mt-4">2.5 & 2.6: Testar no Navegador:</p>
+                <p class="text-sm text-stone-700">1. Acesse `https://ejemplo.site:4433`. Capture o ecrã do aviso de "Potential Security Risk Ahead". (Passo 2.5)
+                <br>2. Importe o ficheiro `LabCA.pem` no seu navegador (em "Authorities" ou "Autoridades"). Confie nela para websites.
+                <br>3. Acesse `https://ejemplo.site:4433/index.html` novamente. Capture o ecrã mostrando o cadeado seguro e a página "Servidor HTTPS OK". (Passo 2.6)</p>
             </div>
 
             <!-- Exercício 3 -->
             <div class="exercise-section">
-                 <h3 class="text-xl font-bold mb-4">Exercício 3: Autenticação de Desenvolvedores (mTLS)</h3>
-                 <p class="text-stone-600 mb-4"><strong>Objetivo:</strong> Implementar autenticação mútua TLS (mTLS) onde o servidor também valida o cliente.</p>
-                <p class="text-stone-600 mb-4"><strong>Conceitos:</strong> Certificados de Cliente, mTLS, PKCS#12.</p>
-                 <ol class="list-decimal list-inside space-y-3 text-stone-700">
-                     <li>
-                        <strong>(3.1)</strong> Gerar chave privada do cliente:
-                        <code class="command">openssl genrsa -out dev.client.key 2048</code>
-                    </li>
-                     <li>
-                        <strong>(3.1)</strong> Criar CSR do cliente (OU=[seu email UOC]):
-                        <code class="command">openssl req -new -key dev.client.key -out dev.client.csr -subj "/C=ES/ST=Catalunya/O=PANDEFX/OU=seu-email@uoc.edu/CN=Nome Desenvolvedor"</code>
-                        (Substitua os dados).
-                    </li>
-                     <li>
-                        <strong>(3.2)</strong> Assinar CSR do cliente com a CA:
-                        <code class="command">openssl x509 -req -in dev.client.csr -CA LabCA.pem -CAkey LabCA.key -CAcreateserial -out dev.client.crt -days 365 -sha256</code>
-                    </li>
-                    <li>
-                        <strong>(3.3)</strong> Criar ficheiro PKCS#12 (guarde a senha de exportação!):
-                        <code class="command">openssl pkcs12 -export -out dev.client.p12 -inkey dev.client.key -in dev.client.crt -certfile LabCA.pem</code>
-                    </li>
-                     <li>
-                        <strong>(3.3)</strong> Importar `dev.client.p12` no navegador (certificados pessoais).
-                    </li>
-                     <li>
-                        <strong>(3.4)</strong> Iniciar servidor OpenSSL exigindo mTLS:
-                        <code class="command">openssl s_server -accept 4433 -cert ejemplo.site.crt -key ejemplo.site.key -Verify 1 -CAfile LabCA.pem -WWW</code>
-                    </li>
-                    <li>
-                        <strong>(3.5)</strong> Acesse `https://ejemplo.site:4433`. O navegador pedirá para escolher o certificado `dev.client`. Selecione-o. Faça captura da tela de seleção ou da conexão bem-sucedida.
-                    </li>
-                </ol>
-                <div class="entregaveis">
-                    <strong>Entregáveis:</strong> Comandos, capturas de tela do terminal e do navegador (autenticação mTLS).
+                <h3 class="text-2xl font-bold">Exercício 3: Autenticação de Desenvolvedores (mTLS)</h3>
+                <p class="text-stone-600 mb-4"><strong>Objetivo:</strong> Forçar o servidor a autenticar o cliente (mTLS).</p>
+                <p class="text-stone-600 mb-4"><strong>Conceitos-Chave (PDFs):</strong> Mutual TLS (mTLS), Certificados de Cliente, PKCS#12.</p>
+                
+                <div class="strategic-insight">
+                    <h4 class="font-bold text-lg text-teal-700 font-mono">&gt; Insight do Analista (80/20)</h4>
+                    <p class="text-stone-700 mt-2 text-sm">Até agora, só o cliente validava o servidor (TLS normal). Agora, vamos fazer o servidor validar o cliente (mTLS).
+                    <br>O servidor vai dizer: "Eu só falo com quem tiver um 'passaporte de desenvolvedor' emitido pela *minha* CA (`LabCA.pem`)".
+                    <br>O ficheiro `.p12` (PKCS#12) é apenas um "porta-passaporte" seguro que agrupa a sua identidade (certificado `dev.client.crt`) e a sua chave privada (`dev.client.key`) num único ficheiro protegido por senha para importar no navegador. (Ref: `Infraestructura de clave publica.pdf`)</p>
                 </div>
+
+                <h4 class="font-semibold text-lg text-stone-800 mt-6 mb-2">Plano de Ação (Comandos):</h4>
+                <p class="text-sm text-stone-600 mb-2 mt-4">3.1: Criar Identidade do Cliente (Desenvolvedor):</p>
+                <code class="command">openssl genrsa -out dev.client.key 2048
+openssl req -new -key dev.client.key -out dev.client.csr -subj "/C=ES/O=PANDEFX/OU=pdeoliveira@uoc.edu/CN=Paulo Ricardo"</code>
+
+                <p class="text-sm text-stone-600 mb-2 mt-4">3.2: Assinar Certificado do Cliente (Emitir "passaporte"):</p>
+                <code class="command">openssl x509 -req -in dev.client.csr -CA LabCA.pem -CAkey LabCA.key -CAcreateserial -out dev.client.crt -days 365 -sha256</code>
+
+                <p class="text-sm text-stone-600 mb-2 mt-4">3.3: Empacotar para o Navegador (PKCS#12):</p>
+                <code class="command">openssl pkcs12 -export -out dev.client.p12 -inkey dev.client.key -in dev.client.crt -certfile LabCA.pem</code>
+                <p class="text-sm text-stone-700">Importe `dev.client.p12` no seu navegador (em "Your Certificates" ou "Seus Certificados").</p>
+
+                <p class="text-sm text-stone-600 mb-2 mt-4">3.4: Iniciar Servidor mTLS:</p>
+                <code class="command"># Pare o servidor anterior (Ctrl+C) e rode este:
+openssl s_server -accept 4433 -cert ejemplo.site.crt -key ejemplo.site.key -Verify 1 -CAfile LabCA.pem -WWW</code>
+                <p class="text-sm text-stone-700"><strong>Diferença crítica:</strong> `-Verify 1` força o pedido de certificado. `-CAfile LabCA.pem` diz ao servidor para *apenas* confiar em clientes assinados por esta CA.</p>
+
+                <p class="text-sm text-stone-600 mb-2 mt-4">3.5: Testar mTLS:</p>
+                <p class="text-sm text-stone-700">Acesse `https://ejemplo.site:4433/index.html`. O navegador *deve* agora pedir para você escolher o seu certificado "Paulo Ricardo". Capture esse ecrã de seleção.</p>
             </div>
 
-            <!-- Exercício 4 -->
+             <!-- Exercício 4 -->
             <div class="exercise-section">
-                <h3 class="text-xl font-bold mb-4">Exercício 4: Visualização dos Protocolos (Wireshark)</h3>
-                <p class="text-stone-600 mb-4"><strong>Objetivo:</strong> Capturar e analisar o handshake mTLS com Wireshark.</p>
-                <p class="text-stone-600 mb-4"><strong>Conceitos:</strong> TLS Handshake, Wireshark, Diagrama de Sequência, Cipher Suites.</p>
-                 <ol class="list-decimal list-inside space-y-3 text-stone-700">
-                     <li>
-                        <strong>(4.1)</strong> Inicie o Wireshark (use `sudo wireshark` se necessário) na interface `lo` (loopback, pois cliente e servidor estão na mesma máquina). Filtro de captura: `tcp port 4433`.
-                    </li>
-                     <li>
-                        <strong>(4.1)</strong> Repita o acesso mTLS (passo 3.5).
-                    </li>
-                     <li>
-                        <strong>(4.1)</strong> Pare a captura. Filtro de visualização: `tls`. Observe os pacotes do handshake. Faça capturas de tela relevantes (Client Hello, Server Hello, Certificate Request, Client Certificate, etc.).
-                    </li>
-                    <li>
-                        <strong>(4.2)</strong> Crie um diagrama de sequência simplificado do handshake mTLS capturado.
-                        
-                        <div class="explanation">
-                            Exemplo de Fluxo: <br>
-                            Cliente ---- Client Hello ----> Servidor <br>
-                            Cliente <--- Server Hello, Certificate [Server], Certificate Request --- Servidor <br>
-                            Cliente ---- Certificate [Client], Client Key Exchange, Certificate Verify, Change Cipher Spec, Encrypted Handshake ----> Servidor <br>
-                            Cliente <--- Change Cipher Spec, Encrypted Handshake --- Servidor <br>
-                            Cliente <---- Application Data ----> Servidor
-                        </div>
-                    </li>
-                    <li>
-                        <strong>(4.3)</strong> No Wireshark, localize o pacote "Server Hello". Anote a "Cipher Suite" negociada.
-                    </li>
-                    <li>
-                        <strong>(4.3)</strong> Explique os componentes da cipher suite (KEX, AUTH, ENC, MAC/Hash).
-                         <div class="explanation">
-                             Exemplo (se for TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256): <br>
-                             - KEX: ECDHE (Troca de chaves efêmera baseada em curvas elípticas Diffie-Hellman) <br>
-                             - AUTH: RSA (Autenticação do servidor - e cliente em mTLS - usando o certificado RSA) <br>
-                             - ENC: AES_128_GCM (Cifragem simétrica AES 128 bits em modo Galois/Counter Mode) <br>
-                             - MAC/Hash: SHA256 (Implícito no modo GCM para garantir integridade e autenticidade)
-                         </div>
-                    </li>
-                 </ol>
-                <div class="entregaveis">
-                    <strong>Entregáveis:</strong> Capturas de tela do Wireshark, diagrama de sequência, nome e explicação da cipher suite.
+                <h3 class="text-2xl font-bold">Exercício 4: Análise de Protocolo (Wireshark)</h3>
+                <p class="text-stone-600 mb-4"><strong>Objetivo:</strong> Observar o handshake mTLS na prática.</p>
+                <p class="text-stone-600 mb-4"><strong>Conceitos-Chave (PDFs):</strong> TLS Handshake, Wireshark, Cipher Suites.</p>
+                
+                <div class="strategic-insight">
+                    <h4 class="font-bold text-lg text-teal-700 font-mono">&gt; Insight do Analista (80/20)</h4>
+                    <p class="text-stone-700 mt-2 text-sm">Como você está em Kali, cliente e servidor estão na mesma máquina. O tráfego não sairá pela `eth0`, ele usará a interface de *loopback* (`lo`).
+                    <br>Você não conseguirá ler os dados (estão cifrados), mas verá a *negociação*. O TLS 1.3 é mais rápido e cifra mais cedo que o 1.2.
+                    <br>1. Procure o `Client Hello`: O cliente diz "Eu sei falar isso (cifras) e quero aceder a `ejemplo.site` (SNI)".
+                    <br>2. Procure o `Server Hello`: O servidor diz "Ok, vamos usar esta cifra: `TLS_AES_128_GCM_SHA256`".
+                    <br>3. Procure o `Certificate Request`: No TLS 1.3, esta mensagem do servidor (pedindo a identidade do cliente) virá *depois* do Server Hello, e provavelmente já *encriptada*. O log do seu terminal `s_server` (mostrando `verify return:1`) é a sua melhor prova de que isso aconteceu. (Ref: `Protocolos criptográficos.pdf`)</p>
                 </div>
+
+                <h4 class="font-semibold text-lg text-stone-800 mt-6 mb-2">Plano de Ação (Comandos):</h4>
+                <p class="text-sm text-stone-600 mb-2 mt-4">4.1: Capturar o Tráfego:</p>
+                <code class="command"># 1. Inicie o servidor mTLS (passo 3.4) se não estiver rodando.
+# 2. Abra o Wireshark
+sudo wireshark
+# 3. Comece a capturar na interface 'lo' (Loopback).
+# 4. Filtro de captura: tcp port 4433
+# 5. Realize o acesso mTLS (passo 3.5) novamente.
+# 6. Pare a captura. Filtro de visualização: tls</code>
+
+                <p class="text-sm text-stone-600 mb-2 mt-4">4.2: Diagrama de Sequência (Simplificado p/ TLS 1.3 mTLS):</p>
+                <div class="font-mono text-sm bg-stone-50 p-4 rounded">
+                    <p>Cliente --- Client Hello (SNI: ejemplo.site) ---> Servidor</p>
+                    <p>Cliente <--- Server Hello (Cipher Suite escolhida) --- Servidor</p>
+                    <p>Cliente <--- [Mensagens Encriptadas: Certificado Servidor, **Certificate Request**, Prova Servidor, Finished] --- Servidor</p>
+                    <p>Cliente --- [Mensagens Encriptadas: **Certificado Cliente**, **Prova Cliente**, Finished] ---> Servidor</p>
+                    <p>Cliente <--- [Application Data (index.html)] ---> Servidor</p>
+                </div>
+
+                <p class="text-sm text-stone-600 mb-2 mt-4">4.3: Identificar a Cipher Suite:</p>
+                <p class="text-sm text-stone-700">Clique no pacote `Server Hello` na captura. Expanda "Handshake Protocol" > "Server Hello" > "Cipher Suite". Anote o nome (ex: `TLS_AES_128_GCM_SHA256`).</p>
+                <p class="text-sm text-stone-700 mt-2"><strong>Explicação da Suite (Exemplo TLS 1.3):</strong> `TLS_AES_128_GCM_SHA256`
+                <br> - **AES_128_GCM:** Este é o algoritmo de cifragem simétrica (o "cadeado" dos dados). AES de 128 bits em modo GCM. GCM é um modo AEAD (Authenticated Encryption), o que significa que ele fornece *confidencialidade* (cifragem) e *integridade/autenticidade* (MAC) numa só operação.
+                <br> - **SHA256:** É a função hash usada *dentro* do modo GCM para a parte de autenticidade, e também usada para derivar as chaves de sessão (KDF).
+                <br> - **KEX/AUTH (Troca de Chave/Autenticação):** No TLS 1.3, estes não estão no nome da cifra. Eles são negociados separadamente no handshake (ex: KEX = ECDHE, AUTH = RSA).
+                </p>
             </div>
-        </section>
 
-        <section id="entrega" class="mb-12 exercise-section">
-            <h2 class="text-2xl font-bold text-stone-800 mb-6">📝 Critérios de Avaliação e Entrega</h2>
-             <ul class="list-disc list-inside space-y-2 text-stone-700">
-                <li>Justifique respostas e decisões.</li>
-                <li>Limite de <strong>5 páginas</strong> para a memória em PDF.</li>
-                <li>Trabalho <strong>individual</strong>, sem plágio.</li>
-                <li><strong>Não é permitido o uso de IA generativa</strong> para a atividade.</li>
-                <li>Entregue um ficheiro `.zip` contendo a memória em PDF no local indicado na aula virtual.</li>
-            </ul>
-        </section>
-
-         <section id="dicas" class="mb-12 exercise-section bg-teal-50 border-teal-600 border-l-4">
-            <h2 class="text-2xl font-bold text-teal-800 mb-6">✨ Dicas Gerais</h2>
-             <ul class="list-disc list-inside space-y-2 text-teal-700">
-                <li><strong>Leia a Teoria Primeiro:</strong> Revise os PDFs antes dos comandos.</li>
-                <li><strong>Documente Conforme Avança:</strong> Capture telas e anote comandos imediatamente.</li>
-                <li><strong>Teste os Comandos:</strong> Use `-text` no OpenSSL para verificar chaves/certificados.</li>
-                <li><strong>Atenção aos Detalhes:</strong> Nomes de ficheiros, CNs, senhas são cruciais.</li>
-                <li><strong>Use o Prompt Personalizado:</strong> Garanta que ele apareça nas capturas.</li>
-            </ul>
         </section>
 
     </main>
 
     <footer class="bg-stone-200 mt-20">
         <div class="container mx-auto px-6 py-4 text-center text-stone-600">
-            <p class="text-xs">&copy; 2025 Centro de Mando Cibersegurança - Reto 2. Baseado nos documentos fornecidos.</p>
+            <p class="text-xs">&copy; 2025 Centro de Mando Cibersegurança - Reto 2. (Baseado nos 9 PDFs fornecidos).</p>
         </div>
     </footer>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    
     // Lógica do Menu Móvel
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -386,44 +342,118 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.nav-link, #mobile-menu a');
     const sections = document.querySelectorAll('main section');
     window.addEventListener('scroll', () => {
-        let current = '';
+        let current = 'briefing'; // Default to briefing
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
-            // Ajuste o offset (-150) conforme necessário para ativar o link um pouco antes
-            if (pageYOffset >= sectionTop - 150) {
+            if (pageYOffset >= sectionTop - 150) { // 150px offset
                  current = section.getAttribute('id');
             }
         });
-
-         // Tratamento especial para o final da página
-         const bottomOfPage = (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 50; // 50px de margem
-         if (bottomOfPage) {
-            const lastSection = sections[sections.length - 1];
-            if(lastSection) current = lastSection.getAttribute('id');
-             const entregaSection = document.getElementById('entrega'); // Ou a última seção relevante
-             if(entregaSection) current = entregaSection.getAttribute('id');
-         }
-
-
         navLinks.forEach(link => {
-            link.classList.remove('active');
+            link.classList.remove('active', 'text-teal-600', 'border-teal-600');
+            link.classList.add('text-stone-600', 'border-transparent');
             const href = link.getAttribute('href');
             if (href && href.substring(1) === current) {
-                link.classList.add('active');
+                link.classList.add('active', 'text-teal-600', 'border-teal-600');
+                link.classList.remove('text-stone-600', 'border-transparent');
+            }
+            // Manter o link VOLTAR estilizado
+            if (link.href.includes("index.html")) {
+                link.classList.remove('text-teal-600', 'border-teal-600');
+                link.classList.add('font-bold', 'text-yellow-600', 'border-transparent');
             }
         });
-
-         // Força a ativação do primeiro link se estiver no topo
-         if (window.pageYOffset < 100) {
-             navLinks.forEach(link => link.classList.remove('active'));
-             const firstLink = document.querySelector('.nav-link[href="#objetivo"]');
-             if (firstLink) firstLink.classList.add('active');
-         }
-
     });
-     // Dispara o evento scroll uma vez no carregamento para definir o estado inicial
-     window.dispatchEvent(new Event('scroll'));
+    window.dispatchEvent(new Event('scroll')); // Aciona no carregamento
+
+    // Lógica das Abas de Conceitos (80/20)
+    const conceptContent = {
+        sym: `
+            <h4 class="font-bold text-lg mb-2 text-teal-700">Simétrico vs. Assimétrico: A Escolha da Chave</h4>
+            <p class="mb-3"><strong>Criptografia Simétrica (Chave Secreta):</strong></p>
+            <ul class="list-disc list-inside text-sm space-y-1 mb-4">
+                <li><strong>Como:</strong> 1 chave (secreta) para cifrar E descifrar.</li>
+                <li><strong>Exemplo:</strong> AES (usado no Exercício 1).</li>
+                <li><strong>Pró:</strong> Muito Rápida. Perfeita para grandes volumes de dados (backups, streaming).</li>
+                <li><strong>Contra:</strong> Como partilhar a chave secreta de forma segura com o destinatário? (Problema da distribuição de chaves).</li>
+            </ul>
+            <p class="mb-3"><strong>Criptografia Assimétrica (Chave Pública/Privada):</strong></p>
+            <ul class="list-disc list-inside text-sm space-y-1">
+                <li><strong>Como:</strong> 2 chaves. Pública (para cifrar/verificar assinatura) e Privada (para descifrar/assinar).</li>
+                <li><strong>Exemplo:</strong> RSA (usado nos Exercícios 2 e 3).</li>
+                <li><strong>Pró:</strong> Resolve o problema da distribuição de chaves. Permite provar identidade (assinaturas).</li>
+                <li><strong>Contra:</strong> Muito Lenta. Inviável para cifrar dados grandes.</li>
+            </ul>
+            <p class="mt-4 text-sm font-semibold"><strong>Conclusão (80/20):</strong> Usamos a <strong class="text-teal-700">Assimétrica (RSA)</strong>, que é lenta, apenas para partilhar de forma segura a chave da <strong class="text-teal-700">Simétrica (AES)</strong>, que é rápida. O TLS (Exercício 4) faz exatamente isso!</p>
+        `,
+        hash: `
+            <h4 class="font-bold text-lg mb-2 text-teal-700">Funções Hash (SHA-256): A Impressão Digital</h4>
+            <p class="mb-3">Uma função hash (como SHA-256) não é cifragem. Não há "chave" nem se pode "descifrar".</p>
+            <ul class="list-disc list-inside text-sm space-y-1">
+                <li><strong>O que faz:</strong> Converte dados de qualquer tamanho (o backup inteiro) numa saída de tamanho fixo (para SHA-256, são 256 bits).</li>
+                <li><strong>Propriedade Chave (80/20):</strong> É (praticamente) impossível encontrar dois ficheiros diferentes que gerem o mesmo hash (Resistência à Colisão). Mudar 1 bit no ficheiro muda o hash completamente.</li>
+                <li><strong>Uso Prático (Exercício 1):</strong> Garantir a <strong>Integridade</strong>. Você calcula o hash do backup antes de o guardar. Quando o recupera, calcula o hash novamente. Se os hashes baterem, você sabe que o ficheiro não foi alterado ou corrompido.</li>
+            </ul>
+            <p class="mt-4 text-sm font-semibold">(Ref: `Funciones hash.pdf` e `Criptografía.pdf` sobre ataques de colisão como *Birthday Attack*).</p>
+        `,
+        pki: `
+            <h4 class="font-bold text-lg mb-2 text-teal-700">PKI: Resolvendo o Problema da Confiança</h4>
+            <p class="mb-3">Ok, usamos criptografia assimétrica (RSA) para o website. Eu (cliente) pego a chave pública de `ejemplo.site` para cifrar. Mas como sei que essa chave pública é *realmente* do `ejemplo.site` e não de um atacante (Man-in-the-Middle)?</p>
+            <p class="font-semibold text-sm">A Solução (80/20): Infraestrutura de Chave Pública (PKI)</p>
+            <ul class="list-disc list-inside text-sm space-y-1 mt-2">
+                <li><strong>Certificado Digital (X.509):</strong> É o "Passaporte" do site. Um ficheiro que "amarra" a chave pública ao domínio (`ejemplo.site`).</li>
+                <li><strong>Autoridade de Certificação (CA):</strong> É a "Entidade Emissora do Passaporte" (ex: Let's Encrypt, DigiCert). Alguém em quem o seu navegador já confia por defeito.</li>
+                <li><strong>O Processo (Exercício 2):</strong>
+                    <br>1. `ejemplo.site` gera uma Chave Privada e uma CSR (pedido de passaporte).
+                    <br>2. A CA (você, com `LabCA.key`) verifica a CSR e *assina* o certificado com a sua chave privada.
+                    <br>3. O Navegador recebe o certificado, vê a assinatura, verifica que confia na CA que assinou, e dá o "OK" (cadeado verde).
+                </li>
+            </ul>
+            <p class="mt-4 text-sm font-semibold">(Ref: `Infraestructura de clave publica.pdf` e `Criptografía de clave pública.pdf`)</p>
+        `,
+        tls: `
+            <h4 class="font-bold text-lg mb-2 text-teal-700">Protocolos (TLS): A Dança Coreografada</h4>
+            <p class="mb-3">TLS (sucessor do SSL) é o protocolo que usa todas as peças anteriores (Simétrica, Assimétrica, Hashes, PKI) para criar um canal seguro na web (HTTPS).</p>
+            <p class="font-semibold text-sm">O Handshake (80/20 - O que você verá no Wireshark):</p>
+            <ol class="list-decimal list-inside text-sm space-y-1 mt-2">
+                <li><strong>Client Hello:</strong> O navegador diz: "Olá, eu sei falar estas cifras (ex: AES_GCM) e quero aceder a `ejemplo.site` (isso é o SNI)".</li>
+                <li><strong>Server Hello:</strong> O servidor diz: "Olá. Da sua lista, eu escolho esta cifra (`TLS_AES_128_GCM_SHA256`)".</li>
+                <li><strong>Troca de Certificados:</strong> O servidor envia o seu "passaporte" (Certificado X.509) para o cliente provar quem é.</li>
+                <li><strong>mTLS (Exercício 3):</strong> O servidor diz: "Agora você, me mostre o *seu* passaporte" (Mensagem `Certificate Request`). O cliente envia o `dev.client.crt`.</li>
+                <li><strong>Troca de Chave:</strong> Cliente e Servidor usam Criptografia Assimétrica (RSA ou ECDH) para *negociar* de forma segura uma *chave simétrica* (ex: AES).</li>
+                <li><strong>Finished:</strong> Ambos trocam mensagens (cifradas com a nova chave simétrica) a dizer "Tudo pronto!". A partir daqui, a comunicação (HTTP) é cifrada com AES.</li>
+            </ol>
+            <p class="mt-4 text-sm font-semibold">(Ref: `Protocolos criptográficos.pdf` e `Criptografía de clave pública.pdf` sobre Diffie-Hellman/TLS)</p>
+        `
+    };
+    const conceptTabsContainer = document.getElementById('concept-tabs');
+    const conceptContentContainer = document.getElementById('concept-content');
+
+    function updateConceptContent(conceptKey) {
+        if (!conceptContentContainer) return;
+        conceptContentContainer.innerHTML = conceptContent[conceptKey] || `<p>Seleccione un concepto.</p>`;
+        
+        conceptTabsContainer.querySelectorAll('.tab-button').forEach(btn => {
+            btn.classList.remove('active', 'text-teal-600', 'border-teal-600');
+            btn.classList.add('text-stone-600', 'border-transparent');
+            if (btn.dataset.concept === conceptKey) {
+                btn.classList.add('active', 'text-teal-600', 'border-teal-600');
+                btn.classList.remove('text-stone-600', 'border-transparent');
+            }
+        });
+    }
+
+    conceptTabsContainer.addEventListener('click', (e) => {
+        if (e.target.classList.contains('tab-button')) {
+            updateConceptContent(e.target.dataset.concept);
+        }
+    });
+    
+    // Inicia com a primeira aba ativa
+    updateConceptContent('sym'); 
+    
 });
 </script>
 </body>
 </html>
+
