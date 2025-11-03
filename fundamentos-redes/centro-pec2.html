@@ -3,55 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Centro de Mando: PEC 2 - Redes</title>
+    <title>Centro de Mando v2: PEC 2</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #111827; /* bg-gray-900 */
+            background-color: #0F172A; /* bg-slate-900 */
+            color: #CBD5E1; /* text-slate-300 */
         }
         .card {
-            background-color: #1F2937; /* bg-gray-800 */
+            background-color: #1E293B; /* bg-slate-800 */
             border-radius: 0.75rem; /* rounded-xl */
-            border: 1px solid #374151; /* border-gray-700 */
+            border: 1px solid #334155; /* border-slate-700 */
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             overflow: hidden;
         }
         .card-header {
             padding: 1rem 1.5rem;
-            border-bottom: 1px solid #374151; /* border-gray-700 */
+            border-bottom: 1px solid #334155; /* border-slate-700 */
         }
         .card-content {
             padding: 1.5rem;
         }
-        .tab-button {
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem; /* rounded-lg */
-            font-weight: 500;
-            color: #D1D5DB; /* text-gray-300 */
-            border: 2px solid transparent;
-            transition: all 0.2s ease;
-        }
-        .tab-button:hover {
-            background-color: #374151; /* bg-gray-700 */
-            color: #FFF;
-        }
-        .tab-button.active {
-            background-color: #3B82F6; /* bg-blue-600 */
-            color: #FFF;
-        }
         .pill {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
             padding: 0.25rem 0.75rem;
             border-radius: 9999px; /* rounded-full */
             font-size: 0.75rem; /* text-xs */
             font-weight: 600;
         }
-        .pill-blue { background-color: #1E40AF; color: #BFDBFE; } /* bg-blue-800 text-blue-200 */
-        .pill-green { background-color: #065F46; color: #A7F3D0; } /* bg-green-800 text-green-200 */
-        .pill-yellow { background-color: #854D0E; color: #FEF08A; } /* bg-yellow-800 text-yellow-200 */
-        .pill-red { background-color: #991B1B; color: #FECACA; } /* bg-red-800 text-red-200 */
+        .pill-blue { background-color: #1E40AF; color: #BFDBFE; }
+        .pill-green { background-color: #065F46; color: #A7F3D0; }
+        .pill-yellow { background-color: #854D0E; color: #FEF08A; }
+        .pill-red { background-color: #991B1B; color: #FECACA; }
+        .pill-gray { background-color: #374151; color: #D1D5DB; }
         
         .code-block {
             background-color: #0F172A; /* bg-slate-900 */
@@ -61,260 +48,327 @@
             font-family: 'Courier New', Courier, monospace;
             font-size: 0.875rem; /* text-sm */
             overflow-x: auto;
+            border: 1px solid #334155;
         }
         .code-block .comment { color: #64748B; } /* text-slate-500 */
         .code-block .keyword { color: #F472B6; } /* text-pink-400 */
         .code-block .value { color: #60A5FA; } /* text-blue-400 */
         .code-block .ip { color: #34D399; } /* text-green-400 */
 
+        /* Stepper */
+        .stepper {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 2rem 0;
+        }
+        .stepper::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #334155; /* border-slate-700 */
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            z-index: 2;
+            width: 25%;
+        }
+        .step-circle {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background-color: #334155; /* bg-slate-700 */
+            color: #CBD5E1; /* text-slate-300 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            border: 3px solid #334155;
+        }
+        .step-title {
+            margin-top: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: #E2E8F0; /* text-slate-200 */
+        }
+        .step.active .step-circle {
+            background-color: #1E40AF;
+            border-color: #60A5FA;
+            color: #FFF;
+        }
+        .step.active .step-title {
+            color: #60A5FA;
+        }
     </style>
 </head>
-<body class="text-gray-200 min-h-screen p-4 sm:p-8">
+<body class="p-4 sm:p-8">
     <div class="max-w-7xl mx-auto">
         
         <!-- Cabeçalho -->
         <header class="mb-6">
-            <h1 class="text-3xl font-bold text-white">Centro de Mando: PEC 2</h1>
-            <p class="text-lg text-gray-400">Fundamentos de Redes e Arquiteturas: O 80/20 do Nível de Rede e Packet Tracer</p>
+            <h1 class="text-4xl font-extrabold text-white">Centro de Mando v2: PEC 2</h1>
+            <p class="text-xl text-slate-400">O Guia 80/20 para Dominar o Nível de Rede</p>
         </header>
 
-        <!-- Grid Principal -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-            <!-- Coluna Principal (2/3) -->
-            <div class="md:col-span-2 space-y-6">
-
-                <!-- Card: O Foco Principal (80/20) -->
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="text-xl font-semibold text-white">🎯 O Foco Principal (A Regra 80/20)</h2>
-                    </div>
-                    <div class="card-content">
-                        <p class="text-gray-300 mb-4">A PEC 2 não é sobre decorar todos os padrões Wi-Fi ou a história do 5G. É sobre <strong class="text-yellow-300">fazer redes diferentes conversarem</strong> e <strong class="text-yellow-300">diagnosticar por que</strong> elas falham.</p>
-                        <p class="text-gray-300">Concentre-se nestas 3 habilidades (o 20% que resolve 80% da PEC):</p>
-                        <ul class="list-disc list-inside space-y-2 mt-4 text-gray-300">
-                            <li><strong class="text-white">Endereçamento IP & Sub-redes (CIDR):</strong> (Ej. 5, 6) Saber "fatiar" o range <code class="code-block inline p-1 text-sm rounded">178.10.20.0/22</code> e calcular IPs de rede, broadcast e hosts.</li>
-                            <li><strong class="text-white">Roteamento Estático:</strong> (Ej. 8) Ensinar manualmente a um roteador (ex: R0) o caminho para uma rede que ele não conhece (ex: Sub-rede 1) através de um "próximo salto" (ex: R1).</li>
-                            <li><strong class="text-white">Diagnóstico de Serviços (DNS/HTTP):</strong> (Ej. 9, 12, 13) Entender a cadeia de eventos: <br>1. PC pede IP ao DNS. <br>2. DNS responde. <br>3. PC pede página ao Servidor Web. <br>E saber onde essa cadeia quebra.</li>
-                        </ul>
-                    </div>
+        <!-- Card: Sua Missão -->
+        <div class="card mb-6">
+            <div class="card-content flex items-center p-6">
+                <div class="flex-shrink-0">
+                    <svg class="h-12 w-12 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-1.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
+                    </svg>
                 </div>
-
-                <!-- Card: Conceitos-Chave da Camada de Rede (Nível 3) -->
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="text-xl font-semibold text-white">🧠 Conceitos-Chave da Camada de Rede (Nível 3)</h2>
-                        <p class="text-sm text-gray-400">Extraído de "El nivel de red.pdf" e "Las capas inferiores.pdf"</p>
-                    </div>
-                    <div class="card-content">
-                        <!-- Botões de Tab -->
-                        <div class="flex space-x-2 mb-4 border-b border-gray-700" id="tabs-nav">
-                            <button class="tab-button active" onclick="showTab(event, 'tab-ip')">IP (IPv4)</button>
-                            <button class="tab-button" onclick="showTab(event, 'tab-icmp')">ICMP</button>
-                            <button class="tab-button" onclick="showTab(event, 'tab-arp')">ARP</button>
-                            <button class="tab-button" onclick="showTab(event, 'tab-router')">Roteador</button>
-                        </div>
-
-                        <!-- Conteúdo das Tabs -->
-                        <div id="tabs-content">
-                            <!-- Tab 1: IP (IPv4) -->
-                            <div id="tab-ip" class="tab-content space-y-3">
-                                <h3 class="text-lg font-semibold text-white">O "Envelope" da Internet (Datagrama IPv4)</h3>
-                                <p>Pense no datagrama IP como um envelope. A Camada de Rede (Nível 3) só se preocupa com o <strong class="text-white">endereço do destinatário (IP Destino)</strong> para saber para *qual* roteador encaminhar.</p>
-                                <p class="text-gray-400 text-sm">Campos do cabeçalho IPv4 que <strong class="text-yellow-300">REALMENTE importam</strong> para esta PEC (Ej. 4, 13):</p>
-                                <ul class="list-disc list-inside space-y-1 text-gray-300">
-                                    <li><strong class="text-white">Endereço IP Origem:</strong> Quem envia.</li>
-                                    <li><strong class="text-white">Endereço IP Destino:</strong> Para quem vai. (O roteador usa isso para consultar sua tabela).</li>
-                                    <li><strong class="text-white">TTL (Time-To-Live):</strong> Um "contador de saltos". Cada roteador que o pacote atravessa subtrai 1.</li>
-                                    <li><strong class="text-white">Protocolo:</strong> Diz o que está *dentro* do envelope. Ex: <code class="text-sm">1</code> (ICMP), <code class="text-sm">6</code> (TCP), <code class="text-sm">17</code> (UDP).</li>
-                                </ul>
-                                <div class="pill-blue">💡 <strong class="font-bold">Pílula de Insight (Ej. 3 e 13):</strong> O <strong class="text-white">TTL</strong> é o segredo do `traceroute`! Quando o TTL chega a 0, o roteador descarta o pacote e envia uma mensagem <strong class="text-white">ICMP (Tipo 11)</strong> de volta, dizendo "Ei, seu pacote morreu aqui". É assim que o `traceroute` mapeia o caminho.</div>
-                            </div>
-
-                            <!-- Tab 2: ICMP -->
-                            <div id="tab-icmp" class="tab-content hidden space-y-3">
-                                <h3 class="text-lg font-semibold text-white">O "Sonar" da Rede (ICMP)</h3>
-                                <p>O ICMP (Protocolo de Mensagens de Controle da Internet) é usado para diagnósticos e mensagens de erro.</p>
-                                <ul class="list-disc list-inside space-y-2 text-gray-300">
-                                    <li><strong class="text-white">`ping` (Ej. 3):</strong> Envia um <strong class="text-white">ICMP Echo Request (Tipo 8)</strong>. Se o host de destino estiver alcançável, ele <strong class="text-white">DEVE</strong> responder com um <strong class="text-white">ICMP Echo Reply (Tipo 0)</strong>. Se o ping falha, a conectividade de Nível 3 está quebrada.</li>
-                                    <li><strong class="text-white">`traceroute` (ou `tracert`):</strong> Envia pacotes com TTL = 1, depois TTL = 2, TTL = 3... Cada roteador no caminho responde com <strong class="text-white">ICMP Time Exceeded (Tipo 11)</strong>, revelando sua identidade.</li>
-                                </ul>
-                            </div>
-
-                            <!-- Tab 3: ARP -->
-                            <div id="tab-arp" class="tab-content hidden space-y-3">
-                                <h3 class="text-lg font-semibold text-white">O "Tradutor" IP -> MAC (Nível 2.5)</h3>
-                                <p>O Roteador 0 (R0) precisa enviar um pacote para o Roteador 1 (R1), que está na mesma rede de interconexão (<code class="text-sm">10.10.0.0/30</code>).</p>
-                                <ul class="list-disc list-inside space-y-2 text-gray-300">
-                                    <li>R0 sabe o <strong class="text-white">IP</strong> de destino: `10.10.0.1` (o IP do R1).</li>
-                                    <li>Mas para enviar um quadro (frame) Ethernet (Nível 2), R0 precisa do <strong class="text-white">Endereço MAC</strong> do R1.</li>
-                                    <li><strong>O ARP resolve isso:</strong> R0 grita (broadcast) na rede `10.10.0.0/30`: <strong class="text-yellow-300">"QUEM TEM O IP 10.10.0.1?"</strong> (ARP Request)</li>
-                                    <li>R1 responde: <strong class="text-green-300">"SOU EU! MEU MAC É AA:BB:CC:11:22:33"</strong> (ARP Reply)</li>
-                                    <li>Agora R0 sabe como endereçar o envelope (IP) e o quadro (MAC).</li>
-                                </ul>
-                            </div>
-                            
-                            <!-- Tab 4: Roteador -->
-                            <div id="tab-router" class="tab-content hidden space-y-3">
-                                <h3 class="text-lg font-semibold text-white">O "Carteiro" da Rede (Roteador)</h3>
-                                <p>A função principal do roteador é <strong class="text-white">encaminhar pacotes entre redes diferentes</strong>. Ele toma decisões baseado em sua <strong class="text-white">Tabela de Roteamento</strong>.</p>
-                                <p class="font-semibold text-white">Lógica de uma Tabela de Roteamento Estático (Ej. 8):</p>
-                                <div class="code-block">
-                                    <span class="comment"># Dentro do Router 0...</span><br>
-                                    <span class="comment"># Para qual Rede Destino...</span><br>
-                                    <span class="keyword">NETWORK</span> <span class="ip">178.10.22.0</span> <span class="comment"># (Sub-rede 1)</span><br>
-                                    <span class="comment"># Com qual Máscara...</span><br>
-                                    <span class="keyword">MASK</span> <span class="value">255.255.255.0</span><br>
-                                    <span class="comment"># Eu envio para qual IP? (Próximo Salto)</span><br>
-                                    <span class="keyword">NEXT HOP</span> <span class="ip">10.10.0.1</span> <span class="comment"># (O IP do Router 1)</span>
-                                </div>
-                                <div class="pill-red">🚨 <strong class="font-bold">Insight Crucial:</strong> Um roteador SÓ conhece as redes que estão <strong class="text-white">DIRETAMENTE CONECTADAS</strong> a ele. Para CADA outra rede na topologia, você precisa adicionar uma Rota Estática manualmente!</div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="ml-4">
+                    <h2 class="text-xl font-bold text-white">Sua Missão, Professor 80/20</h2>
+                    <p class="text-slate-300">Seu objetivo não é *ler* os PDFs, é *vencer* a PEC. Vamos usar o <strong class="text-yellow-300">Packet Tracer</strong> como nosso campo de batalha e os PDFs como nosso arsenal. Esta PEC é <strong class="text-white">80% prática (roteamento, sub-redes)</strong> e <strong class="text-white">20% teórica (classificação)</strong>. Vamos focar no 80%.</p>
                 </div>
-
-                <!-- Card: Guia de Troubleshooting (Ej. 9, 12) -->
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="text-xl font-semibold text-white">🕵️ Guia de Troubleshooting (Ej. 9, 12, 13)</h2>
-                    </div>
-                    <div class="card-content space-y-6">
-                        <!-- Problema 1 -->
-                        <div>
-                            <h3 class="text-lg font-semibold text-white">Problema: O `ping` falha (Ej. 9)</h3>
-                            <p class="text-gray-300 mt-1">Você configurou todas as rotas (Ej. 8), mas o ping de PC0 para PC3 (ou PC2) falha. Por quê?</p>
-                            <p class="pill-yellow mt-2">💡 <strong class="font-bold">Hipótese 80/20:</strong> O <strong class="text-white">Default Gateway (Puerta de enlace)</strong> do PC está errado ou faltando.</p>
-                            <p class="text-gray-300 mt-2">
-                                O PC3 (ex: <code class="text-sm">178.10.23.130</code>) precisa saber para onde enviar pacotes que NÃO são da sua rede local. Esse "para onde" é o roteador da sua rede (R3, ex: <code class="text-sm">178.10.23.129</code>).
-                            </p>
-                            <p class="text-gray-300 mt-2"><strong class="text-white">Solução (Provável):</strong> Verifique no PC (Desktop > IP Configuration) se o campo <strong class="text-white">Default Gateway</strong> está preenchido com o IP da interface do roteador daquela sub-rede.</p>
-                        </div>
-                        
-                        <hr class="border-gray-700">
-
-                        <!-- Problema 2 -->
-                        <div>
-                            <h3 class="text-lg font-semibold text-white">Problema: A Web NÃO carrega, mas o `ping` FUNCIONA (Ej. 12)</h3>
-                            <p class="text-gray-300 mt-1">Você tenta abrir a URL do Server0 no PC1, mas falha. No entanto, <code class="text-sm">ping</code> PC1 -> Server0 funciona!</p>
-                            <p class="pill-red mt-2">🚨 <strong class="font-bold">Insight de Nível Sênior:</strong> Isso é quase SEMPRE um problema de <strong class="text-white">DNS</strong> ou <strong class="text-white">ROTA DE VOLTA</strong>.</p>
-                            <p class="text-gray-300 mt-2">
-                                <strong>Cadeia de eventos (Ej. 13):</strong>
-                            </p>
-                            <ol class="list-decimal list-inside space-y-2 text-gray-300 mt-2">
-                                <li>PC1 (ex: `178.10.22.10`) envia uma <strong class="text-yellow-300">Query DNS (UDP porta 53)</strong> para o Server1 (DNS, ex: `178.10.22.2`).</li>
-                                <li>O Server1 recebe a query do IP `178.10.22.10`. Ele consulta sua tabela e descobre o IP do Server0 (`178.10.20.2`).</li>
-                                <li>O Server1 tenta enviar a <strong class="text-yellow-300">Resposta DNS</strong> de volta para o PC1 (`178.10.22.10`).</li>
-                                <li><strong class="text-red-400">AQUI ESTÁ O ERRO (Ej. 12):</strong> O Server1 é um <strong class="text-white">HOST</strong>, não um roteador. Ele não tem tabela de roteamento. Ele só conhece a própria rede (`178.10.22.0/24`). Ele não sabe como chegar em `178.10.22.10` (que está na mesma rede, ok) nem em `178.10.20.0/23` (se a query fosse de lá).</li>
-                                <li><strong class="text-red-400">O ERRO REAL (Ej 12):</strong> O `ping` funciona porque está na mesma sub-rede (PC1 -> Server1). Mas se o PC0 (`178.10.20.10`) tentar consultar o DNS (Server1, `178.10.22.2`), o Server1 <strong class="text-white">recebe</strong> a query, mas <strong class="text-white">NÃO SABE COMO RESPONDER</strong> para a rede `178.10.20.0/23`.</li>
-                            </ol>
-                            <p class="text-gray-300 mt-2"><strong class="text-white">Solução (Ej. 12):</strong> Configure o <strong class="text-white">Default Gateway</strong> nos <strong class="text-white">SERVIDORES</strong>!
-                                <br> - No <strong class="text-white">Server0</strong> (HTTP): Gateway = <code class="ip">178.10.20.1</code> (IP do R0)
-                                <br> - No <strong class="text-white">Server1</strong> (DNS): Gateway = <code class="ip">178.10.22.1</code> (IP do R1)
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
             </div>
-
-            <!-- Coluna Lateral (1/3) -->
-            <div class="md:col-span-1 space-y-6">
-                
-                <!-- Card: Cálculo de Sub-rede (Ej. 5, 6) -->
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="text-xl font-semibold text-white">📐 Cálculo de Sub-rede (Ej. 5, 6)</h2>
-                    </div>
-                    <div class="card-content space-y-4">
-                        <p class="text-gray-300">O range global é <code class="code-block inline p-1 text-sm rounded">178.10.20.0/22</code>.</p>
-                        <ul class="text-sm text-gray-400 space-y-1">
-                            <li><code class="text-white">/22</code> = <code class="text-yellow-300">255.255.252.0</code></li>
-                            <li>IPs: <code class="text-white">178.10.20.0</code> a <code class="text-white">178.10.23.255</code></li>
-                        </ul>
-                        <hr class="border-gray-700">
-                        <p class="font-semibold text-white">Redes Já Usadas:</p>
-                        <ul class="text-sm text-gray-300 space-y-1">
-                            <li><strong>Sub-rede 0:</strong> <code class="text-white">178.10.20.0/23</code> (Usa .20 e .21)</li>
-                            <li><strong>Sub-rede 1:</strong> <code class="text-white">178.10.22.0/24</code> (Usa .22)</li>
-                            <li><strong>Sub-rede 2:</strong> <code class="text-white">178.10.23.0/25</code> (Usa .23.0 a .23.127)</li>
-                        </ul>
-                        <hr class="border-gray-700">
-                        <p class="font-semibold text-white">Cálculo para Sub-rede 3 (Ej. 5):</p>
-                         <ul class="text-sm text-gray-300 space-y-1">
-                            <li><strong>Necessidade:</strong> 63 dispositivos.</li>
-                            <li><strong>Cálculo:</strong> 63 hosts + 1 Rede + 1 Broadcast = 65 IPs.</li>
-                            <li><strong>Potência de 2:</strong> $2^6=64$ (insuficiente). Próxima: $2^7=128$ IPs.</li>
-                            <li><strong>Bits de Host:</strong> 7.</li>
-                            <li><strong>Máscara:</strong> 32 - 7 = <code class="text-white">/25</code> (ou `255.255.255.128`).</li>
-                            <li><strong>Espaço Livre:</strong> A rede 2 usou a primeira metade do bloco .23. Usamos a segunda.</li>
-                            <li><strong>Rede:</strong> <code class="ip">178.10.23.128</code></li>
-                            <li><strong>Router (R3):</strong> <code class="ip">178.10.23.129</code> (1º IP útil)</li>
-                            <li><strong>PC3:</strong> <code class="ip">178.10.23.130</code> (2º IP útil)</li>
-                            <li><strong>Gateway (no PC3):</strong> <code class="ip">178.10.23.129</code></li>
-                        </ul>
-                        <hr class="border-gray-700">
-                        <p class="font-semibold text-white">Endereços de Broadcast (Ej. 6):</p>
-                        <ul class="text-sm text-gray-300 space-y-1">
-                            <li><strong>Sub-rede 0 (/23):</strong> <code class="ip">178.10.21.255</code></li>
-                            <li><strong>Sub-rede 1 (/24):</strong> <code class="ip">178.10.22.255</code></li>
-                            <li><strong>Sub-rede 2 (/25):</strong> <code class="ip">178.10.23.127</code></li>
-                            <li><strong>Sub-rede 3 (/25):</strong> <code class="ip">178.10.23.255</code></li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <!-- Card: Classificação de Redes (Ej. 1, 7) -->
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="text-xl font-semibold text-white">🌍 Classificação de Redes (Ej. 1, 7)</h2>
-                    </div>
-                    <div class="card-content space-y-4">
-                        <div>
-                            <h3 class="font-semibold text-white">Por Alcance (Ej. 1):</h3>
-                            <ul class="list-disc list-inside text-gray-300 text-sm mt-1 space-y-1">
-                                <li><strong>LAN (Local):</strong> Edifício/Casa. (Ex: As sub-redes 0, 1, 2, 3 da PEC).</li>
-                                <li><strong>MAN (Metropolitana):</strong> Cidade. (Ex: Interligar campi da UOC).</li>
-                                <li><strong>WAN (Ampla):</strong> País/Global. (Ex: A própria Internet).</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3 class="font-semibold text-white">Por Topologia (Ej. 7):</h3>
-                             <ul class="list-disc list-inside text-gray-300 text-sm mt-1 space-y-1">
-                                <li><strong>Bus (Barra):</strong> Antiga. Todos no mesmo cabo.</li>
-                                <li><strong>Anel (Ring):</strong> Antiga (Token Ring).</li>
-                                <li><strong>Estrela (Star):</strong> <strong class="text-green-300">A topologia MODERNA</strong>. Hosts se ligam a um ponto central (Switch). <strong class="text-white">É a topologia *dentro* de cada sub-rede da PEC</strong>.</li>
-                                <li><strong>Malha (Mesh):</strong> Usada para redundância. <strong class="text-white">É a topologia usada *entre* os roteadores R0-R3</strong> (um anel/malha).</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
         </div>
+
+        <!-- Guia da Jornada -->
+        <div class="stepper mb-8">
+            <div class="step active">
+                <div class="step-circle">1</div>
+                <div class="step-title">Conceitos<br>(Ej 1-2)</div>
+            </div>
+            <div class="step active">
+                <div class="step-circle">2</div>
+                <div class="step-title">O Mapa (IP)<br>(Ej 3-7)</div>
+            </div>
+            <div class="step active">
+                <div class="step-circle">3</div>
+                <div class="step-title">As Rotas (Routing)<br>(Ej 8-9)</div>
+            </div>
+            <div class="step active">
+                <div class="step-circle">4</div>
+                <div class="step-title">Os Serviços (DNS/HTTP)<br>(Ej 10-14)</div>
+            </div>
+        </div>
+
+        <!-- Bloco 1: Conceitos e Classificação -->
+        <div class="card mb-6">
+            <div class="card-header">
+                <h2 class="text-xl font-semibold text-white">Bloco 1: Classificando o Mundo (Ej. 1 & 2)</h2>
+            </div>
+            <div class="card-content space-y-6 divide-y divide-slate-700">
+                <!-- Exercício 1 -->
+                <div>
+                    <span class="pill pill-gray">Exercício 1</span>
+                    <h3 class="text-lg font-semibold text-white mt-2">LAN vs. MAN vs. WAN</h3>
+                    <p class="pill-yellow mt-2">💡 <strong class="font-bold">Pílula 80/20 (PDFs: "Las capas inferiores..." p.9 | "Las redes..." p.10):</strong> A única diferença que importa aqui é o <strong class="text-white">ALCANCE</strong> (distância).</p>
+                    <ul class="list-disc list-inside space-y-1 mt-2 text-slate-300">
+                        <li><strong>LAN (Local):</strong> Seu apartamento, um escritório. Pense: Ethernet e Wi-Fi. (Ex: Cada sub-rede *dentro* do seu Packet Tracer é uma LAN).</li>
+                        <li><strong>MAN (Metropolitana):</strong> Uma cidade. Pense: Interligar campi de uma universidade.</li>
+                        <li><strong>WAN (Ampla):</strong> Um país ou o globo. Pense: A própria Internet. (Ex: A rede de roteadores no seu Packet Tracer *simula* uma pequena WAN).</li>
+                    </ul>
+                    <p class="font-semibold text-white mt-3">🤔 Pensamento Crítico:</p>
+                    <p class="text-slate-300">O PDF fala de uso. Qual é o *uso* de uma LAN no Packet Tracer? (Conectar PCs e Servidores). Qual é o *uso* da WAN? (Conectar as LANs entre si). Isso é tudo.</p>
+                </div>
+                <!-- Exercício 2 -->
+                <div class="pt-6">
+                    <span class="pill pill-gray">Exercício 2</span>
+                    <h3 class="text-lg font-semibold text-white mt-2">RAN Tradicional vs. Open RAN</h3>
+                    <p class="pill-yellow mt-2">💡 <strong class="font-bold">Pílula 80/20 (PDF: "Las redes..."):</strong> O PDF (p.17) define RAN (Radio Access Network) como a parte "rádio" das redes móveis (as antenas). Ele não detalha Open RAN.</p>
+                    <p class="text-slate-300 mt-2">O 80/20 é o conceito de <strong class="text-white">"desacoplamento" (decoupling)</strong>. Pense nisso como "caixa preta" vs. "peças de Lego".</p>
+                    <ul class="list-disc list-inside space-y-1 mt-2 text-slate-300">
+                        <li><strong>RAN Tradicional:</strong> Um único fornecedor (ex: Nokia) vende TUDO (hardware e software) num pacote fechado. Você não pode misturar peças.</li>
+                        <li><strong>Open RAN:</strong> Define padrões abertos. Você pode comprar o hardware da Empresa A, o software da Empresa B e fazê-los funcionar juntos.</li>
+                    </ul>
+                    <p class="font-semibold text-white mt-3">🤔 Pensamento Crítico:</p>
+                    <p class="text-slate-300">A pergunta pede as *vantagens*. O que acontece quando você quebra um monopólio de "caixa preta"? Pense em <strong class="text-white">custo</strong> (mais competição), <strong class="text-white">inovação</strong> (qualquer um pode criar um software) e <strong class="text-white">flexibilidade</strong>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bloco 2: O Mapa da Rede (Endereçamento) -->
+        <div class="card mb-6">
+            <div class="card-header">
+                <h2 class="text-xl font-semibold text-white">Bloco 2: O Mapa da Rede (Ej. 3-7)</h2>
+                <p class="text-sm text-slate-400">Aqui é onde 50% da PEC é resolvida. Dominar o IP é dominar a PEC.</p>
+            </div>
+            <div class="card-content space-y-6 divide-y divide-slate-700">
+                <!-- Exercício 3 -->
+                <div class="pt-6">
+                    <span class="pill pill-gray">Exercício 3</span>
+                    <h3 class="text-lg font-semibold text-white mt-2">ICMP: O "Sonar" da Rede</h3>
+                    <p class="pill-yellow mt-2">💡 <strong class="font-bold">Pílula 80/20 (PDF: "El nivel de red" p.28-30):</strong> O ICMP não transporta dados (como web); ele transporta <strong class="text-white">mensagens de controle e erro</strong>. É o protocolo de diagnóstico.</p>
+                    <ul class="list-disc list-inside space-y-1 mt-2 text-slate-300">
+                        <li><strong>`ping`:</strong> "Você está aí?" Usa <strong class="text-white">ICMP Tipo 8 (Echo Request)</strong>. A resposta é <strong class="text-white">ICMP Tipo 0 (Echo Reply)</strong>. Testa a conectividade de Nível 3 (IP).</li>
+                        <li><strong>`traceroute` (tracert):</strong> "Qual o caminho até você?" É genial. Ele envia pacotes com TTL=1, TTL=2, TTL=3... Cada roteador no caminho descarta o pacote (quando TTL=0) e envia de volta um <strong class="text-white">ICMP Tipo 11 (Time Exceeded)</strong>, revelando seu IP.</li>
+                    </ul>
+                    <p class="font-semibold text-white mt-3">🤔 Pensamento Crítico:</p>
+                    <p class="text-slate-300">Se um `ping` falha, o que isso *realmente* significa? (Que a rota de ida, ou a de volta, está quebrada, ou o host está desligado). Se o `traceroute` morre no meio do caminho, o que isso significa? (O roteador onde ele morreu não sabe como continuar, ou está bloqueando ICMP).</p>
+                </div>
+                <!-- Exercício 4 -->
+                <div class="pt-6">
+                    <span class="pill pill-gray">Exercício 4</span>
+                    <h3 class="text-lg font-semibold text-white mt-2">Cabeçalho IPv4: O "Envelope"</h3>
+                    <p class="pill-yellow mt-2">💡 <strong class="font-bold">Pílula 80/20 (PDF: "El nivel de red" p.10-12):</strong> A imagem na página 10 é o gabarito. Mas o 80/20 que você precisa para o Ej. 13 são estes campos:</p>
+                    <ul class="list-disc list-inside space-y-1 mt-2 text-slate-300">
+                        <li><strong>Source IP:</strong> De onde veio.</li>
+                        <li><strong>Destination IP:</strong> Para onde vai. (É o que o roteador usa para decidir).</li>
+                        <li><strong>Protocol:</strong> O que tem *dentro* do envelope? (Valor 1 = ICMP; 6 = TCP; 17 = UDP).</li>
+                        <li><strong>TTL (Time-to-Live):</strong> O "contador de saltos" que o `traceroute` explora.</li>
+                    </ul>
+                    <p class="font-semibold text-white mt-3">🤔 Pensamento Crítico:</p>
+                    <p class="text-slate-300">Quando você for ao Modo Simulação (Ej. 13), abra um pacote e encontre esses campos. Veja como o "Protocol" muda de 17 (DNS) para 6 (HTTP). Veja como os IPs de Origem/Destino *não mudam* durante toda a viagem (só no NAT, que não usamos aqui).</p>
+                </div>
+                <!-- Exercício 5 e 6 -->
+                <div class="pt-6">
+                    <span class="pill pill-gray">Exercício 5 & 6</span>
+                    <h3 class="text-lg font-semibold text-white mt-2">CIDR: A Arte de "Fatiar" a Rede</h3>
+                    <p class-><strong class="font-bold">Pílula 80/20 (PDF: "El nivel de red" p.20, "Subredes: CIDR"):</strong> Esta é a habilidade-chave. Esqueça as "Classes A, B, C" (p.14), isso é passado. O que importa é o CIDR (a barra "/").</p>
+                    <p class="text-slate-300 mt-2">Seu Range: <code class="code-block inline p-1 text-sm rounded">178.10.20.0/22</code> (Máscara `255.255.252.0`). Isso te dá 10 bits de host, cobrindo de `178.10.20.0` até `178.10.23.255`.</p>
+                    <p class="font-semibold text-white mt-3">🤔 Pensamento Crítico (Ej. 5: Sub-rede 3):</p>
+                    <ol class="list-decimal list-inside space-y-2 text-slate-300 mt-2">
+                        <li><strong>Necessidade:</strong> 63 dispositivos.</li>
+                        <li><strong>Cálculo 80/20:</strong> Você precisa de IPs para 63 hosts + 1 IP de Rede + 1 IP de Broadcast = 65 IPs.</li>
+                        <li><strong>Potência de 2:</strong> Qual a menor potência de 2 que cobre 65? $2^6 = 64$ (Não dá!). A próxima é $2^7 = 128$ IPs.</li>
+                        <li><strong>Bits de Host:</strong> Você precisa de 7 bits para os hosts.</li>
+                        <li><strong>Máscara (o /X):</strong> Se 7 bits são para hosts, a máscara de rede é $32 - 7 = 25$. Sua nova máscara é <strong class="text-white">/25</strong> (ou `255.255.255.128`).</li>
+                        <li><strong>Onde alocar?</strong> A Sub-rede 2 usou `178.10.23.0/25` (IPs .0 a .127). O próximo bloco /25 livre começa em <strong class="text-white">`178.10.23.128`</strong>. Essa é sua rede.</li>
+                    </ol>
+                    <p class="font-semibold text-white mt-3">🤔 Pensamento Crítico (Ej. 6: Broadcast):</p>
+                    <p class="text-slate-300">Broadcast (p.15) é o *último* IP de uma sub-rede.
+                        <br>- Rede 2 (`...23.0/25`): Range é .0 a .127. Broadcast é <strong class="text-white">`178.10.23.127`</strong>.
+                        <br>- Rede 3 (`...23.128/25`): Range é .128 a .255. Broadcast é <strong class="text-white">`178.10.23.255`</strong>.
+                    </p>
+                </div>
+                <!-- Exercício 7 -->
+                <div class="pt-6">
+                    <span class="pill pill-gray">Exercício 7</span>
+                    <h3 class="text-lg font-semibold text-white mt-2">Topologias: Como as Redes se Desenham</h3>
+                    <p class="pill-yellow mt-2">💡 <strong class="font-bold">Pílula 80/20 (PDF: "Las capas inferiores..." p.7-8):</strong> O 80/20 é saber diferenciar <strong class="text-white">Estrela</strong> (moderno) de <strong class="text-white">Malha</strong> (redundante).</p>
+                    <ul class="list-disc list-inside space-y-1 mt-2 text-slate-300">
+                        <li><strong>Bus/Anel:</strong> Antigas, acadêmicas. Todos compartilham o mesmo meio físico (Bus) ou passam um "bastão" (Token Ring).</li>
+                        <li><strong>Estrela (Star):</strong> O padrão MODERNO. Todos os dispositivos (PCs, Servidores) se conectam a um ponto central (um <strong class="text-white">Switch</strong>).</li>
+                        <li><strong>Malha (Mesh):</strong> Cada nó se conecta a vários outros. Caro, mas redundante. Usado para conectar <strong class="text-white">Roteadores</strong>.</li>
+                    </ul>
+                    <p class="font-semibold text-white mt-3">🤔 Pensamento Crítico:</p>
+                    <p class="text-slate-300">Olhe o `.pkt`. *Dentro* da Sub-rede 0, qual topologia você vê? (PC0 e Server0 ligados no Switch0). E *entre* os Roteadores (R0-R1-R3-R2)?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bloco 3: As Rotas (Roteamento) -->
+        <div class="card mb-6">
+            <div class="card-header">
+                <h2 class="text-xl font-semibold text-white">Bloco 3: Ensinando o Caminho (Ej. 8-9)</h2>
+                <p class="text-sm text-slate-400">Aqui está o "R" de Roteador. A falha aqui é a causa de 90% dos problemas de "rede inacessível".</p>
+            </div>
+            <div class="card-content space-y-6 divide-y divide-slate-700">
+                <!-- Exercício 8 -->
+                <div class="pt-6">
+                    <span class="pill pill-gray">Exercício 8</span>
+                    <h3 class="text-lg font-semibold text-white mt-2">Roteamento Estático: O "GPS Manual"</h3>
+                    <p class="pill-yellow mt-2">💡 <strong class="font-bold">Pílula 80/20 (PDF: "El nivel de red" p.35, "Tabelas de enrutamento"):</strong> O roteador é burro. Ele SÓ conhece as redes que estão fisicamente conectadas a ele. Você precisa "ensinar" manualmente a ele o caminho para TODAS as outras redes.</p>
+                    <p class="text-slate-300 mt-2">A lógica é: "Para chegar na [Rede Destino] com [Máscara], envie o pacote para [IP do Próximo Roteador]".</p>
+                    
+                    <p class="font-semibold text-white mt-3">🤔 Pensamento Crítico (Exemplo no Router0):</p>
+                    <div class="code-block">
+                        <span class="comment"># O Roteador R0 SÓ conhece:</span><br>
+                        <span class="ip">178.10.20.0/23</span> <span class="comment">(Sub-rede 0)</span><br>
+                        <span class="ip">10.10.0.0/30</span>   <span class="comment">(Link para R1)</span><br>
+                        <span class="ip">10.10.0.12/30</span>  <span class="comment">(Link para R2)</span><br><br>
+                        
+                        <span class="comment"># O que o R0 NÃO conhece?</span><br>
+                        <span class="value">178.10.22.0/24</span> <span class="comment">(Sub-rede 1)</span><br>
+                        <span class="value">178.10.23.0/25</span> <span class="comment">(Sub-rede 2)</span><br>
+                        <span class="value">178.10.23.128/25</span> <span class="comment">(Sub-rede 3)</span><br>
+                        <span class="value">10.10.0.4/30</span>   <span class="comment">(Link R1-R3)</span><br>
+                        <span class="value">10.10.0.8/30</span>   <span class="comment">(Link R3-R2)</span><br><br>
+
+                        <span class="comment"># Sua tarefa no R0 é adicionar uma rota para CADA rede que ele não conhece.</span><br>
+                        <span class="comment"># Ex: Para chegar na Sub-rede 1...</span><br>
+                        <span class="keyword">NETWORK</span> <span class="ip">178.10.22.0</span> <span class="keyword">MASK</span> 255.255.255.0 <span class="keyword">NEXT_HOP</span> <span class="ip">10.10.0.1</span> <span class="comment">(IP do R1)</span><br>
+                        <span class="comment"># Ex: Para chegar na Sub-rede 3...</span><br>
+                        <span class="keyword">NETWORK</span> <span class="ip">178.10.23.128</span> <span class="keyword">MASK</span> 255.255.255.128 <span class="keyword">NEXT_HOP</span> <span class="ip">10.10.0.1</span> <span class="comment">(via R1)</span><br>
+                        <span class="comment"># ...OU...</span><br>
+                        <span class="keyword">NETWORK</span> <span class="ip">178.10.23.128</span> <span class="keyword">MASK</span> 255.255.255.128 <span class="keyword">NEXT_HOP</span> <span class="ip">10.10.0.13</span> <span class="comment">(via R2)</span>
+                    </div>
+                     <p class="text-slate-300 mt-2"><strong class="text-red-400">Importante:</strong> Você precisa fazer isso em TODOS os 4 roteadores. E lembre-se, a comunicação precisa de <strong class="text-white">IDA e VOLTA</strong>. Não adianta o R0 saber chegar no R1, se o R1 não souber *voltar* para o R0.</p>
+                </div>
+                 <!-- Exercício 9 -->
+                <div class="pt-6">
+                    <span class="pill pill-red">Exercício 9: TROUBLESHOOTING 1</span>
+                    <h3 class="text-lg font-semibold text-white mt-2">"Meus pings não funcionam!"</h3>
+                    <p class="pill-yellow mt-2">💡 <strong class="font-bold">Pílula 80/20 (PDF: "El nivel de red" p.42, "Puerta de enlace"):</strong> Se você tem 100% de certeza que suas rotas (Ej. 8) estão certas, o problema <strong class="text-white">NÃO está nos roteadores</strong>. Está nos <strong class="text-white">HOSTS (PCs)</strong>.</p>
+                    <p class="text-slate-300 mt-2">Um PC (ex: PC0) sabe como falar com sua rede local (Sub-rede 0). Mas como ele fala com o PC1 (outra rede)? Ele precisa de uma <strong class="text-white">"Puerta de enlace predeterminada" (Default Gateway)</strong>.</p>
+                    <p class="font-semibold text-white mt-3">🤔 Pensamento Crítico:</p>
+                    <p class="text-slate-300">O Default Gateway é o "IP de saída" da rede. É o IP do roteador *daquela* LAN.
+                        <br>- Para o PC0, o Gateway é o IP do R0 na Sub-rede 0 (<code class="ip">178.10.20.1</code>).
+                        <br>- Para o PC1, o Gateway é o IP do R1 na Sub-rede 1 (<code class="ip">178.10.22.1</code>).
+                        <br><br>
+                        Use o Modo Simulação e siga um `ping` de PC0 para PC1. O pacote chega no R0? Sim. Chega no R1? Sim. Chega no PC1? Sim. Agora veja o pacote de *resposta* (o Echo Reply) do PC1. Para onde ele o envia? Se o Gateway do PC1 estiver em branco, o PC1 descarta o pacote, pois não sabe como chegar na rede `178.10.20.0`.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bloco 4: Os Serviços (DNS/HTTP) -->
+        <div class="card mb-6">
+            <div class="card-header">
+                <h2 class="text-xl font-semibold text-white">Bloco 4: Usando a Rede (Ej. 10-14)</h2>
+                <p class="text-sm text-slate-400">A rede funciona (Nível 3). E agora? Vamos usá-la (Nível 7).</p>
+            </div>
+            <div class="card-content space-y-6 divide-y divide-slate-700">
+                <!-- Exercício 10 & 11 -->
+                <div class="pt-6">
+                    <span class="pill pill-gray">Exercício 10 & 11</span>
+                    <h3 class="text-lg font-semibold text-white mt-2">DNS: A "Lista Telefônica" da Internet</h3>
+                    <p class="pill-yellow mt-2">💡 <strong class="font-bold">Pílula 80/20 (PDF: "El nivel de red" p.26):</strong> Ninguém digita `192.150.16.64` para ver a Adobe (exemplo do PDF p.30). Digitamos `adobe.com`. O <strong class="text-white">DNS (Domain Name System)</strong> é o serviço que traduz Nomes em IPs.</p>
+                    <p class="text-slate-300 mt-2">No Packet Tracer, sua tarefa é:
+                        <br>1. <strong>No Server1 (DNS):</strong> Ir em Services -> DNS. Criar um registro. (Ex: Nome: `minha-web.pec`, IP: `178.10.20.2` [IP do Server0]).
+                        <br>2. <strong>Nos PCs (PC0, PC1...):</strong> Ir em Desktop -> IP Config. No campo "DNS Server", colocar o IP do Server1 (<code class="ip">178.10.22.2</code>).
+                    </p>
+                    <p class="font-semibold text-white mt-3">🤔 Pensamento Crítico (Ej. 10):</p>
+                    <p class="text-slate-300">No seu computador real, use `nslookup www.uoc.edu`. Veja o IP que ele retorna e *qual servidor* DNS te deu a resposta. Isso é o Ej. 10 na prática.</p>
+                </div>
+                <!-- Exercício 12 -->
+                <div class="pt-6">
+                    <span class="pill pill-red">Exercício 12: TROUBLESHOOTING 2</span>
+                    <h3 class="text-lg font-semibold text-white mt-2">"A Web não carrega, mas o PING funciona!"</h3>
+                    <p class="pill-yellow mt-2">💡 <strong class="font-bold">Pílula 80/20:</strong> Este é o erro mais clássico. O `ping` PC0 -> Server0 funciona, mas o browser falha. Por quê?</p>
+                    <p class="text-slate-300 mt-2">O problema não é o HTTP. O problema é o <strong class="text-white">DNS</strong>. Siga a lógica do Ej. 9:</p>
+                    <p class="font-semibold text-white mt-3">🤔 Pensamento Crítico (A Cadeia da Falha):</p>
+                    <ol class="list-decimal list-inside space-y-2 text-slate-300 mt-2">
+                        <li>PC0 tenta abrir `minha-web.pec`.</li>
+                        <li>PC0 envia uma Query DNS para o Server1 (em `178.10.22.2`).</li>
+                        <li>O pacote <strong class="text-green-300">CHEGA</strong> ao Server1 (graças às suas Rotas Estáticas).</li>
+                        <li>Server1 pensa: "OK, preciso responder ao `178.10.20.10` (PC0)".</li>
+                        <li>Server1 olha seu IP e máscara. A rede `178.10.20.0` <strong class="text-red-400">NÃO É</strong> sua rede local.</li>
+                        <li><strong>O QUE UM HOST FAZ QUANDO NÃO CONHECE A REDE DE DESTINO?</strong></li>
+                        <li>Ele procura seu <strong class="text-white">Default Gateway</strong>.</li>
+                        <li>Vá no Server1 (Desktop -> IP Config). O campo "Default Gateway" está... <strong class="text-red-400">em branco!</strong> O servidor não sabe como responder. Ele descarta o pacote.</li>
+                    </ol>
+                    <p class="text-slate-300 mt-2"><strong class="text-white">A Solução (80/20):</strong> Servidores são HOSTS. Hosts precisam de um Default Gateway. Configure o Gateway no Server0 e Server1.</p>
+                </div>
+                <!-- Exercício 13 -->
+                <div class="pt-6">
+                    <span class="pill pill-gray">Exercício 13</span>
+                    <h3 class="text-lg font-semibold text-white mt-2">Modo Simulação: Vendo a Mágica</h3>
+                    <p class="pill-yellow mt-2">💡 <strong class="font-bold">Pílula 80/20:</strong> Agora que tudo funciona (graças ao Ej. 12), ative o "Simulation Mode" e filtre por <strong class="text-white">DNS</strong> e <strong class="text-white">HTTP</strong> (ou TCP).</p>
+                    <p class="font-semibold text-white mt-3">🤔 Pensamento Crítico (O que observar):</p>
+                    <ul class="list-disc list-inside space-y-1 mt-2 text-slate-300">
+                        <li><strong>Pacote 1 (Query DNS):</strong> Olhe o "Outbound PDU". Camada 4 (UDP), Porta Destino: 53. Camada 3 (IP), Protocolo: 17 (UDP).</li>
+                        <li><strong>Pacote 2 (Reply DNS):</strong> Olhe o pacote de volta. Camada 4 (UDP), Porta Origem: 53.</li>
+                        <li><strong>Pacote 3 (HTTP):</strong> Só aparece *depois* que o DNS volta. Camada 4 (TCP), Porta Destino: 80.</li>
+                        <li>Abra o pacote DNS (Inbound/Outbound PDU Details) e compare a seção do cabeçalho IP com o que você escreveu no Ej. 4. É o mesmo!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
     </div>
-
-    <script>
-        function showTab(event, tabID) {
-            // Esconder todo o conteúdo de tabs
-            const tabContents = document.getElementById('tabs-content').children;
-            for (let i = 0; i < tabContents.length; i++) {
-                tabContents[i].classList.add('hidden');
-            }
-
-            // Remover classe 'active' de todos os botões
-            const tabButtons = document.getElementById('tabs-nav').children;
-            for (let i = 0; i < tabButtons.length; i++) {
-                tabButtons[i].classList.remove('active');
-            }
-
-            // Mostrar a tab clicada
-            document.getElementById(tabID).classList.remove('hidden');
-
-            // Adicionar classe 'active' ao botão clicado
-            event.currentTarget.classList.add('active');
-        }
-    </script>
 </body>
 </html>
+
