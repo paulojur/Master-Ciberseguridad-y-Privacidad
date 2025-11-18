@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanessa Santuccione | Digital Collage Artist</title>
+    <meta name="description" content="Visual Poetry and Abstract Modern Digital Collage by Vanessa Santuccione.">
+    
+    <!-- Google Fonts: Inter (Clean Sans-serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config for Custom Font and Colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        neutral: {
+                            50: '#F9FAFB', /* Off-white background */
+                            900: '#171717', /* Off-black text */
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom subtle animations */
+        .fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hide scrollbar for menu but keep functionality */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-neutral-50 text-neutral-900 font-sans antialiased selection:bg-neutral-900 selection:text-neutral-50">
+
+    <!-- 1. Header (Fixed) -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-neutral-50/90 backdrop-blur-sm border-b border-neutral-200/50 transition-all duration-300">
+        <div class="max-w-screen-2xl mx-auto px-6 h-20 flex items-center justify-between relative">
+            
+            <!-- Left: Hamburger Menu Icon -->
+            <button id="menu-btn" class="text-2xl focus:outline-none hover:opacity-70 transition-opacity z-50 w-10 text-left">
+                <i class="fa-solid fa-bars font-light"></i>
+            </button>
+
+            <!-- Center: Brand Name -->
+            <div class="absolute left-1/2 transform -translate-x-1/2 text-center">
+                <h1 class="text-sm md:text-base tracking-[0.3em] uppercase font-semibold whitespace-nowrap">
+                    Vanessa Santuccione
+                </h1>
+            </div>
+
+            <!-- Right: Placeholder for balance (invisible) -->
+            <div class="w-10"></div>
+        </div>
+    </header>
+
+    <!-- Mobile/Sidebar Menu Overlay -->
+    <div id="menu-overlay" class="fixed inset-0 bg-neutral-50 z-40 transform -translate-x-full transition-transform duration-500 ease-in-out flex flex-col justify-center items-center">
+        <nav class="space-y-8 text-center">
+            <a href="#hero" class="menu-link block text-3xl md:text-4xl font-light tracking-widest hover:italic transition-all">Home</a>
+            <a href="#portfolio" class="menu-link block text-3xl md:text-4xl font-light tracking-widest hover:italic transition-all">Portfolio</a>
+            <a href="#about" class="menu-link block text-3xl md:text-4xl font-light tracking-widest hover:italic transition-all">About Me</a>
+            <a href="#services" class="menu-link block text-3xl md:text-4xl font-light tracking-widest hover:italic transition-all">Services</a>
+            <a href="#contact" class="menu-link block text-3xl md:text-4xl font-light tracking-widest hover:italic transition-all">Contact</a>
+        </nav>
+    </div>
+
+    <main class="pt-32 pb-20 px-6 md:px-12 max-w-screen-2xl mx-auto">
+
+        <!-- 2. Hero Action (Top of page content) -->
+        <!-- Following the Inverted Layout: Action first -->
+        <section id="hero" class="flex justify-center items-center min-h-[40vh] fade-in-up" style="animation-delay: 0.2s;">
+            <a href="#contact" class="group relative inline-block">
+                <span class="text-2xl md:text-4xl lg:text-5xl font-light italic serif text-center leading-tight hover:text-neutral-600 transition-colors duration-300">
+                    "Let's create visual poetry together"
+                </span>
+                <span class="absolute bottom-0 left-0 w-0 h-px bg-neutral-900 transition-all duration-500 group-hover:w-full"></span>
+            </a>
+        </section>
+
+        <!-- 3. Portfolio Teaser (The Visuals) -->
+        <section id="portfolio" class="mb-32 fade-in-up" style="animation-delay: 0.4s;">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+                <!-- Item 1 -->
+                <div class="aspect-square overflow-hidden bg-neutral-200 group relative cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop" 
+                         alt="Abstract digital collage for fashion editorial" 
+                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105">
+                    <div class="absolute inset-0 bg-neutral-900/0 group-hover:bg-neutral-900/10 transition-all duration-500"></div>
+                </div>
+                
+                <!-- Item 2 -->
+                <div class="aspect-square overflow-hidden bg-neutral-200 group relative cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1507643179173-39632099427c?q=80&w=1000&auto=format&fit=crop" 
+                         alt="Surrealist wine label art" 
+                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105">
+                </div>
+
+                <!-- Item 3 -->
+                <div class="aspect-square overflow-hidden bg-neutral-200 group relative cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1493421419110-74f4e30abc26?q=80&w=1000&auto=format&fit=crop" 
+                         alt="Modern book cover design" 
+                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105">
+                </div>
+
+                <!-- Item 4 -->
+                <div class="aspect-square overflow-hidden bg-neutral-200 group relative cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?q=80&w=1000&auto=format&fit=crop" 
+                         alt="Luxury brand visual storytelling" 
+                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105">
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. The "Why + Who" (About Section) -->
+        <section id="about" class="mb-32 flex justify-center fade-in-up" style="animation-delay: 0.6s;">
+            <div class="max-w-md text-center space-y-8">
+                <h2 class="text-xl md:text-2xl uppercase tracking-widest font-medium">
+                    Art that speaks before you read.
+                </h2>
+                <p class="text-neutral-600 leading-relaxed text-sm md:text-base font-light">
+                    I translate complex emotions into curated imagery. My work is not just collage; it is visual poetry designed to elevate brand narratives. Specializing in abstract modern composition, I partner with agencies, fashion houses, and publishers to turn concepts into tangible atmosphere.
+                </p>
+                <div class="h-16 w-px bg-neutral-300 mx-auto"></div> <!-- Minimalist vertical line -->
+            </div>
+        </section>
+
+        <!-- 5. Services Grid (The Offer) -->
+        <section id="services" class="mb-32 fade-in-up" style="animation-delay: 0.8s;">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-neutral-200 border border-neutral-200">
+                <!-- Using gap-px with bg-color creates perfectly thin borders between items -->
+                
+                <div class="bg-neutral-50 aspect-square flex items-center justify-center p-8 hover:bg-white transition-colors duration-300">
+                    <span class="uppercase tracking-widest text-xs md:text-sm text-center font-medium">Editorial Narratives</span>
+                </div>
+
+                <div class="bg-neutral-50 aspect-square flex items-center justify-center p-8 hover:bg-white transition-colors duration-300">
+                    <span class="uppercase tracking-widest text-xs md:text-sm text-center font-medium">Brand Identity & Art Direction</span>
+                </div>
+
+                <div class="bg-neutral-50 aspect-square flex items-center justify-center p-8 hover:bg-white transition-colors duration-300">
+                    <span class="uppercase tracking-widest text-xs md:text-sm text-center font-medium">Packaging & Label Design</span>
+                </div>
+
+                <div class="bg-neutral-50 aspect-square flex items-center justify-center p-8 hover:bg-white transition-colors duration-300">
+                    <span class="uppercase tracking-widest text-xs md:text-sm text-center font-medium">Custom Commissions</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Footer / Contact -->
+        <footer id="contact" class="text-center py-20 border-t border-neutral-200 fade-in-up" style="animation-delay: 1s;">
+            <p class="text-2xl md:text-3xl font-light mb-8 italic">Ready to define your aesthetic?</p>
+            
+            <div class="mb-16">
+                <a href="mailto:hello@vanessasantuccione.com" 
+                   class="inline-block border border-neutral-900 px-10 py-4 text-sm uppercase tracking-[0.2em] hover:bg-neutral-900 hover:text-neutral-50 transition-all duration-300">
+                    Get in Touch
+                </a>
+            </div>
+
+            <div class="flex justify-center gap-8 text-xl text-neutral-400">
+                <a href="#" class="hover:text-neutral-900 transition-colors duration-300"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="hover:text-neutral-900 transition-colors duration-300"><i class="fab fa-pinterest"></i></a>
+                <a href="#" class="hover:text-neutral-900 transition-colors duration-300"><i class="fab fa-behance"></i></a>
+            </div>
+            
+            <p class="mt-12 text-xs text-neutral-300 uppercase tracking-widest">© 2025 Vanessa Santuccione</p>
+        </footer>
+
+    </main>
+
+    <!-- JavaScript for Menu functionality -->
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const menuOverlay = document.getElementById('menu-overlay');
+        const menuIcon = menuBtn.querySelector('i');
+        const menuLinks = document.querySelectorAll('.menu-link');
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            
+            if (isMenuOpen) {
+                // Open Menu
+                menuOverlay.classList.remove('-translate-x-full');
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-xmark');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            } else {
+                // Close Menu
+                menuOverlay.classList.add('-translate-x-full');
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Event Listener for Button
+        menuBtn.addEventListener('click', toggleMenu);
+
+        // Event Listeners for Links (Close menu when clicking a link)
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if(isMenuOpen) toggleMenu();
+            });
+        });
+    </script>
+</body>
+</html>
